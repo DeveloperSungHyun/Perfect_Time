@@ -12,13 +12,17 @@ public class SettingValue {
     private int Time_Minute;                //시간 분
 
     private boolean Sound_Activate;         //소리알림 활성화 유무
+    private int Sound_volume;               //소리크기
+
     private boolean Vibration_Activate;     //진동알림 활성화 유무
+    private int Vibration_volume;           //진동세기
+
     private boolean Popup_Activate;         //팝업알림 활성화 유무
 
-    private boolean warning;                //알림 예고
-    private int WarningTime;                //알림 예고 시간
+    private boolean beforehand;                //알림 예고
+    private int beforehandTime;                //알림 예고 시간
 
-    private int AutoOff;                    //알람 자동끄기
+    private int AutoOffTime;                    //알람 자동끄기
 
     public boolean isTimer_Activate() {
         return Timer_Activate;
@@ -76,12 +80,28 @@ public class SettingValue {
         Sound_Activate = sound_Activate;
     }
 
+    public int getSound_volume() {
+        return Sound_volume;
+    }
+
+    public void setSound_volume(int sound_volume) {
+        Sound_volume = sound_volume;
+    }
+
     public boolean isVibration_Activate() {
         return Vibration_Activate;
     }
 
     public void setVibration_Activate(boolean vibration_Activate) {
         Vibration_Activate = vibration_Activate;
+    }
+
+    public int getVibration_volume() {
+        return Vibration_volume;
+    }
+
+    public void setVibration_volume(int vibration_volume) {
+        Vibration_volume = vibration_volume;
     }
 
     public boolean isPopup_Activate() {
@@ -92,27 +112,27 @@ public class SettingValue {
         Popup_Activate = popup_Activate;
     }
 
-    public boolean isWarning() {
-        return warning;
+    public boolean isBeforehand() {
+        return beforehand;
     }
 
-    public void setWarning(boolean warning) {
-        this.warning = warning;
+    public void setBeforehand(boolean beforehand) {
+        this.beforehand = beforehand;
     }
 
-    public int getWarningTime() {
-        return WarningTime;
+    public int getBeforehandTime() {
+        return beforehandTime;
     }
 
-    public void setWarningTime(int warningTime) {
-        WarningTime = warningTime;
+    public void setBeforehandTime(int beforehandTime) {
+        this.beforehandTime = beforehandTime;
     }
 
-    public int getAutoOff() {
-        return AutoOff;
+    public int getAutoOffTime() {
+        return AutoOffTime;
     }
 
-    public void setAutoOff(int autoOff) {
-        AutoOff = autoOff;
+    public void setAutoOffTime(int autoOff) {
+        AutoOffTime = autoOff;
     }
 }
