@@ -100,7 +100,7 @@ public class FragWeek extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TimerSettings.class);
                 intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                intent.putExtra("TimerType", FragmentType.fragWeek);
+                intent.putExtra("TimerViewType", FragmentType.fragWeek);
                 startActivity(intent);
             }
         });

@@ -101,7 +101,7 @@ public class FragEveryDay extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TimerSettings.class);
                 intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                intent.putExtra("TimerType", FragmentType.fragEveryDay);
+                intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
                 startActivity(intent);
             }
         });
