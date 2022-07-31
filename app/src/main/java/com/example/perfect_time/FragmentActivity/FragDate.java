@@ -102,7 +102,7 @@ public class FragDate extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TimerSettings.class);
                 intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                intent.putExtra("TimerType", FragmentType.fragDate);
+                intent.putExtra("TimerViewType", FragmentType.fragDate);
                 startActivity(intent);
             }
         });

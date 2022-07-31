@@ -99,7 +99,7 @@
                         android:id="@+id/TextView_Date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="월요일"
+                        android:text="날짜"
                         android:textColor="#FF000000"
                         android:textSize="20dp"
                         android:visibility="gone"/>
@@ -197,7 +197,8 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="15dp"
                     android:paddingRight="5dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/TextView_sound_notification"
@@ -218,17 +219,19 @@
                         android:textColor="#6363FF"
                         android:textSize="15dp" />-->
 
-                    <ImageView
-                        android:id="@+id/ImageView_sound_SettingButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/sound_SettingButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_baseline_settings_24" />
+                        android:layout_marginLeft="7dp"
+                        android:background="@drawable/ic_baseline_settings_24"
+                        android:backgroundTint="#353535" />
                     <Switch
                         android:id="@+id/Switch_sound"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/ImageView_sound_SettingButton"/>
+                        android:layout_toLeftOf="@+id/sound_SettingButton"/>
 
                 </RelativeLayout>
 
@@ -268,18 +271,20 @@
                         android:textSize="15dp" />
 -->
 
-                    <ImageView
-                        android:id="@+id/ImageView_Vibration_SettingButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_settings_24"
-                        android:layout_alignParentRight="true"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/Vibration_SettingButton"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="7dp"
+                        android:background="@drawable/ic_baseline_settings_24"
+                        android:backgroundTint="#353535" />
 
                     <Switch
                         android:id="@+id/Switch_vibration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/ImageView_Vibration_SettingButton" />
+                        android:layout_toLeftOf="@+id/Vibration_SettingButton" />
 
                 </RelativeLayout>
 

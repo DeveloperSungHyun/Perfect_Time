@@ -60,6 +60,7 @@ public class TimerSoundSetting extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Sound_Activate = b;
+                settingValue.setSound_Activate(Sound_Activate);
             }
         });
 
@@ -68,6 +69,7 @@ public class TimerSoundSetting extends Activity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 SoundValue = i;
                 TextView_SoundValue.setText(Integer.toString(SoundValue));
+                settingValue.setSound_volume(SoundValue);
             }
 
             @Override
@@ -87,7 +89,5 @@ public class TimerSoundSetting extends Activity {
     protected void onDestroy() {
         super.onDestroy();
 
-        settingValue.setSound_Activate(Sound_Activate);
-        settingValue.setSound_volume(SoundValue);
     }
 }

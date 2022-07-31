@@ -23,20 +23,20 @@ public class TimerVibrationSetting extends Activity {
     TextView TextView_VibrationValue;
     SeekBar SeekBar_VibrationValue;
 
-    boolean Sound_Activate;
-    int SoundValue;
+    boolean Vibration_Activate;
+    int VibrationValue;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onStart() {
         super.onStart();
 
-        Sound_Activate = settingValue.isSound_Activate();
-        SoundValue = settingValue.getSound_volume();
+        Vibration_Activate = settingValue.isVibration_Activate();
+        VibrationValue = settingValue.getVibration_volume();
 
-        Switch_Vibration_Activate.setChecked(Sound_Activate);
-        TextView_VibrationValue.setText(Integer.toString(SoundValue));
-        SeekBar_VibrationValue.setProgress(SoundValue, true);
+        Switch_Vibration_Activate.setChecked(Vibration_Activate);
+        TextView_VibrationValue.setText(Integer.toString(VibrationValue));
+        SeekBar_VibrationValue.setProgress(VibrationValue, true);
 
     }
 
@@ -58,8 +58,34 @@ public class TimerVibrationSetting extends Activity {
         Switch_Vibration_Activate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                settingValue.setVibration_Activate(b);
+                Vibration_Activate = b;
+                settingValue.setVibration_Activate(Vibration_Activate);
             }
         });
+
+        SeekBar_VibrationValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                VibrationValue = i;
+                TextView_VibrationValue.setText(Integer.toString(VibrationValue));
+                settingValue.setVibration_volume(VibrationValue);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }
