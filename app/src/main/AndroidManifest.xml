@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.TimerSettings"/>
+        <activity android:name=".Activity.TimerSoundSetting"/>
+        <activity android:name=".Activity.TimerVibrationSetting"/>
     </application>
 
 </manifest>

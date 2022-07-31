@@ -3,58 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="13dp"
-        android:gravity="center|left"
-        android:background="#3434FF">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/exit"
-            android:backgroundTint="#FFFFFFFF" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뒤로"
-            android:textSize="20dp"
-            android:textColor="#FFFFFFFF"/>
-
-    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:padding="10dp"
         android:layout_margin="5dp"
         android:background="@drawable/background_style1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="소리설정"
+            android:text="진동설정"
             android:textSize="17dp"
             android:textColor="#000000"
             android:layout_alignParentLeft="true"/>
 
         <Switch
-            android:id="@+id/Switch_Sound_Activate"
+            android:id="@+id/Switch_Vibration_Activate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="켜짐"
-            android:textOff="꺼짐"
+            android:layout_alignParentRight="true"
             android:text="꺼짐"
-            android:layout_alignParentRight="true"/>
+            android:textOff="꺼짐"
+            android:textOn="켜짐" />
     </RelativeLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="볼륨"
+        android:text="강도"
         android:layout_margin="3dp"
         android:textColor="#FF000000"
         android:textSize="13sp"/>
@@ -65,7 +41,7 @@
         android:layout_margin="5dp">
 
         <SeekBar
-            android:id="@+id/SeekBar_SoundValue"
+            android:id="@+id/SeekBar_VibrationValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="10"
@@ -73,7 +49,7 @@
             android:max="100"/>
 
         <TextView
-            android:id="@+id/TextView_SoundValue"
+            android:id="@+id/TextView_VibrationValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

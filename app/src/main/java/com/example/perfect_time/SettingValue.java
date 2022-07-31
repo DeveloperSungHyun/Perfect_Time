@@ -2,27 +2,27 @@ package com.example.perfect_time;
 
 public class SettingValue {
 
-    private boolean Timer_Activate;         //알람 활성화
-    private boolean Important;              //중요알람 표시
+    private static boolean Timer_Activate;         //알람 활성화
+    private static boolean Important;              //중요알람 표시
 
-    private String Name;                    //알람 이름
-    private String Memo;                    //알람 메모
+    private static String Name;                    //알람 이름
+    private static String Memo;                    //알람 메모
 
-    private int Time_Hour;                  //시간 시
-    private int Time_Minute;                //시간 분
+    private static int Time_Hour;                  //시간 시
+    private static int Time_Minute;                //시간 분
 
-    private boolean Sound_Activate;         //소리알림 활성화 유무
-    private int Sound_volume;               //소리크기
+    private static boolean Sound_Activate;         //소리알림 활성화 유무
+    private static int Sound_volume;               //소리크기
 
-    private boolean Vibration_Activate;     //진동알림 활성화 유무
-    private int Vibration_volume;           //진동세기
+    private static boolean Vibration_Activate;     //진동알림 활성화 유무
+    private static int Vibration_volume;           //진동세기
 
-    private boolean Popup_Activate;         //팝업알림 활성화 유무
+    private static boolean Popup_Activate;         //팝업알림 활성화 유무
 
-    private boolean beforehand;                //알림 예고
-    private int beforehandTime;                //알림 예고 시간
+    private static boolean beforehand;                //알림 예고
+    private static int beforehandTime;                //알림 예고 시간
 
-    private int AutoOffTime;                    //알람 자동끄기
+    private static int AutoOffTime;                    //알람 자동끄기
 
     public boolean isTimer_Activate() {
         return Timer_Activate;
