@@ -2,6 +2,7 @@ package com.example.perfect_time.Activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +15,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -25,6 +28,7 @@ import com.example.perfect_time.DayOfTheWeek_Item;
 import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.R;
 import com.example.perfect_time.SettingValue;
+import com.example.perfect_time.Time24_to_12Hour;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -38,6 +42,7 @@ public class TimerSettings extends Activity {
     GridView GridView_WeekSelectView;
     TextView TextView_Date;
 
+    LinearLayout LinearLayout_Time_Setting;
     TextView TextView_Time_H;
     TextView TextView_Time_M;
     TextView TextView_AmPm;
@@ -74,12 +79,13 @@ public class TimerSettings extends Activity {
 
         Switch_TimerActivate = findViewById(R.id.Switch_TimerActivate);
 
+        LinearLayout_Time_Setting = findViewById(R.id.LinearLayout_Time_Setting);
         TextView_Time_H = findViewById(R.id.TextView_Time_H);
         TextView_Time_M = findViewById(R.id.TextView_Time_M);
+        TextView_AmPm = findViewById(R.id.TextView_AmPm);
 
         EditText_Name = findViewById(R.id.EditText_Name);
         EditText_Memo = findViewById(R.id.EditText_Memo);
-        TextView_AmPm = findViewById(R.id.TextView_AmPm);
 
         Switch_Important = findViewById(R.id.Switch_Important);
 
@@ -112,7 +118,14 @@ public class TimerSettings extends Activity {
     }
 
     private void InterfaceSetting(){
+        Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(settingValue.getTime_Hour());
         Switch_TimerActivate.setChecked(settingValue.isTimer_Activate());
+
+        TextView_Time_H.setText(Integer.toString(time24_to_12Hour.getTime12Hour()));
+        TextView_Time_M.setText(Integer.toString(settingValue.getTime_Minute()));
+
+        if(time24_to_12Hour.getAmPm()) TextView_AmPm.setText("오후");
+        else TextView_AmPm.setText("오전");
 
         EditText_Name.setText(settingValue.getName());
         EditText_Memo.setText(settingValue.getMemo());
@@ -151,8 +164,28 @@ public class TimerSettings extends Activity {
 
         TimerDaySetting();
 
+        LinearLayout_Time_Setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimeSettingsView();
+            }
+        });
+
         ValueSetting();
 
+    }
+
+    private void showTimeSettingsView(){
+        TimePickerDialog timePickerDialog = new TimePickerDialog(TimerSettings.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int h, int m) {
+                settingValue.setTime_Hour(h);
+                settingValue.setTime_Minute(m);
+
+                InterfaceSetting();
+            }
+        } ,settingValue.getTime_Hour(), settingValue.getTime_Minute(), false);
+        timePickerDialog.show();
     }
 
     private void NewTimerCommonLogic(){//알람 추가시 디폴트 값
