@@ -361,6 +361,7 @@
                         android:textColor="#6363FF"
                         android:textSize="15dp" />
 
+
                     <Switch
                         android:id="@+id/Switch_beforehand"
                         android:layout_width="wrap_content"

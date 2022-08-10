@@ -1,13 +1,17 @@
 package com.example.perfect_time.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -16,6 +20,9 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -32,9 +39,12 @@ import com.example.perfect_time.Time24_to_12Hour;
 
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.List;
 
 public class TimerSettings extends Activity {
     Calendar calendar;
+
+    Dialog TimeSetting_Dialog;
 
     DayOfTheWeek_Adapter dayOfTheWeek_adapter;
     SettingValue settingValue;
@@ -137,9 +147,9 @@ public class TimerSettings extends Activity {
         Switch_popup.setChecked(settingValue.isPopup_Activate());
 
         Switch_beforehand.setChecked(settingValue.isBeforehand());
-        TextView_beforehand_Set.setText(Integer.toString(settingValue.getBeforehandTime()));
+        TextView_beforehand_Set.setText(new Second_to_Minute(settingValue.getBeforehandTime()).getTypeChange());
 
-        TextView_HolidayOff_Set.setText(Integer.toString(settingValue.getAutoOffTime()));
+        TextView_HolidayOff_Set.setText(new Second_to_Minute(settingValue.getAutoOffTime()).getTypeChange());
 
     }
     @Override
@@ -151,6 +161,9 @@ public class TimerSettings extends Activity {
         settingValue = new SettingValue();
 
         calendar = Calendar.getInstance();
+
+        TimeSetting_Dialog = new Dialog(TimerSettings.this);
+        TimeSetting_Dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         nowTime_H = calendar.get(Calendar.HOUR_OF_DAY);//24시 형식
         nowTime_M = calendar.get(Calendar.MINUTE);//24시 형식
@@ -171,6 +184,25 @@ public class TimerSettings extends Activity {
             }
         });
 
+        TextView_beforehand_Set.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                int TimeValue[] = {60, 180, 300, 600, 1800};
+
+                TimeSettingDialog(TimeValue, 1);
+            }
+        });
+
+        TextView_HolidayOff_Set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int TimeValue[] = {10, 30, 60, 180, 600};
+
+                TimeSettingDialog(TimeValue, 2);
+            }
+        });
+
         ValueSetting();
 
     }
@@ -186,6 +218,80 @@ public class TimerSettings extends Activity {
             }
         } ,settingValue.getTime_Hour(), settingValue.getTime_Minute(), false);
         timePickerDialog.show();
+    }
+
+    int Time;
+    int ArrayTimeInDex;
+    private void TimeSettingDialog(int TimeValue[], int division){
+
+        int ArraySize = TimeValue.length;
+        String[] versionArray = new String[ArraySize];
+        if(division == 1) Time = settingValue.getBeforehandTime();
+        else Time = settingValue.getAutoOffTime();
+
+        for (int i = 0; i < ArraySize; i++) {
+            ArrayTimeInDex = i;
+            if(TimeValue[i] == Time) break;
+        }
+
+
+
+        for(int i = 0; i < ArraySize; i++){
+            versionArray[i] = new Second_to_Minute(TimeValue[i]).getTypeChange();
+        }
+
+        AlertDialog.Builder dlg = new AlertDialog.Builder(TimerSettings.this);
+
+
+        dlg.setSingleChoiceItems(versionArray, ArrayTimeInDex, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Time = TimeValue[i];
+            }
+        });
+
+        dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(division == 1){// 알림 예고
+                    settingValue.setBeforehandTime(Time);
+                }else if(division == 2){// 자동 알링끄기
+                    settingValue.setAutoOffTime(Time);
+                }
+                InterfaceSetting();
+            }
+        });
+        dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        dlg.show();
+    }
+
+
+    class Second_to_Minute{
+        int Second;
+
+        String value;
+
+        public Second_to_Minute(int Second) {
+            this.Second = Second;
+        }
+
+        public String getTypeChange(){
+
+            if(Second >= 60){
+                value = Second / 60 + "분";
+            }else{
+                value = Second + "초";
+            }
+
+            return value;
+        }
+
     }
 
     private void NewTimerCommonLogic(){//알람 추가시 디폴트 값
@@ -211,7 +317,7 @@ public class TimerSettings extends Activity {
         settingValue.setBeforehand(true);
         settingValue.setBeforehandTime(60 * 5);//초단위
 
-        settingValue.setAutoOffTime(10);
+        settingValue.setAutoOffTime(60);
 
         InterfaceSetting();
     }
