@@ -461,7 +461,7 @@ class DayOfTheWeek_TimerSettings{
 
     int TimerSettingType;
 
-    int DayOfTheWeek = 0;
+    int DayOfTheWeek = 0;//요일
     public DayOfTheWeek_TimerSettings(Context context, int TimerSettingType){
         this.context = context;
         this.TimerSettingType = TimerSettingType;
@@ -518,7 +518,7 @@ class Date_TimerSettings{
 
     int TimerSettingType;
 
-    int y, m, d;
+    int y, m, d;//날짜
     public Date_TimerSettings(Context context, int TimerSettingType){
         this.context = context;
         this.TimerSettingType = TimerSettingType;
