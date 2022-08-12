@@ -9,17 +9,16 @@ import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
 import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
 import com.example.perfect_time.SettingValue;
 
-public class EveryDay_DataBase_Management {
+import java.util.List;
 
-    SettingValue settingValue;
+public class EveryDay_DataBase_Management {
 
     DB_EveryDay db_everyDay;
     EveryDao everyDao;
     EveryDayDataBase everyDayDataBase;
 
-    public EveryDay_DataBase_Management(Context context, SettingValue settingValue){
+    public EveryDay_DataBase_Management(Context context){
 
-        this.settingValue = settingValue;
 
         everyDayDataBase = Room.databaseBuilder(context, EveryDayDataBase.class, "EveryDayDataBase")
                 .fallbackToDestructiveMigration()
@@ -33,7 +32,7 @@ public class EveryDay_DataBase_Management {
 
     }
 
-    public void setInsert(){
+    public void setInsert(SettingValue settingValue){
 
 
         db_everyDay.setTimer_Activate(settingValue.isTimer_Activate());
@@ -60,4 +59,15 @@ public class EveryDay_DataBase_Management {
 
         everyDao.setInsert(db_everyDay);
     }
+
+    public List<DB_EveryDay> getData(){
+
+        List<DB_EveryDay> dbEveryDayList;
+
+        dbEveryDayList = everyDao.getEveryDay();
+
+
+        return dbEveryDayList;
+    }
+
 }

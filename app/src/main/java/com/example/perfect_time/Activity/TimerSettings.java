@@ -451,14 +451,26 @@ public class TimerSettings extends Activity {
         switch (TimerViewType){
             case FragmentType.fragEveryDay:{
                 everyDay_timerSettings = new EveryDay_TimerSettings(this, TimerSettingType);
+
+                if(TimerSettingType == 2){
+                    everyDay_timerSettings.EditTimer();
+                }
                 break;
             }
             case FragmentType.fragWeek:{
                 dayOfTheWeek_timerSettings = new DayOfTheWeek_TimerSettings(this, TimerSettingType);
+
+                if(TimerSettingType == 2){
+                    dayOfTheWeek_timerSettings.EditTimer();
+                }
                 break;
             }
             case FragmentType.fragDate:{
                 date_timerSettings = new Date_TimerSettings(this, TimerSettingType);
+
+                if(TimerSettingType == 2){
+                    date_timerSettings.EditTimer();
+                }
                 break;
             }
         }
@@ -493,7 +505,7 @@ class EveryDay_TimerSettings{
 
         settingValue = new SettingValue();
 
-        everyDay_dataBase_management = new EveryDay_DataBase_Management(context, settingValue);
+        everyDay_dataBase_management = new EveryDay_DataBase_Management(context);
 
 //        if(TimerSettingType == 1){
 //            NewAddTimer();
@@ -504,11 +516,17 @@ class EveryDay_TimerSettings{
 
     protected void NewAddTimer(){
         Log.d("NewAddTimer", "test====================");
-        everyDay_dataBase_management.setInsert();
+        everyDay_dataBase_management.setInsert(settingValue);
     }
 
     protected void EditTimer(){
+        List<DB_EveryDay> db_everyDayList;
+        DB_EveryDay db_everyDay;
+        db_everyDayList = everyDay_dataBase_management.getData();
 
+        db_everyDay = db_everyDayList.get(0);
+
+        settingValue.setMemo(db_everyDay.getMemo());
     }
 }
 
