@@ -29,11 +29,16 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.room.Room;
 
 import com.example.perfect_time.DayOfTheWeek_Adapter;
 import com.example.perfect_time.DayOfTheWeek_Item;
 import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.R;
+import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
+import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
+import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
+import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
 import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.Time24_to_12Hour;
 
@@ -46,8 +51,11 @@ public class TimerSettings extends Activity {
 
     Dialog TimeSetting_Dialog;
 
-    DayOfTheWeek_Adapter dayOfTheWeek_adapter;
     SettingValue settingValue;
+
+    EveryDay_TimerSettings everyDay_timerSettings;
+    DayOfTheWeek_TimerSettings dayOfTheWeek_timerSettings;
+    Date_TimerSettings date_timerSettings;
 
     GridView GridView_WeekSelectView;
     TextView TextView_Date;
@@ -76,6 +84,9 @@ public class TimerSettings extends Activity {
     TextView TextView_beforehand_Set;//알림예고 시간설정
 
     TextView TextView_HolidayOff_Set;//알림자동꺼짐 시간설정
+
+    TextView TextView_SaveButton;
+    TextView TextView_No_SaveButton;
 
 
     private int TimerSettingType;
@@ -111,6 +122,10 @@ public class TimerSettings extends Activity {
         TextView_beforehand_Set = findViewById(R.id.TextView_beforehand_Set);
 
         TextView_HolidayOff_Set = findViewById(R.id.TextView_HolidayOff_Set);
+
+
+        TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
+        TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
     }
 
     @Override
@@ -130,6 +145,9 @@ public class TimerSettings extends Activity {
     private void InterfaceSetting(){
         Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(settingValue.getTime_Hour());
         Switch_TimerActivate.setChecked(settingValue.isTimer_Activate());
+
+        EditText_Name.setText(settingValue.getName());
+        EditText_Memo.setText(settingValue.getMemo());
 
         TextView_Time_H.setText(Integer.toString(time24_to_12Hour.getTime12Hour()));
         TextView_Time_M.setText(Integer.toString(settingValue.getTime_Minute()));
@@ -203,8 +221,40 @@ public class TimerSettings extends Activity {
             }
         });
 
+
+        TextView_SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //everyDay_timerSettings.NewAddTimer();
+
+
+                settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
+                settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
+
+                if(!settingValue.getName().equals("")){
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();
+                }
+
+                if(TimerSettingType == 1){//데이터 추가
+                    everyDay_timerSettings.NewAddTimer();
+                }else if(TimerSettingType == 2){//데이터 변경
+                    everyDay_timerSettings.EditTimer();
+                }
+            }
+        });
+
         ValueSetting();
 
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
+        settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
     }
 
     private void showTimeSettingsView(){
@@ -333,9 +383,6 @@ public class TimerSettings extends Activity {
 
 
 
-        settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
-        settingValue.setName(EditText_Memo.getText().toString());                                       //알람메모
-
         Switch_Important.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {      //중요알림
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -403,15 +450,15 @@ public class TimerSettings extends Activity {
 
         switch (TimerViewType){
             case FragmentType.fragEveryDay:{
-                EveryDay_TimerSettings everyDay_timerSettings = new EveryDay_TimerSettings(this, TimerSettingType);
+                everyDay_timerSettings = new EveryDay_TimerSettings(this, TimerSettingType);
                 break;
             }
             case FragmentType.fragWeek:{
-                DayOfTheWeek_TimerSettings dayOfTheWeek_timerSettings = new DayOfTheWeek_TimerSettings(this, TimerSettingType);
+                dayOfTheWeek_timerSettings = new DayOfTheWeek_TimerSettings(this, TimerSettingType);
                 break;
             }
             case FragmentType.fragDate:{
-                Date_TimerSettings date_timerSettings = new Date_TimerSettings(this, TimerSettingType);
+                date_timerSettings = new Date_TimerSettings(this, TimerSettingType);
                 break;
             }
         }
@@ -426,10 +473,15 @@ class EveryDay_TimerSettings{
     Context context;
     TimerSettings ActivityView;
 
+    SettingValue settingValue;
+
+    EveryDay_DataBase_Management everyDay_dataBase_management;
+
     int TimerSettingType;
     public EveryDay_TimerSettings(Context context, int TimerSettingType){
         this.context = context;
         this.TimerSettingType = TimerSettingType;
+
 
         CommonLogic();
     }
@@ -439,15 +491,20 @@ class EveryDay_TimerSettings{
 
         ActivityView.TextView_Date.setText("매일");
 
-        if(TimerSettingType == 1){
-            NewAddTimer();
-        }else if(TimerSettingType == 2){
-            EditTimer();
-        }
+        settingValue = new SettingValue();
+
+        everyDay_dataBase_management = new EveryDay_DataBase_Management(context, settingValue);
+
+//        if(TimerSettingType == 1){
+//            NewAddTimer();
+//        }else if(TimerSettingType == 2){
+//            EditTimer();
+//        }
     }
 
     protected void NewAddTimer(){
-
+        Log.d("NewAddTimer", "test====================");
+        everyDay_dataBase_management.setInsert();
     }
 
     protected void EditTimer(){
@@ -458,6 +515,8 @@ class EveryDay_TimerSettings{
 class DayOfTheWeek_TimerSettings{
     Context context;
     TimerSettings ActivityView;
+
+    DayOfTheWeek_Adapter dayOfTheWeek_adapter;
 
     int TimerSettingType;
 
@@ -473,22 +532,22 @@ class DayOfTheWeek_TimerSettings{
         ActivityView = ((TimerSettings) context);
         ActivityView.GridView_WeekSelectView.setVisibility(View.VISIBLE);
         String DayOfTheWeek_text[] = {"일", "월", "화", "수", "목", "금", "토"};
-        ActivityView.dayOfTheWeek_adapter = new DayOfTheWeek_Adapter();
+        dayOfTheWeek_adapter = new DayOfTheWeek_Adapter();
 
         for(String WeekText : DayOfTheWeek_text) {
             DayOfTheWeek_Item dayOfTheWeekItem = new DayOfTheWeek_Item(false, WeekText, 0xFF000000);
-            ActivityView.dayOfTheWeek_adapter.addItem(dayOfTheWeekItem);
+            dayOfTheWeek_adapter.addItem(dayOfTheWeekItem);
         }
 
         ActivityView.GridView_WeekSelectView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 for(int RadioBtn = 0; RadioBtn < DayOfTheWeek_text.length; RadioBtn++){
-                    if(RadioBtn == i) ActivityView.dayOfTheWeek_adapter.setItem(RadioBtn, true);
-                    else ActivityView.dayOfTheWeek_adapter.setItem(RadioBtn, false);
+                    if(RadioBtn == i) dayOfTheWeek_adapter.setItem(RadioBtn, true);
+                    else dayOfTheWeek_adapter.setItem(RadioBtn, false);
                 }
 
-                ActivityView.GridView_WeekSelectView.setAdapter(ActivityView.dayOfTheWeek_adapter);
+                ActivityView.GridView_WeekSelectView.setAdapter(dayOfTheWeek_adapter);
             }
         });
 
@@ -498,13 +557,13 @@ class DayOfTheWeek_TimerSettings{
             EditTimer();
         }
 
-        ActivityView.GridView_WeekSelectView.setAdapter(ActivityView.dayOfTheWeek_adapter);
+        ActivityView.GridView_WeekSelectView.setAdapter(dayOfTheWeek_adapter);
 
     }
 
     protected void NewAddTimer(){
         DayOfTheWeek = ActivityView.calendar.get(Calendar.DAY_OF_WEEK) - 1;//초기 설정시 현재 요일로
-        ActivityView.dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
+        dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
     }
 
     protected void EditTimer(){
@@ -572,4 +631,7 @@ class Date_TimerSettings{
 
         datePickerDialog.show();
     }
+
+
+
 }
