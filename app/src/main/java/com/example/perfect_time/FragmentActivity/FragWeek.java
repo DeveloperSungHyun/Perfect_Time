@@ -17,6 +17,9 @@ import com.example.perfect_time.R;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListAdapter;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
 import com.example.perfect_time.Activity.TimerSettings;
+import com.example.perfect_time.RoomDataBase.DayOfTheWeek.DB_Week;
+import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
+import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 
 import java.util.ArrayList;
 
@@ -31,6 +34,8 @@ public class FragWeek extends Fragment {
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
 
     ArrayList<RecyclerView_ListItem> ListItem;      //리사이클러뷰 아이템 리스트데이터
+
+    Week_DataBase_Management week_dataBase_management;
 
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
 
@@ -67,17 +72,18 @@ public class FragWeek extends Fragment {
 
         ListItem.clear();//아이템 초기화
 
-        recyclerView_listItem =
-                new RecyclerView_ListItem(ViewType, Timer_Activate, Important, Name, Memo, Time_Hour,
-                        Time_Minute, Sound_Activate, Vibration_Activate, Popup_Activate, FragmentType.fragWeek);
+        for(DB_Week data : week_dataBase_management.getData()){
 
-        ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+            if(data.isTimer_Activate()) ViewType = 0;
+            else ViewType = 1;
 
-        recyclerView_listItem =
-                new RecyclerView_ListItem(ViewType, Timer_Activate, Important, Name, Memo, Time_Hour,
-                        Time_Minute, Sound_Activate, Vibration_Activate, Popup_Activate, FragmentType.fragWeek);
+            recyclerView_listItem =
+                    new RecyclerView_ListItem(ViewType, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
+                            data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(), FragmentType.fragWeek);
 
-        ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+            ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+        }
+
         recyclerView_listAdapter.notifyDataSetChanged();//
     }
 
@@ -86,6 +92,8 @@ public class FragWeek extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_week_view,container, false);
         IdMapping(view);
+
+        week_dataBase_management = new Week_DataBase_Management(getContext());
 
         linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -35,10 +35,12 @@ import com.example.perfect_time.DayOfTheWeek_Adapter;
 import com.example.perfect_time.DayOfTheWeek_Item;
 import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.R;
+import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
 import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
+import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.Time24_to_12Hour;
 
@@ -237,10 +239,30 @@ public class TimerSettings extends Activity {
                     Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();
                 }
 
-                if(TimerSettingType == 1){//데이터 추가
-                    everyDay_timerSettings.NewAddTimer();
-                }else if(TimerSettingType == 2){//데이터 변경
-                    everyDay_timerSettings.EditTimer();
+                switch (TimerViewType){
+                    case FragmentType.fragEveryDay:{
+                        if(TimerSettingType == 1){//데이터 추가
+                            everyDay_timerSettings.NewAddTimer();
+                        }else if(TimerSettingType == 2){//데이터 변경
+                            everyDay_timerSettings.EditTimer();
+                        }
+                        break;
+                    }
+                    case FragmentType.fragWeek:{
+                        if(TimerSettingType == 1){//데이터 추가
+                            dayOfTheWeek_timerSettings.NewAddTimer();
+                        }else if(TimerSettingType == 2){//데이터 변경
+                            dayOfTheWeek_timerSettings.EditTimer();
+                        }
+                        break;
+                    }
+                    case FragmentType.fragDate:{
+                        if(TimerSettingType == 1){//데이터 추가
+                            date_timerSettings.NewAddTimer();
+                        }else if(TimerSettingType == 2){//데이터 변경
+                            date_timerSettings.EditTimer();
+                        }
+                    }
                 }
             }
         });
@@ -534,7 +556,11 @@ class DayOfTheWeek_TimerSettings{
     Context context;
     TimerSettings ActivityView;
 
+    SettingValue settingValue;
+
     DayOfTheWeek_Adapter dayOfTheWeek_adapter;
+
+    Week_DataBase_Management week_dataBase_management;
 
     int TimerSettingType;
 
@@ -552,10 +578,18 @@ class DayOfTheWeek_TimerSettings{
         String DayOfTheWeek_text[] = {"일", "월", "화", "수", "목", "금", "토"};
         dayOfTheWeek_adapter = new DayOfTheWeek_Adapter();
 
+        settingValue = new SettingValue();
+
+        week_dataBase_management = new Week_DataBase_Management(context);
+
+
         for(String WeekText : DayOfTheWeek_text) {
             DayOfTheWeek_Item dayOfTheWeekItem = new DayOfTheWeek_Item(false, WeekText, 0xFF000000);
             dayOfTheWeek_adapter.addItem(dayOfTheWeekItem);
         }
+
+        DayOfTheWeek = ActivityView.calendar.get(Calendar.DAY_OF_WEEK) - 1;//초기 설정시 현재 요일로
+        dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
 
         ActivityView.GridView_WeekSelectView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -569,19 +603,19 @@ class DayOfTheWeek_TimerSettings{
             }
         });
 
-        if(TimerSettingType == 1){
-            NewAddTimer();
-        }else if(TimerSettingType == 2){
-            EditTimer();
-        }
+//        if(TimerSettingType == 1){
+//            NewAddTimer();
+//        }else if(TimerSettingType == 2){
+//            EditTimer();
+//        }
 
         ActivityView.GridView_WeekSelectView.setAdapter(dayOfTheWeek_adapter);
 
     }
 
     protected void NewAddTimer(){
-        DayOfTheWeek = ActivityView.calendar.get(Calendar.DAY_OF_WEEK) - 1;//초기 설정시 현재 요일로
-        dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
+
+        week_dataBase_management.setInsert(settingValue);
     }
 
     protected void EditTimer(){
@@ -592,6 +626,10 @@ class DayOfTheWeek_TimerSettings{
 class Date_TimerSettings{
     Context context;
     TimerSettings ActivityView;
+
+    SettingValue settingValue;
+
+    Date_DataBase_Management date_dataBase_management;
 
     int TimerSettingType;
 
@@ -606,11 +644,21 @@ class Date_TimerSettings{
     private void CommonLogic(){
         ActivityView = ((TimerSettings) context);
 
-        if(TimerSettingType == 1){
-            NewAddTimer();
-        }else if(TimerSettingType == 2){
-            EditTimer();
-        }
+        settingValue = new SettingValue();
+
+        date_dataBase_management = new Date_DataBase_Management(context);
+
+        y = ActivityView.calendar.get(Calendar.YEAR);
+        m = ActivityView.calendar.get(Calendar.MONDAY) + 1;
+        d = ActivityView.calendar.get(Calendar.DATE);
+
+        ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
+
+//        if(TimerSettingType == 1){
+//            NewAddTimer();
+//        }else if(TimerSettingType == 2){
+//            EditTimer();
+//        }
 
         ActivityView.TextView_Date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -623,11 +671,8 @@ class Date_TimerSettings{
     }
 
     protected void NewAddTimer(){
-        y = ActivityView.calendar.get(Calendar.YEAR);
-        m = ActivityView.calendar.get(Calendar.MONDAY) + 1;
-        d = ActivityView.calendar.get(Calendar.DATE);
 
-        ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
+        date_dataBase_management.setInsert(settingValue);
     }
 
     protected void EditTimer(){
