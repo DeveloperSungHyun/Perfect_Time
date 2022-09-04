@@ -38,15 +38,15 @@ public class Date_DataBase_Management {
 
     }
 
-    public void setInsert(SettingValue settingValue){
+    public void setInsert(SettingValue settingValue, int y, int m, int d){
 
 
         db_date.setTimer_Activate(settingValue.isTimer_Activate());
         db_date.setImportant(settingValue.isImportant());
 
-        db_date.setDate_Year(2022);
-        db_date.setDate_Month(1);
-        db_date.setDate_Day(13);
+        db_date.setDate_Year(y);
+        db_date.setDate_Month(m);
+        db_date.setDate_Day(d);
 
         db_date.setName(settingValue.getName());
         db_date.setMemo(settingValue.getMemo());

@@ -36,24 +36,33 @@
                 android:visibility="gone"/>
 
 
-            <ImageView
-                android:id="@+id/ImageView_important"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/star_icon" />
+                android:orientation="horizontal"
+                android:gravity="left">
 
-<!--            <TextView-->
-<!--                android:id="@+id/TextView_Day"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="right"-->
-<!--                android:text="매일"-->
-<!--                android:textSize="17dp"-->
-<!--                android:textColor="#5B000000"-->
-<!--                android:layout_toLeftOf="@+id/ImageView_important"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                />-->
+                <TextView
+                    android:id="@+id/TextView_Day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="매일"
+                    android:textSize="17dp"
+                    android:textColor="#656565"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/ImageView_important"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star_icon"
+                    android:layout_marginRight="5dp"/>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

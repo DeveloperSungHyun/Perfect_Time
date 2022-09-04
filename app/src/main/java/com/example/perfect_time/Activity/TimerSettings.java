@@ -234,36 +234,39 @@ public class TimerSettings extends Activity {
                 settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
 
                 if(!settingValue.getName().equals("")){
+
+                    switch (TimerViewType){
+                        case FragmentType.fragEveryDay:{
+                            if(TimerSettingType == 1){//데이터 추가
+                                everyDay_timerSettings.NewAddTimer();
+                            }else if(TimerSettingType == 2){//데이터 변경
+                                everyDay_timerSettings.EditTimer();
+                            }
+                            break;
+                        }
+                        case FragmentType.fragWeek:{
+                            if(TimerSettingType == 1){//데이터 추가
+                                dayOfTheWeek_timerSettings.NewAddTimer();
+                            }else if(TimerSettingType == 2){//데이터 변경
+                                dayOfTheWeek_timerSettings.EditTimer();
+                            }
+                            break;
+                        }
+                        case FragmentType.fragDate:{
+                            if(TimerSettingType == 1){//데이터 추가
+                                date_timerSettings.NewAddTimer();
+                            }else if(TimerSettingType == 2){//데이터 변경
+                                date_timerSettings.EditTimer();
+                            }
+                        }
+                    }
+
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();
+
                 }
 
-                switch (TimerViewType){
-                    case FragmentType.fragEveryDay:{
-                        if(TimerSettingType == 1){//데이터 추가
-                            everyDay_timerSettings.NewAddTimer();
-                        }else if(TimerSettingType == 2){//데이터 변경
-                            everyDay_timerSettings.EditTimer();
-                        }
-                        break;
-                    }
-                    case FragmentType.fragWeek:{
-                        if(TimerSettingType == 1){//데이터 추가
-                            dayOfTheWeek_timerSettings.NewAddTimer();
-                        }else if(TimerSettingType == 2){//데이터 변경
-                            dayOfTheWeek_timerSettings.EditTimer();
-                        }
-                        break;
-                    }
-                    case FragmentType.fragDate:{
-                        if(TimerSettingType == 1){//데이터 추가
-                            date_timerSettings.NewAddTimer();
-                        }else if(TimerSettingType == 2){//데이터 변경
-                            date_timerSettings.EditTimer();
-                        }
-                    }
-                }
             }
         });
 
@@ -594,8 +597,9 @@ class DayOfTheWeek_TimerSettings{
         ActivityView.GridView_WeekSelectView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DayOfTheWeek = i;
                 for(int RadioBtn = 0; RadioBtn < DayOfTheWeek_text.length; RadioBtn++){
-                    if(RadioBtn == i) dayOfTheWeek_adapter.setItem(RadioBtn, true);
+                    if(RadioBtn == DayOfTheWeek) dayOfTheWeek_adapter.setItem(RadioBtn, true);
                     else dayOfTheWeek_adapter.setItem(RadioBtn, false);
                 }
 
@@ -615,7 +619,7 @@ class DayOfTheWeek_TimerSettings{
 
     protected void NewAddTimer(){
 
-        week_dataBase_management.setInsert(settingValue);
+        week_dataBase_management.setInsert(settingValue, DayOfTheWeek);
     }
 
     protected void EditTimer(){
@@ -672,7 +676,7 @@ class Date_TimerSettings{
 
     protected void NewAddTimer(){
 
-        date_dataBase_management.setInsert(settingValue);
+        date_dataBase_management.setInsert(settingValue, y, m, d);
     }
 
     protected void EditTimer(){

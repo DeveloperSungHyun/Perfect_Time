@@ -56,6 +56,8 @@ public class FragDate extends Fragment {
     private boolean Vibration_Activate = true;      //진동알림 활성화 유무
     private boolean Popup_Activate = true;          //팝업알림 활성화 유무
 
+    private String DayText;
+
     public static FragDate newInstance(){
         FragDate fragDate = new FragDate();
 
@@ -80,9 +82,11 @@ public class FragDate extends Fragment {
             if(data.isTimer_Activate()) ViewType = 0;
             else ViewType = 1;
 
+            DayText = data.getDate_Year() + " / " + data.getDate_Month() + " / " + data.getDate_Day();
+
             recyclerView_listItem =
                     new RecyclerView_ListItem(ViewType, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
-                            data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(), FragmentType.fragDate);
+                            data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(), DayText, 0xFF000000, FragmentType.fragDate);
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
         }

@@ -40,13 +40,13 @@ public class Week_DataBase_Management {
 
     }
 
-    public void setInsert(SettingValue settingValue){
+    public void setInsert(SettingValue settingValue, int DayOfTheWeek){
 
 
         db_week.setTimer_Activate(settingValue.isTimer_Activate());
         db_week.setImportant(settingValue.isImportant());
 
-        db_week.setDayOfTheWeek(0);
+        db_week.setDayOfTheWeek(DayOfTheWeek);
 
         db_week.setName(settingValue.getName());
         db_week.setMemo(settingValue.getMemo());

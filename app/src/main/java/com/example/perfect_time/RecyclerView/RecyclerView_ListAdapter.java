@@ -1,13 +1,17 @@
 package com.example.perfect_time.RecyclerView;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.perfect_time.R;
@@ -68,11 +72,17 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     private void ActivateView(ActivateListView holder, int position){
         RecyclerView_ListItem getItem = listItems.get(position);
 
+        holder.CardView_List.setOutlineSpotShadowColor(getItem.getDayTextColor());
+
         if(getItem.isImportant()) holder.ImageView_important.setVisibility(View.VISIBLE);
         else holder.ImageView_important.setVisibility(View.GONE);
+
+        holder.TextView_Day.setText(getItem.getDayText());
+        holder.TextView_Day.setTextColor(getItem.getDayTextColor());
 
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
@@ -87,6 +97,17 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         if(getItem.isPopup_Activate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
         else holder.ImageView_popup.setVisibility(View.GONE);
+
+        holder.RelativeLayout_BackGround.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                listItems.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+
+                return false;
+            }
+        });
 
     }
 
@@ -113,7 +134,12 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public class ActivateListView extends RecyclerView.ViewHolder{//활성화 뷰
+        CardView CardView_List;
+
+        RelativeLayout RelativeLayout_BackGround;
         ImageView ImageView_important;//중요알림 표시 아이콘
+
+        TextView TextView_Day;
 
         TextView TextView_Name;//알람 이름
         TextView TextView_Memo;//알람 메모
@@ -128,7 +154,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         public ActivateListView(@NonNull View itemView) {
             super(itemView);
 
+            CardView_List = itemView.findViewById(R.id.CardView_List);
+
+            RelativeLayout_BackGround = itemView.findViewById(R.id.RelativeLayout_BackGround);
+
             ImageView_important = itemView.findViewById(R.id.ImageView_important);
+
+            TextView_Day = itemView.findViewById(R.id.TextView_Day);
 
             TextView_Name = itemView.findViewById(R.id.TextView_Name);
             TextView_Memo = itemView.findViewById(R.id.TextView_Memo);

@@ -54,6 +54,9 @@ public class FragWeek extends Fragment {
     private boolean Vibration_Activate = true;      //진동알림 활성화 유무
     private boolean Popup_Activate = true;          //팝업알림 활성화 유무
 
+    String WeekText[] = {"일", "월", "화", "수", "목", "금", "토"};
+    int DayTextColor;
+
     public static FragWeek newInstance(){
         FragWeek fragWeek = new FragWeek();
 
@@ -77,9 +80,16 @@ public class FragWeek extends Fragment {
             if(data.isTimer_Activate()) ViewType = 0;
             else ViewType = 1;
 
+            if(data.getDayOfTheWeek() == 0){
+                DayTextColor = 0xFFFF0000;
+            }else if(data.getDayOfTheWeek() == 6){
+                DayTextColor = 0xFF0000FF;
+            }else{
+                DayTextColor = 0xFF000000;
+            }
             recyclerView_listItem =
                     new RecyclerView_ListItem(ViewType, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
-                            data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(), FragmentType.fragWeek);
+                            data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(), WeekText[data.getDayOfTheWeek()],DayTextColor, FragmentType.fragWeek);
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
         }

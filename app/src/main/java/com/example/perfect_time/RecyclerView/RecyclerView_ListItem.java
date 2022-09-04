@@ -7,6 +7,9 @@ public class RecyclerView_ListItem {
 
     private boolean Important;              //중요알람 표시
 
+    private String DayText;
+    private int DayTextColor;
+
     private String Name;                    //알람 이름
     private String Memo;                    //알람 메모
 
@@ -21,11 +24,13 @@ public class RecyclerView_ListItem {
 
     public RecyclerView_ListItem
             (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
-             int time_Minute, boolean sound_Activate, boolean vibration_Activate, boolean popup_Activate, int fragment_Type) {
+             int time_Minute, boolean sound_Activate, boolean vibration_Activate, boolean popup_Activate, String dayText, int dayTextColor, int fragment_Type) {
 
         ViewType = viewType;
         Timer_Activate = timer_Activate;
         Important = important;
+        DayText = dayText;
+        DayTextColor = dayTextColor;
         Name = name;
         Memo = memo;
         Time_Hour = time_Hour;
@@ -58,6 +63,22 @@ public class RecyclerView_ListItem {
 
     public void setImportant(boolean important) {
         Important = important;
+    }
+
+    public String getDayText() {
+        return DayText;
+    }
+
+    public void setDayText(String dayText) {
+        DayText = dayText;
+    }
+
+    public int getDayTextColor() {
+        return DayTextColor;
+    }
+
+    public void setDayTextColor(int dayTextColor) {
+        DayTextColor = dayTextColor;
     }
 
     public String getName() {

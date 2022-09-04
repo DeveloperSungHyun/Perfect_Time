@@ -22,7 +22,7 @@ public interface WeekDao {
     @Delete
     void setDelete(DB_Week db_week);
 
-    @Query("SELECT * FROM DB_Week ORDER BY Time_Hour, Time_Minute, Name")
+    @Query("SELECT * FROM DB_Week ORDER BY dayOfTheWeek, Time_Hour, Time_Minute, Name")
     List<DB_Week> getWeek();
 
 }
