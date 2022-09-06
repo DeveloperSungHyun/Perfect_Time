@@ -1,7 +1,11 @@
 package com.example.perfect_time.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +18,12 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.perfect_time.Activity.TimerSettings;
+import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.R;
+import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
+import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
+import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 
 import java.util.ArrayList;
 
@@ -60,6 +69,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         return listItems.get(position).getViewType();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -102,8 +112,87 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public boolean onLongClick(View view) {
 
-                listItems.remove(holder.getAdapterPosition());
-                notifyItemRemoved(holder.getAdapterPosition());
+                String item[] = {"수정하기", "알림끄기", "삭제하기", "취소"};
+
+                AlertDialog.Builder builder;
+
+                builder = new AlertDialog.Builder(view.getContext());
+
+                builder.setItems(item, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0:{
+
+                                if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                                    intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
+
+                                    intent.putExtra("ItemID", holder.getAdapterPosition());
+                                    Log.d("인텐트 데이터 출력", "ItemID " + holder.getAdapterPosition());
+
+                                    view.getContext().startActivity(intent);
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragWeek){
+                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                                    intent.putExtra("TimerViewType", FragmentType.fragWeek);
+
+                                    intent.putExtra("ItemID", holder.getAdapterPosition());
+
+                                    view.getContext().startActivity(intent);
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragDate){
+                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                                    intent.putExtra("TimerViewType", FragmentType.fragDate);
+
+                                    intent.putExtra("ItemID", holder.getAdapterPosition());
+
+                                    view.getContext().startActivity(intent);
+                                }
+
+                                break;
+                            }
+                            case 1:{
+
+                                Log.d("다이얼 로그", "알림끄기");
+                                break;
+                            }
+                            case 2:{
+
+                                if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+                                    EveryDay_DataBase_Management everyDay_dataBase_management =
+                                            new EveryDay_DataBase_Management(view.getContext());
+
+                                    everyDay_dataBase_management.setDelete(holder.getAdapterPosition());
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragWeek){
+                                    Week_DataBase_Management week_dataBase_management =
+                                            new Week_DataBase_Management(view.getContext());
+
+                                    week_dataBase_management.setDelete(holder.getAdapterPosition());
+
+                                    Log.d("=====================", "삭제");
+
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragDate){
+                                    Date_DataBase_Management date_dataBase_management =
+                                            new Date_DataBase_Management(view.getContext());
+
+                                    date_dataBase_management.setDelete(holder.getAdapterPosition());
+
+                                }
+
+                                listItems.remove(holder.getAdapterPosition());
+                                notifyItemRemoved(holder.getAdapterPosition());
+                            }
+                        }
+                    }
+                });
+
+                builder.show();
 
                 return false;
             }

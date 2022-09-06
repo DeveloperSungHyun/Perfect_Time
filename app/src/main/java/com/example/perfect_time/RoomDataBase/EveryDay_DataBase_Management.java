@@ -60,6 +60,41 @@ public class EveryDay_DataBase_Management {
         everyDao.setInsert(db_everyDay);
     }
 
+    public void setUpData(int UpDataItem_ID, SettingValue settingValue){
+
+        db_everyDay.setId(everyDao.getEveryDay().get(UpDataItem_ID).getId());
+
+        db_everyDay.setTimer_Activate(settingValue.isTimer_Activate());
+        db_everyDay.setImportant(settingValue.isImportant());
+
+        db_everyDay.setName(settingValue.getName());
+        db_everyDay.setMemo(settingValue.getMemo());
+
+        db_everyDay.setTime_Hour(settingValue.getTime_Hour());
+        db_everyDay.setTime_Minute(settingValue.getTime_Minute());
+
+        db_everyDay.setSound_Activate(settingValue.isSound_Activate());
+        db_everyDay.setSound_volume(settingValue.getSound_volume());
+
+        db_everyDay.setVibration_Activate(settingValue.isVibration_Activate());
+        db_everyDay.setVibration_volume(settingValue.getVibration_volume());
+
+        db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
+
+        db_everyDay.setBeforehand(settingValue.isBeforehand());
+        db_everyDay.setBeforehandTime(settingValue.getBeforehandTime());
+
+        db_everyDay.setAutoOffTime(settingValue.getAutoOffTime());
+
+        everyDao.setUpdate(db_everyDay);
+    }
+
+    public void setDelete(int DeleteItem_ID){
+        db_everyDay.setId(everyDao.getEveryDay().get(DeleteItem_ID).getId());
+        everyDao.setDelete(db_everyDay);
+    }
+
+
     public List<DB_EveryDay> getData(){
 
         List<DB_EveryDay> dbEveryDayList;
@@ -69,5 +104,4 @@ public class EveryDay_DataBase_Management {
 
         return dbEveryDayList;
     }
-
 }

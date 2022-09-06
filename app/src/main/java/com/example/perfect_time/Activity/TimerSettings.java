@@ -35,7 +35,9 @@ import com.example.perfect_time.DayOfTheWeek_Adapter;
 import com.example.perfect_time.DayOfTheWeek_Item;
 import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.R;
+import com.example.perfect_time.RoomDataBase.Date.DB_Date;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
+import com.example.perfect_time.RoomDataBase.DayOfTheWeek.DB_Week;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
@@ -191,6 +193,7 @@ public class TimerSettings extends Activity {
         TimerViewType = getIntent().getIntExtra("TimerViewType", 0);//받은 데이터 알람타입
         TimerSettingType = getIntent().getIntExtra("TimerSettingType", 0);//1: 데이터 추가, 2: 데이터 변경
 
+
         if(TimerSettingType == 1){
             NewTimerCommonLogic();//모든 알람이 새로 추가할 시 동일하게  초기값 설정
         }
@@ -240,7 +243,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 everyDay_timerSettings.NewAddTimer();
                             }else if(TimerSettingType == 2){//데이터 변경
-                                everyDay_timerSettings.EditTimer();
+                                everyDay_timerSettings.TimerUpData();
                             }
                             break;
                         }
@@ -248,7 +251,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 dayOfTheWeek_timerSettings.NewAddTimer();
                             }else if(TimerSettingType == 2){//데이터 변경
-                                dayOfTheWeek_timerSettings.EditTimer();
+                                dayOfTheWeek_timerSettings.TimerUpData();
                             }
                             break;
                         }
@@ -256,7 +259,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 date_timerSettings.NewAddTimer();
                             }else if(TimerSettingType == 2){//데이터 변경
-                                date_timerSettings.EditTimer();
+                                date_timerSettings.TimerUpData();
                             }
                         }
                     }
@@ -478,7 +481,7 @@ public class TimerSettings extends Activity {
                 everyDay_timerSettings = new EveryDay_TimerSettings(this, TimerSettingType);
 
                 if(TimerSettingType == 2){
-                    everyDay_timerSettings.EditTimer();
+                    everyDay_timerSettings.getTimer();
                 }
                 break;
             }
@@ -486,7 +489,7 @@ public class TimerSettings extends Activity {
                 dayOfTheWeek_timerSettings = new DayOfTheWeek_TimerSettings(this, TimerSettingType);
 
                 if(TimerSettingType == 2){
-                    dayOfTheWeek_timerSettings.EditTimer();
+                    dayOfTheWeek_timerSettings.getTimer();
                 }
                 break;
             }
@@ -494,7 +497,7 @@ public class TimerSettings extends Activity {
                 date_timerSettings = new Date_TimerSettings(this, TimerSettingType);
 
                 if(TimerSettingType == 2){
-                    date_timerSettings.EditTimer();
+                    date_timerSettings.getTimer();
                 }
                 break;
             }
@@ -544,14 +547,42 @@ class EveryDay_TimerSettings{
         everyDay_dataBase_management.setInsert(settingValue);
     }
 
-    protected void EditTimer(){
+    protected void getTimer(){
         List<DB_EveryDay> db_everyDayList;
         DB_EveryDay db_everyDay;
         db_everyDayList = everyDay_dataBase_management.getData();
 
-        db_everyDay = db_everyDayList.get(0);
+        db_everyDay = db_everyDayList.get(ActivityView.getIntent().getIntExtra("ItemID", 0));//ActivityView.getIntent().getIntExtra("ItemID", 0)
+        Log.d("인텐트 데이터 입력", "ItemID " + ActivityView.getIntent().getIntExtra("ItemID", 0));
 
+        settingValue.setTimer_Activate(db_everyDay.isTimer_Activate());
+
+        settingValue.setTime_Hour(db_everyDay.getTime_Hour());
+        settingValue.setTime_Minute(db_everyDay.getTime_Minute());
+
+        settingValue.setName(db_everyDay.getName());
         settingValue.setMemo(db_everyDay.getMemo());
+
+        settingValue.setImportant(db_everyDay.isImportant());
+
+        settingValue.setSound_Activate(db_everyDay.isSound_Activate());
+        settingValue.setSound_volume(db_everyDay.getSound_volume());
+
+        settingValue.setVibration_Activate(db_everyDay.isVibration_Activate());
+        settingValue.setVibration_volume(db_everyDay.getVibration_volume());
+
+        settingValue.setPopup_Activate(db_everyDay.isPopup_Activate());
+
+        settingValue.setBeforehand(db_everyDay.isBeforehand());
+        settingValue.setBeforehandTime(db_everyDay.getBeforehandTime());
+
+        settingValue.setAutoOffTime(db_everyDay.getAutoOffTime());
+
+    }
+
+    protected void TimerUpData(){
+        everyDay_dataBase_management.setUpData(ActivityView.getIntent().getIntExtra("ItemID", 0), settingValue);
+        Log.d("데이터 업데이트", "ItemID " + ActivityView.getIntent().getIntExtra("ItemID", 0));
     }
 }
 
@@ -590,7 +621,6 @@ class DayOfTheWeek_TimerSettings{
             DayOfTheWeek_Item dayOfTheWeekItem = new DayOfTheWeek_Item(false, WeekText, 0xFF000000);
             dayOfTheWeek_adapter.addItem(dayOfTheWeekItem);
         }
-
         DayOfTheWeek = ActivityView.calendar.get(Calendar.DAY_OF_WEEK) - 1;//초기 설정시 현재 요일로
         dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
 
@@ -622,8 +652,43 @@ class DayOfTheWeek_TimerSettings{
         week_dataBase_management.setInsert(settingValue, DayOfTheWeek);
     }
 
-    protected void EditTimer(){
+    protected void getTimer(){
+        List<DB_Week> db_weekList;
+        DB_Week db_week;
+        db_weekList = week_dataBase_management.getData();
 
+        db_week = db_weekList.get(ActivityView.getIntent().getIntExtra("ItemID", 0));//ActivityView.getIntent().getIntExtra("ItemID", 0)
+        Log.d("인텐트 데이터 입력", "ItemID " + ActivityView.getIntent().getIntExtra("ItemID", 0));
+
+        settingValue.setTimer_Activate(db_week.isTimer_Activate());
+
+        DayOfTheWeek = db_week.getDayOfTheWeek();
+        dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
+
+        settingValue.setTime_Hour(db_week.getTime_Hour());
+        settingValue.setTime_Minute(db_week.getTime_Minute());
+
+        settingValue.setName(db_week.getName());
+        settingValue.setMemo(db_week.getMemo());
+
+        settingValue.setImportant(db_week.isImportant());
+
+        settingValue.setSound_Activate(db_week.isSound_Activate());
+        settingValue.setSound_volume(db_week.getSound_volume());
+
+        settingValue.setVibration_Activate(db_week.isVibration_Activate());
+        settingValue.setVibration_volume(db_week.getVibration_volume());
+
+        settingValue.setPopup_Activate(db_week.isPopup_Activate());
+
+        settingValue.setBeforehand(db_week.isBeforehand());
+        settingValue.setBeforehandTime(db_week.getBeforehandTime());
+
+        settingValue.setAutoOffTime(db_week.getAutoOffTime());
+    }
+
+    protected void TimerUpData(){
+        week_dataBase_management.setUpData(ActivityView.getIntent().getIntExtra("ItemID", 0), settingValue, DayOfTheWeek);
     }
 }
 
@@ -679,9 +744,47 @@ class Date_TimerSettings{
         date_dataBase_management.setInsert(settingValue, y, m, d);
     }
 
-    protected void EditTimer(){
+    protected void getTimer(){
+        List<DB_Date> db_dateList;
+        DB_Date db_date;
+        db_dateList = date_dataBase_management.getData();
 
+        db_date = db_dateList.get(ActivityView.getIntent().getIntExtra("ItemID", 0));//ActivityView.getIntent().getIntExtra("ItemID", 0)
+        Log.d("인텐트 데이터 입력", "ItemID " + ActivityView.getIntent().getIntExtra("ItemID", 0));
+
+        settingValue.setTimer_Activate(db_date.isTimer_Activate());
+
+        settingValue.setTime_Hour(db_date.getTime_Hour());
+        settingValue.setTime_Minute(db_date.getTime_Minute());
+
+        y = db_date.getDate_Year();
+        m = db_date.getDate_Month();
+        d = db_date.getDate_Day();
+        ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
+
+        settingValue.setName(db_date.getName());
+        settingValue.setMemo(db_date.getMemo());
+
+        settingValue.setImportant(db_date.isImportant());
+
+        settingValue.setSound_Activate(db_date.isSound_Activate());
+        settingValue.setSound_volume(db_date.getSound_volume());
+
+        settingValue.setVibration_Activate(db_date.isVibration_Activate());
+        settingValue.setVibration_volume(db_date.getVibration_volume());
+
+        settingValue.setPopup_Activate(db_date.isPopup_Activate());
+
+        settingValue.setBeforehand(db_date.isBeforehand());
+        settingValue.setBeforehandTime(db_date.getBeforehandTime());
+
+        settingValue.setAutoOffTime(db_date.getAutoOffTime());
     }
+
+    protected void TimerUpData(){
+        date_dataBase_management.setUpData(ActivityView.getIntent().getIntExtra("ItemID", 0), settingValue, y, m, d);
+    }
+
 
     protected void showDate(){
         DatePickerDialog datePickerDialog = new DatePickerDialog(this.ActivityView, new DatePickerDialog.OnDateSetListener() {
@@ -693,7 +796,7 @@ class Date_TimerSettings{
 
                 ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
             }
-        },y, m, d);
+        },y, m - 1, d);
 
 
         datePickerDialog.show();

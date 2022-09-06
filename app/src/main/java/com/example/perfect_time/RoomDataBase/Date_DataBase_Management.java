@@ -70,6 +70,43 @@ public class Date_DataBase_Management {
         dateDao.setInsert(db_date);
     }
 
+    public void setDelete(int DeleteItem_ID){
+        db_date.setId(dateDao.getDate().get(DeleteItem_ID).getId());
+        dateDao.setDelete(db_date);
+    }
+
+    public void setUpData(int UpDataItem_ID, SettingValue settingValue, int y, int m, int d){
+        db_date.setId(dateDao.getDate().get(UpDataItem_ID).getId());
+
+        db_date.setTimer_Activate(settingValue.isTimer_Activate());
+        db_date.setImportant(settingValue.isImportant());
+
+        db_date.setDate_Year(y);
+        db_date.setDate_Month(m);
+        db_date.setDate_Day(d);
+
+        db_date.setName(settingValue.getName());
+        db_date.setMemo(settingValue.getMemo());
+
+        db_date.setTime_Hour(settingValue.getTime_Hour());
+        db_date.setTime_Minute(settingValue.getTime_Minute());
+
+        db_date.setSound_Activate(settingValue.isSound_Activate());
+        db_date.setSound_volume(settingValue.getSound_volume());
+
+        db_date.setVibration_Activate(settingValue.isVibration_Activate());
+        db_date.setVibration_volume(settingValue.getVibration_volume());
+
+        db_date.setPopup_Activate(settingValue.isPopup_Activate());
+
+        db_date.setBeforehand(settingValue.isBeforehand());
+        db_date.setBeforehandTime(settingValue.getBeforehandTime());
+
+        db_date.setAutoOffTime(settingValue.getAutoOffTime());
+
+        dateDao.setUpdate(db_date);
+    }
+
     public List<DB_Date> getData(){
 
         List<DB_Date> dbDateList;
