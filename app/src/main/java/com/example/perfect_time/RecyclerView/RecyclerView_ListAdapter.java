@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -24,6 +26,7 @@ import com.example.perfect_time.R;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
+import com.example.perfect_time.SettingValue;
 
 import java.util.ArrayList;
 
@@ -88,8 +91,18 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         holder.CardView_List.setOutlineSpotShadowColor(getItem.getDayTextColor());
 
-        if(getItem.isImportant()) holder.ImageView_important.setVisibility(View.VISIBLE);
-        else holder.ImageView_important.setVisibility(View.GONE);
+        if(getItem.isTimer_Activate()){
+            holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+        }else{
+            holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+        }
+
+        if(getItem.isImportant()){
+            holder.ImageView_important.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.ImageView_important.setVisibility(View.GONE);
+        }
 
         holder.TextView_Day.setText(getItem.getDayText());
         holder.TextView_Day.setTextColor(getItem.getDayTextColor());
@@ -119,6 +132,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                 builder = new AlertDialog.Builder(view.getContext());
 
                 builder.setItems(item, new DialogInterface.OnClickListener() {
+                    String ToastText = null;
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i){
@@ -157,6 +171,52 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                             }
                             case 1:{
 
+                                if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+                                    EveryDay_DataBase_Management everyDay_dataBase_management =
+                                            new EveryDay_DataBase_Management(view.getContext());
+
+                                    if(everyDay_dataBase_management.getData().get(position).isTimer_Activate()){
+                                        holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+                                        everyDay_dataBase_management.setTimeOnOff(position, false);
+                                        ToastText = "알림이 꺼졌습니다.";
+                                    }else{
+                                        holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+                                        everyDay_dataBase_management.setTimeOnOff(position, true);
+                                        ToastText = "알림이 켜졌습니다.";
+                                    }
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragWeek){
+                                    Week_DataBase_Management week_dataBase_management =
+                                            new Week_DataBase_Management(view.getContext());
+
+                                    if(week_dataBase_management.getData().get(position).isTimer_Activate()){
+                                        holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+                                        week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), false);
+                                        ToastText = "알림이 꺼졌습니다.";
+                                    }else{
+                                        holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+                                        week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
+                                        ToastText = "알림이 켜졌습니다.";
+                                    }
+
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragDate){
+                                    Date_DataBase_Management date_dataBase_management =
+                                            new Date_DataBase_Management(view.getContext());
+
+
+                                    if(date_dataBase_management.getData().get(position).isTimer_Activate()){
+                                        holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+                                        date_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), false);
+                                        ToastText = "알림이 꺼졌습니다.";
+                                    }else{
+                                        holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+                                        date_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
+                                        ToastText = "알림이 켜졌습니다.";
+                                    }
+
+                                }
+                                Toast.makeText(view.getContext(), ToastText, Toast.LENGTH_SHORT).show();
                                 Log.d("다이얼 로그", "알림끄기");
                                 break;
                             }
@@ -174,8 +234,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                                     week_dataBase_management.setDelete(holder.getAdapterPosition());
 
-                                    Log.d("=====================", "삭제");
-
                                 }
                                 if(getItem.getFragmentType() == FragmentType.fragDate){
                                     Date_DataBase_Management date_dataBase_management =
@@ -187,6 +245,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                                 listItems.remove(holder.getAdapterPosition());
                                 notifyItemRemoved(holder.getAdapterPosition());
+
+                                Toast.makeText(view.getContext(), "알람이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

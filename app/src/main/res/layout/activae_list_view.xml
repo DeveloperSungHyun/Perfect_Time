@@ -16,6 +16,7 @@
         card_view:cardCornerRadius="15dp"
         card_view:cardElevation="4dp"
         android:outlineSpotShadowColor="#CC0000"
+        android:backgroundTint="#D6D6D6"
         >
 
         <RelativeLayout

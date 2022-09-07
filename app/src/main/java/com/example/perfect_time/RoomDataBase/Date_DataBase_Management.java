@@ -107,6 +107,37 @@ public class Date_DataBase_Management {
         dateDao.setUpdate(db_date);
     }
 
+    public void setTimeOnOff(int UpDataItem_ID, boolean Activate){
+
+        int DataId = UpDataItem_ID;
+
+        db_date.setId(dateDao.getDate().get(UpDataItem_ID).getId());
+        db_date.setTimer_Activate(Activate);
+
+        db_date.setImportant(getData().get(DataId).isImportant());
+
+        db_date.setName(getData().get(DataId).getName());
+        db_date.setMemo(getData().get(DataId).getMemo());
+
+        db_date.setTime_Hour(getData().get(DataId).getTime_Hour());
+        db_date.setTime_Minute(getData().get(DataId).getTime_Minute());
+
+        db_date.setSound_Activate(getData().get(DataId).isSound_Activate());
+        db_date.setSound_volume(getData().get(DataId).getSound_volume());
+
+        db_date.setVibration_Activate(getData().get(DataId).isVibration_Activate());
+        db_date.setVibration_volume(getData().get(DataId).getVibration_volume());
+
+        db_date.setPopup_Activate(getData().get(DataId).isPopup_Activate());
+
+        db_date.setBeforehand(getData().get(DataId).isBeforehand());
+        db_date.setBeforehandTime(getData().get(DataId).getBeforehandTime());
+
+        db_date.setAutoOffTime(getData().get(DataId).getAutoOffTime());
+
+        dateDao.setUpdate(db_date);
+    }
+
     public List<DB_Date> getData(){
 
         List<DB_Date> dbDateList;

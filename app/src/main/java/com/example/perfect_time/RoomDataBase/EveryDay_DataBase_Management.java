@@ -89,6 +89,37 @@ public class EveryDay_DataBase_Management {
         everyDao.setUpdate(db_everyDay);
     }
 
+    public void setTimeOnOff(int UpDataItem_ID, boolean Activate){
+
+        int DataId = UpDataItem_ID;
+
+        db_everyDay.setId(everyDao.getEveryDay().get(UpDataItem_ID).getId());
+        db_everyDay.setTimer_Activate(Activate);
+
+        db_everyDay.setImportant(getData().get(DataId).isImportant());
+
+        db_everyDay.setName(getData().get(DataId).getName());
+        db_everyDay.setMemo(getData().get(DataId).getMemo());
+
+        db_everyDay.setTime_Hour(getData().get(DataId).getTime_Hour());
+        db_everyDay.setTime_Minute(getData().get(DataId).getTime_Minute());
+
+        db_everyDay.setSound_Activate(getData().get(DataId).isSound_Activate());
+        db_everyDay.setSound_volume(getData().get(DataId).getSound_volume());
+
+        db_everyDay.setVibration_Activate(getData().get(DataId).isVibration_Activate());
+        db_everyDay.setVibration_volume(getData().get(DataId).getVibration_volume());
+
+        db_everyDay.setPopup_Activate(getData().get(DataId).isPopup_Activate());
+
+        db_everyDay.setBeforehand(getData().get(DataId).isBeforehand());
+        db_everyDay.setBeforehandTime(getData().get(DataId).getBeforehandTime());
+
+        db_everyDay.setAutoOffTime(getData().get(DataId).getAutoOffTime());
+
+        everyDao.setUpdate(db_everyDay);
+    }
+
     public void setDelete(int DeleteItem_ID){
         db_everyDay.setId(everyDao.getEveryDay().get(DeleteItem_ID).getId());
         everyDao.setDelete(db_everyDay);

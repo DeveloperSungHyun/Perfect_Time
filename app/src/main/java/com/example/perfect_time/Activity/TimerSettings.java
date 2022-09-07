@@ -621,8 +621,11 @@ class DayOfTheWeek_TimerSettings{
             DayOfTheWeek_Item dayOfTheWeekItem = new DayOfTheWeek_Item(false, WeekText, 0xFF000000);
             dayOfTheWeek_adapter.addItem(dayOfTheWeekItem);
         }
-        DayOfTheWeek = ActivityView.calendar.get(Calendar.DAY_OF_WEEK) - 1;//초기 설정시 현재 요일로
-        dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
+
+        if(TimerSettingType == 1){
+            DayOfTheWeek = ActivityView.calendar.get(Calendar.DAY_OF_WEEK) - 1;//초기 설정시 현재 요일로
+            dayOfTheWeek_adapter.setItem(DayOfTheWeek, true);
+        }
 
         ActivityView.GridView_WeekSelectView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

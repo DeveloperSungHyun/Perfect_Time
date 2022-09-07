@@ -115,4 +115,35 @@ public class Week_DataBase_Management {
 
         weekDao.setUpdate(db_week);
     }
+
+    public void setTimeOnOff(int UpDataItem_ID, boolean Activate){
+
+        int DataId = UpDataItem_ID;
+
+        db_week.setId(weekDao.getWeek().get(UpDataItem_ID).getId());
+        db_week.setTimer_Activate(Activate);
+
+        db_week.setImportant(getData().get(DataId).isImportant());
+
+        db_week.setName(getData().get(DataId).getName());
+        db_week.setMemo(getData().get(DataId).getMemo());
+
+        db_week.setTime_Hour(getData().get(DataId).getTime_Hour());
+        db_week.setTime_Minute(getData().get(DataId).getTime_Minute());
+
+        db_week.setSound_Activate(getData().get(DataId).isSound_Activate());
+        db_week.setSound_volume(getData().get(DataId).getSound_volume());
+
+        db_week.setVibration_Activate(getData().get(DataId).isVibration_Activate());
+        db_week.setVibration_volume(getData().get(DataId).getVibration_volume());
+
+        db_week.setPopup_Activate(getData().get(DataId).isPopup_Activate());
+
+        db_week.setBeforehand(getData().get(DataId).isBeforehand());
+        db_week.setBeforehandTime(getData().get(DataId).getBeforehandTime());
+
+        db_week.setAutoOffTime(getData().get(DataId).getAutoOffTime());
+
+        weekDao.setUpdate(db_week);
+    }
 }

@@ -78,7 +78,7 @@ public class FragEveryDay extends Fragment {
             else ViewType = 1;
 
             recyclerView_listItem =
-                    new RecyclerView_ListItem(ViewType, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
+                    new RecyclerView_ListItem(0, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
                             data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(),null, 0xFF000000, FragmentType.fragEveryDay);
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
