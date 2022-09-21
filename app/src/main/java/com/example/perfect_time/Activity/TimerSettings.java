@@ -191,7 +191,7 @@ public class TimerSettings extends Activity {
         nowTime_M = calendar.get(Calendar.MINUTE);//24시 형식
 
         TimerViewType = getIntent().getIntExtra("TimerViewType", 0);//받은 데이터 알람타입
-        TimerSettingType = getIntent().getIntExtra("TimerSettingType", 0);//1: 데이터 추가, 2: 데이터 변경
+        TimerSettingType = getIntent().getIntExtra("TimerSettingType", 0);//1: 데이터 추가, 2: 데이터 변경, 3: 데이터 복사
 
 
         if(TimerSettingType == 1){
@@ -244,6 +244,8 @@ public class TimerSettings extends Activity {
                                 everyDay_timerSettings.NewAddTimer();
                             }else if(TimerSettingType == 2){//데이터 변경
                                 everyDay_timerSettings.TimerUpData();
+                            }else if(TimerSettingType == 3){
+                                everyDay_timerSettings.NewAddTimer();
                             }
                             break;
                         }
@@ -252,6 +254,8 @@ public class TimerSettings extends Activity {
                                 dayOfTheWeek_timerSettings.NewAddTimer();
                             }else if(TimerSettingType == 2){//데이터 변경
                                 dayOfTheWeek_timerSettings.TimerUpData();
+                            }else if(TimerSettingType == 3){
+                                dayOfTheWeek_timerSettings.NewAddTimer();
                             }
                             break;
                         }
@@ -260,10 +264,15 @@ public class TimerSettings extends Activity {
                                 date_timerSettings.NewAddTimer();
                             }else if(TimerSettingType == 2){//데이터 변경
                                 date_timerSettings.TimerUpData();
+                            }else if(TimerSettingType == 3){
+                                date_timerSettings.NewAddTimer();
                             }
                         }
                     }
 
+                    Intent intent = new Intent();
+                    intent.putExtra("UpData", 1);
+                    setResult(RESULT_OK, intent);
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();
@@ -382,7 +391,7 @@ public class TimerSettings extends Activity {
         settingValue.setName(null);
         settingValue.setMemo(null);
 
-        settingValue.setImportant(true);
+        settingValue.setImportant(false);
 
         settingValue.setSound_Activate(true);
         settingValue.setSound_volume(70);
@@ -480,7 +489,7 @@ public class TimerSettings extends Activity {
             case FragmentType.fragEveryDay:{
                 everyDay_timerSettings = new EveryDay_TimerSettings(this, TimerSettingType);
 
-                if(TimerSettingType == 2){
+                if(TimerSettingType == 2 || TimerSettingType == 3){
                     everyDay_timerSettings.getTimer();
                 }
                 break;
@@ -488,7 +497,7 @@ public class TimerSettings extends Activity {
             case FragmentType.fragWeek:{
                 dayOfTheWeek_timerSettings = new DayOfTheWeek_TimerSettings(this, TimerSettingType);
 
-                if(TimerSettingType == 2){
+                if(TimerSettingType == 2 || TimerSettingType == 3){
                     dayOfTheWeek_timerSettings.getTimer();
                 }
                 break;
@@ -496,7 +505,7 @@ public class TimerSettings extends Activity {
             case FragmentType.fragDate:{
                 date_timerSettings = new Date_TimerSettings(this, TimerSettingType);
 
-                if(TimerSettingType == 2){
+                if(TimerSettingType == 2 || TimerSettingType == 3){
                     date_timerSettings.getTimer();
                 }
                 break;

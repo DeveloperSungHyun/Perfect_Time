@@ -45,4 +45,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             default: return null;
         }
     }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+    }
+
+
+
+
+
 }

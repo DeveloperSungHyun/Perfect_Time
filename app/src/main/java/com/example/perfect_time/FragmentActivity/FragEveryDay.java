@@ -2,10 +2,12 @@ package com.example.perfect_time.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,20 +41,6 @@ public class FragEveryDay extends Fragment {
 
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
 
-    private boolean Timer_Activate = true;          //알람 활정화 유무
-
-    private boolean Important = false;              //중요알람 표시
-
-    private String Name = null;                     //알람 이름
-    private String Memo = null;                     //알람 메모
-
-    private int Time_Hour = 0;                      //시간 시
-    private int Time_Minute = 0;                    //시간 분
-
-    private boolean Sound_Activate = true;          //소리알림 활성화 유무
-    private boolean Vibration_Activate = true;      //진동알림 활성화 유무
-    private boolean Popup_Activate = true;          //팝업알림 활성화 유무
-
     public static FragEveryDay newInstance(){
         FragEveryDay fragEveryDay = new FragEveryDay();
 
@@ -64,6 +52,19 @@ public class FragEveryDay extends Fragment {
         TimerAddButton = view.findViewById(R.id.TimerAddButton);//알람 추가 버튼
         recyclerView = view.findViewById(R.id.recyclerview);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("UpData","=====================");
+        if(data.getIntExtra("UpData", 0) == 0){//데이터 업데이트가 일어나지 안을떄
+            Toast.makeText(getContext(), "업데이트 안됨", Toast.LENGTH_SHORT).show();
+            Log.d("UpData","===================== ok");
+        }else if(data.getIntExtra("UpData", 0) == 1){//데이터가 업데이트 됬을떄
+            Toast.makeText(getContext(), "업데이트 됨", Toast.LENGTH_SHORT).show();
+            Log.d("UpData","===================== no");
+        }
     }
 
     @Override
@@ -83,16 +84,6 @@ public class FragEveryDay extends Fragment {
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
         }
-
-//        recyclerView_listItem =
-//                new RecyclerView_ListItem(ViewType, Timer_Activate, Important, Name, Memo, Time_Hour,
-//                        Time_Minute, Sound_Activate, Vibration_Activate, Popup_Activate, FragmentType.fragEveryDay);
-//
-//        ListItem.add(recyclerView_listItem);//리스트 아이템 추가
-//
-//        recyclerView_listItem =
-//                new RecyclerView_ListItem(ViewType, Timer_Activate, Important, Name, Memo, Time_Hour,
-//                        Time_Minute, Sound_Activate, Vibration_Activate, Popup_Activate, FragmentType.fragEveryDay);
 
         recyclerView_listAdapter.notifyDataSetChanged();//
     }

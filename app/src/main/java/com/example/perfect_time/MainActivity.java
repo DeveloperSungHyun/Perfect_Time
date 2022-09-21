@@ -7,10 +7,13 @@ import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     TabLayout tabLayout;
     public static ViewPager viewPager;
@@ -34,11 +37,38 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        fragmentPagerAdapter.notifyDataSetChanged();
+
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
         ViewPagerPosition = viewPager.getCurrentItem();//현재 보여지는 뷰
 
 
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    refresh();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
+
+    private void refresh(){
+        fragmentPagerAdapter.notifyDataSetChanged();
+    }
+
+
 }

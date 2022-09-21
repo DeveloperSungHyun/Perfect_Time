@@ -125,7 +125,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public boolean onLongClick(View view) {
 
-                String item[] = {"수정하기", "알림끄기", "삭제하기", "취소"};
+                String item[] = {"수정하기", "복사하기", "알림끄기", "삭제하기", "취소"};
 
                 AlertDialog.Builder builder;
 
@@ -170,6 +170,39 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 break;
                             }
                             case 1:{
+
+                                if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
+                                    intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
+
+                                    intent.putExtra("ItemID", holder.getAdapterPosition());
+                                    Log.d("인텐트 데이터 출력", "ItemID " + holder.getAdapterPosition());
+
+                                    view.getContext().startActivity(intent);
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragWeek){
+                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
+                                    intent.putExtra("TimerViewType", FragmentType.fragWeek);
+
+                                    intent.putExtra("ItemID", holder.getAdapterPosition());
+
+                                    view.getContext().startActivity(intent);
+                                }
+                                if(getItem.getFragmentType() == FragmentType.fragDate){
+                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
+                                    intent.putExtra("TimerViewType", FragmentType.fragDate);
+
+                                    intent.putExtra("ItemID", holder.getAdapterPosition());
+
+                                    view.getContext().startActivity(intent);
+                                }
+
+                                break;
+                            }
+                            case 2:{
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
                                     EveryDay_DataBase_Management everyDay_dataBase_management =
@@ -220,7 +253,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 Log.d("다이얼 로그", "알림끄기");
                                 break;
                             }
-                            case 2:{
+                            case 3:{
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
                                     EveryDay_DataBase_Management everyDay_dataBase_management =
@@ -265,6 +298,12 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         if(getItem.isImportant()) holder.ImageView_important.setVisibility(View.VISIBLE);
         else holder.ImageView_important.setVisibility(View.GONE);
+
+        if(getItem.isTimer_Activate()){
+            holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+        }else{
+            holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+        }
 
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
@@ -325,6 +364,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public class DisabledListView extends RecyclerView.ViewHolder{//비 활성화 뷰
+        CardView CardView_List;
+
         ImageView ImageView_important;//중요알림 표시 아이콘
 
         TextView TextView_Name;//알람 이름
@@ -339,6 +380,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         public DisabledListView(@NonNull View itemView) {
             super(itemView);
+
+            CardView_List = itemView.findViewById(R.id.CardView_List);
 
             ImageView_important = itemView.findViewById(R.id.ImageView_important);
 

@@ -14,14 +14,15 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="10dp"
         card_view:cardCornerRadius="15dp"
-        card_view:cardElevation="0dp"
+        card_view:cardElevation="4dp"
+        android:outlineSpotShadowColor="#CC0000"
+        android:backgroundTint="#FFFFFF"
         >
 
         <RelativeLayout
             android:id="@+id/RelativeLayout_BackGround"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#C8C8C8"
             android:padding="10dp">
 
             <TextView
@@ -64,6 +65,7 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Text"
-                    android:textColor="#85000000"
+                    android:textColor="#FF000000"
                     android:textSize="21dp"
                     android:textStyle="bold" />
 
@@ -87,7 +89,7 @@
                     android:layout_marginTop="5dp"
                     android:maxWidth="250dp"
                     android:text="text"
-                    android:textColor="#85000000"
+                    android:textColor="#1B1B1B"
                     android:textSize="16dp" />
 
                 <LinearLayout
@@ -127,7 +129,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="00 : 00"
-                android:textColor="#85000000"
+                android:textColor="#FF000000"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
