@@ -29,10 +29,13 @@ import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     View view;
+
+    boolean another_day = true;
 
     private ArrayList<RecyclerView_ListItem> listItems;
 
@@ -54,6 +57,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                 return new ActivateListView(view);
             }
             case 1:{
+                another_day = true;
+                view = inflater.inflate(R.layout.disabled_list_view, parent, false);
+                return new DisabledListView(view);
+
+            }
+            case 2:{
+                another_day = false;
                 view = inflater.inflate(R.layout.disabled_list_view, parent, false);
                 return new DisabledListView(view);
             }
@@ -292,17 +302,40 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         });
 
     }
+    Calendar calendar;
+    int h, m;
+//    int Day_y, Day_m, Day_d;
 
     private void DisabledView(DisabledListView holder, int position){
+
+        calendar = Calendar.getInstance();
+
+        h = calendar.get(Calendar.HOUR_OF_DAY);
+        m = calendar.get(Calendar.MINUTE);
+
+//        Day_y = calendar.get(Calendar.YEAR);//24시 형식
+//        Day_m = calendar.get(Calendar.MONTH) + 1;//24시 형식
+//        Day_d = calendar.get((Calendar.DATE));
+
         RecyclerView_ListItem getItem = listItems.get(position);
 
         if(getItem.isImportant()) holder.ImageView_important.setVisibility(View.VISIBLE);
         else holder.ImageView_important.setVisibility(View.GONE);
 
-        if(getItem.isTimer_Activate()){
-            holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
-        }else{
-            holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+
+        if(another_day){
+            if(h < getItem.getTime_Hour() || (h == getItem.getTime_Hour() && m < getItem.getTime_Minute())){
+                holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+            }else{
+                holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+            }
+        }
+
+        if(getItem.isImportant()){
+            holder.ImageView_important.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.ImageView_important.setVisibility(View.GONE);
         }
 
         holder.TextView_Name.setText(getItem.getName());

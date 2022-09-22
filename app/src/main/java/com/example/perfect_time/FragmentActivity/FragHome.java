@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,11 +46,14 @@ public class FragHome extends Fragment {
     RecyclerView_ListAdapter recyclerView_listAdapter;
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
 
+    Button DayTimeList;
+
     ArrayList<RecyclerView_ListItem> ListItem;      //리사이클러뷰 아이템 리스트데이터
 
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
 
     int y, m, d;
+    Boolean ToDay = true;
 
     public static FragHome newInstance(){
         FragHome fragHome = new FragHome();
@@ -59,6 +63,7 @@ public class FragHome extends Fragment {
 
     private void IdMapping(View view){
         recyclerView = view.findViewById(R.id.recyclerview);
+        DayTimeList = view.findViewById(R.id.DayTimeList);
 
     }
 
@@ -103,43 +108,94 @@ public class FragHome extends Fragment {
             Log.d("======================", " " + data.getName());
         }
 
-        String item[] = {"오늘 일정", "내일 일정", "모래 일정", "날짜 지정"};
-
-        AlertDialog.Builder builder;
-
-        builder = new AlertDialog.Builder(view.getContext());
-
-        builder.setItems(item, new DialogInterface.OnClickListener() {
+        DayTimeList.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i){
-                    case 0:{
-                        y = calendar.get(Calendar.YEAR);//24시 형식
-                        m = calendar.get(Calendar.MONTH) + 1;//24시 형식
-                        d = calendar.get((Calendar.DATE));
+            public void onClick(View view) {
 
+                String item[] = {"오늘 일정", "내일 일정", "모래 일정", "날짜 지정"};
+
+                AlertDialog.Builder builder;
+
+                builder = new AlertDialog.Builder(view.getContext());
+
+                builder.setItems(item, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0:{
+                                ToDay = true;
+
+                                y = calendar.get(Calendar.YEAR);//24시 형식
+                                m = calendar.get(Calendar.MONTH) + 1;//24시 형식
+                                d = calendar.get((Calendar.DATE));
+
+                                DayTimeList.setText("오늘 일정");
+                                break;
+                            }
+                            case 1:{
+                                ToDay = false;
+
+                                y = calendar.get(Calendar.YEAR);//24시 형식
+                                m = calendar.get(Calendar.MONTH) + 1;//24시 형식
+                                d = calendar.get((Calendar.DATE)) + 1;
+
+                                DayTimeList.setText("내일 일정");
+                                break;
+                            }
+                            case 2:{
+                                ToDay = false;
+
+                                y = calendar.get(Calendar.YEAR);//24시 형식
+                                m = calendar.get(Calendar.MONTH) + 1;//24시 형식
+                                d = calendar.get((Calendar.DATE)) + 2;
+
+                                DayTimeList.setText("모래 일정");
+                                break;
+                            }
+                        }
+
+                        ListItem.clear();
                         oneDayTimeList = new OneDayTimeList(view.getContext(), y, m, d);
 
                         all_times = oneDayTimeList.getTimeList();
 
                         recyclerView_ListShow();
                     }
-                }
+                });
+                builder.show();
+
             }
         });
+
 
         return view;
     }
 
+    int viewType = 1;
     private void recyclerView_ListShow(){
         for(All_Time data : all_times){
 
+//            int Color;
 
-            recyclerView_listItem =
-                    new RecyclerView_ListItem(1, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
-                            data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(),null, 0xFF000000, FragmentType.fragHome);
+            if(data.isTimer_Activate() == true){
 
-            ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+//                if(calendar.get(Calendar.HOUR) < data.getTime_Hour() ||
+//                        (calendar.get(Calendar.HOUR) == data.getTime_Hour() && calendar.get(Calendar.MINUTE) < data.getTime_Minute())){
+//                    Color = 0xFF000000;
+//                }else{
+//                    Color = 0xFF000000;
+//                }
+
+                if(ToDay) viewType = 1;
+                else viewType = 2;
+
+                recyclerView_listItem =
+                        new RecyclerView_ListItem(viewType
+                                , data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
+                                data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(),null, 0xFF000000, FragmentType.fragHome);
+
+                ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+            }
         }
 
         recyclerView_listAdapter.notifyDataSetChanged();//

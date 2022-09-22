@@ -125,6 +125,8 @@ public class Week_DataBase_Management {
 
         db_week.setImportant(getData().get(DataId).isImportant());
 
+        db_week.setDayOfTheWeek(getData().get(DataId).getDayOfTheWeek());
+
         db_week.setName(getData().get(DataId).getName());
         db_week.setMemo(getData().get(DataId).getMemo());
 

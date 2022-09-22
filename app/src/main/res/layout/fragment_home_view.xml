@@ -4,12 +4,69 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오늘일정"
-        android:textColor="#FF000000"
-        android:textSize="17dp"/>
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2022년 9월 22일"
+            android:textColor="#FF000000"
+            android:textSize="21dp"
+            android:layout_margin="3dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:00:00"
+            android:textColor="#FF000000"
+            android:textSize="26dp"
+            android:layout_margin="3dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:paddingTop="0.5dp"
+        android:background="#FF000000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="left">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/DayTimeList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘 일정"
+            android:textSize="15dp"
+            android:backgroundTint="#5A83FF"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:id="@+id/Day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2022년 9월 22일"
+            android:textSize="18dp"
+            android:textColor="#7E7E7E"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목요일"
+            android:textSize="18dp"
+            android:textColor="#4A4A4A"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -116,6 +116,10 @@ public class Date_DataBase_Management {
 
         db_date.setImportant(getData().get(DataId).isImportant());
 
+        db_date.setDate_Year(getData().get(DataId).getDate_Year());
+        db_date.setDate_Month(getData().get(DataId).getDate_Month());
+        db_date.setDate_Day(getData().get(DataId).getDate_Day());
+
         db_date.setName(getData().get(DataId).getName());
         db_date.setMemo(getData().get(DataId).getMemo());
 
