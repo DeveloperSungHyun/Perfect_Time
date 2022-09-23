@@ -1,30 +1,27 @@
 package com.example.perfect_time.FragmentActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.perfect_time.Activity.TimerSettings;
 import com.example.perfect_time.All_Time;
+import com.example.perfect_time.DeviceType;
 import com.example.perfect_time.OneDayTimeList;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListAdapter;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
-import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
-import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +39,7 @@ public class FragHome extends Fragment {
 
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    GridLayoutManager gridLayoutManager;
 
     RecyclerView_ListAdapter recyclerView_listAdapter;
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
@@ -96,8 +94,15 @@ public class FragHome extends Fragment {
 
         all_times = oneDayTimeList.getTimeList();
 
-        linearLayoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        DeviceType deviceType = new DeviceType(view.getContext());
+        if(deviceType.IsPhone()){
+            linearLayoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }else if(deviceType.IsTablet()){
+            gridLayoutManager = new GridLayoutManager(this.getContext(),2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
+
 
         ListItem = new ArrayList<>();
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
@@ -200,5 +205,6 @@ public class FragHome extends Fragment {
 
         recyclerView_listAdapter.notifyDataSetChanged();//
     }
+
 
 }

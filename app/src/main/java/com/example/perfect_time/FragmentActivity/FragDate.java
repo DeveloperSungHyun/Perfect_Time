@@ -10,16 +10,17 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.perfect_time.DeviceType;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListAdapter;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
 import com.example.perfect_time.Activity.TimerSettings;
 import com.example.perfect_time.RoomDataBase.Date.DB_Date;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
-import com.example.perfect_time.RoomDataBase.DayOfTheWeek.DB_Week;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class FragDate extends Fragment {
     LinearLayout TimerAddButton;//알람 추가 버튼
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    GridLayoutManager gridLayoutManager;
 
     RecyclerView_ListAdapter recyclerView_listAdapter;
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
@@ -100,11 +102,17 @@ public class FragDate extends Fragment {
         view = inflater.inflate(R.layout.fragment_date_view,container, false);
         IdMapping(view);
 
+
         date_dataBase_management = new Date_DataBase_Management(getContext());
 
-        linearLayoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
+        DeviceType deviceType = new DeviceType(view.getContext());
+        if(deviceType.IsPhone()){
+            linearLayoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }else if(deviceType.IsTablet()){
+            gridLayoutManager = new GridLayoutManager(this.getContext(),2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
         ListItem = new ArrayList<>();
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
 

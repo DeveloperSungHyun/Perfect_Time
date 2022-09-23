@@ -12,9 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.perfect_time.DeviceType;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListAdapter;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
@@ -31,6 +33,7 @@ public class FragEveryDay extends Fragment {
     LinearLayout TimerAddButton;//알람 추가 버튼
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    GridLayoutManager gridLayoutManager;
 
     RecyclerView_ListAdapter recyclerView_listAdapter;
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
@@ -94,10 +97,17 @@ public class FragEveryDay extends Fragment {
         view = inflater.inflate(R.layout.fragment_everyday_view,container, false);
         IdMapping(view);
 
+
         everyDay_dataBase_management = new EveryDay_DataBase_Management(getContext());
 
-        linearLayoutManager = new LinearLayoutManager(this.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+        DeviceType deviceType = new DeviceType(view.getContext());
+        if(deviceType.IsPhone()){
+            linearLayoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }else if(deviceType.IsTablet()){
+            gridLayoutManager = new GridLayoutManager(this.getContext(),2);
+            recyclerView.setLayoutManager(gridLayoutManager);
+        }
 
         ListItem = new ArrayList<>();
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);

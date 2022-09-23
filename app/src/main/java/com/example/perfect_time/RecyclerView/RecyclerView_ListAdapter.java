@@ -310,6 +310,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         calendar = Calendar.getInstance();
 
+        holder.TextView_Day.setText(null);
+
         h = calendar.get(Calendar.HOUR_OF_DAY);
         m = calendar.get(Calendar.MINUTE);
 
@@ -399,6 +401,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
     public class DisabledListView extends RecyclerView.ViewHolder{//비 활성화 뷰
         CardView CardView_List;
 
+        TextView TextView_Day;
+
         ImageView ImageView_important;//중요알림 표시 아이콘
 
         TextView TextView_Name;//알람 이름
@@ -417,6 +421,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             CardView_List = itemView.findViewById(R.id.CardView_List);
 
             ImageView_important = itemView.findViewById(R.id.ImageView_important);
+
+            TextView_Day = itemView.findViewById(R.id.TextView_Day);
 
             TextView_Name = itemView.findViewById(R.id.TextView_Name);
             TextView_Memo = itemView.findViewById(R.id.TextView_Memo);
