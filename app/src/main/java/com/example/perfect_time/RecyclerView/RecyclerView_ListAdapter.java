@@ -95,6 +95,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
+    int Time_h_12;
     @RequiresApi(api = Build.VERSION_CODES.P)
     private void ActivateView(ActivateListView holder, int position){
         RecyclerView_ListItem getItem = listItems.get(position);
@@ -120,7 +121,16 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
 
-        holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
+        if(getItem.getTime_Hour() > 12){
+            Time_h_12 = getItem.getTime_Hour() - 12;
+            holder.TextView_Time_AmPm.setText("오후");
+        }else{
+            holder.TextView_Time_AmPm.setText("오전");
+        }
+        if(Time_h_12 == 0) Time_h_12 = 12;
+
+        holder.TextView_Time.setText(Time_h_12 + " : " + getItem.getTime_Minute());
+
 
         if(getItem.isSound_Activate()) holder.ImageView_sound.setVisibility(View.VISIBLE);
         else holder.ImageView_sound.setVisibility(View.GONE);
@@ -135,7 +145,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public boolean onLongClick(View view) {
 
-                String item[] = {"수정하기", "복사하기", "알림끄기", "삭제하기", "취소"};
+                String item[] = {"수정하기", "복사하기", "알림On/Off", "삭제하기", "취소"};
 
                 AlertDialog.Builder builder;
 
@@ -343,7 +353,16 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
 
-        holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
+        if(getItem.getTime_Hour() > 12){
+            Time_h_12 = getItem.getTime_Hour() - 12;
+            holder.TextView_Time_AmPm.setText("오후");
+        }else{
+            holder.TextView_Time_AmPm.setText("오전");
+        }
+
+        if(Time_h_12 == 0) Time_h_12 = 12;
+
+        holder.TextView_Time.setText(Time_h_12 + " : " + getItem.getTime_Minute());
 
         if(getItem.isSound_Activate()) holder.ImageView_sound.setVisibility(View.VISIBLE);
         else holder.ImageView_sound.setVisibility(View.GONE);

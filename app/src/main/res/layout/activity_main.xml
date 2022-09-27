@@ -7,6 +7,29 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center|right"
+        android:padding="12dp"
+        android:background="@color/purple_500">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/SystemSettings"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:background="@drawable/settings"
+            android:backgroundTint="#FFFFFF" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설정"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"

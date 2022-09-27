@@ -21,6 +21,7 @@
         <activity android:name=".Activity.TimerSettings"/>
         <activity android:name=".Activity.TimerSoundSetting"/>
         <activity android:name=".Activity.TimerVibrationSetting"/>
+        <activity android:name=".Activity.Preferences"/>
     </application>
 
 </manifest>

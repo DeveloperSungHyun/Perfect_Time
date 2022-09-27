@@ -6,11 +6,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
+import com.example.perfect_time.Activity.Preferences;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity{
@@ -19,11 +22,15 @@ public class MainActivity extends AppCompatActivity{
     public static ViewPager viewPager;
     private FragmentPagerAdapter fragmentPagerAdapter;
 
+    Button SystemSettings;
+
     public static int ViewPagerPosition;
 
     private void IdMapping(){
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.viewPager);
+
+        SystemSettings = findViewById(R.id.SystemSettings);
     }
 
     @Override
@@ -61,6 +68,14 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        SystemSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Preferences.class);
+                startActivity(intent);
             }
         });
 

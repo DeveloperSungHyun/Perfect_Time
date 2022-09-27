@@ -23,6 +23,7 @@ import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
 import com.example.perfect_time.Activity.TimerSettings;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
+import com.example.perfect_time.SystemDataSave;
 
 import java.util.ArrayList;
 
@@ -101,12 +102,17 @@ public class FragEveryDay extends Fragment {
         everyDay_dataBase_management = new EveryDay_DataBase_Management(getContext());
 
         DeviceType deviceType = new DeviceType(view.getContext());
-        if(deviceType.IsPhone()){
+        if(new SystemDataSave(this.getContext()).getData_TableMode() == true){
+            if(deviceType.IsPhone()){
+                linearLayoutManager = new LinearLayoutManager(this.getContext());
+                recyclerView.setLayoutManager(linearLayoutManager);
+            }else if(deviceType.IsTablet()){
+                gridLayoutManager = new GridLayoutManager(this.getContext(),2);
+                recyclerView.setLayoutManager(gridLayoutManager);
+            }
+        }else{
             linearLayoutManager = new LinearLayoutManager(this.getContext());
             recyclerView.setLayoutManager(linearLayoutManager);
-        }else if(deviceType.IsTablet()){
-            gridLayoutManager = new GridLayoutManager(this.getContext(),2);
-            recyclerView.setLayoutManager(gridLayoutManager);
         }
 
         ListItem = new ArrayList<>();

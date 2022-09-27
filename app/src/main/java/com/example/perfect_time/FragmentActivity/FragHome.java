@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.perfect_time.Activity.Preferences;
 import com.example.perfect_time.All_Time;
 import com.example.perfect_time.DeviceType;
 import com.example.perfect_time.OneDayTimeList;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListAdapter;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
+import com.example.perfect_time.SystemDataSave;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -95,12 +97,18 @@ public class FragHome extends Fragment {
         all_times = oneDayTimeList.getTimeList();
 
         DeviceType deviceType = new DeviceType(view.getContext());
-        if(deviceType.IsPhone()){
+
+        if(new SystemDataSave(this.getContext()).getData_TableMode() == true){
+            if(deviceType.IsPhone()){
+                linearLayoutManager = new LinearLayoutManager(this.getContext());
+                recyclerView.setLayoutManager(linearLayoutManager);
+            }else if(deviceType.IsTablet()){
+                gridLayoutManager = new GridLayoutManager(this.getContext(),2);
+                recyclerView.setLayoutManager(gridLayoutManager);
+            }
+        }else{
             linearLayoutManager = new LinearLayoutManager(this.getContext());
             recyclerView.setLayoutManager(linearLayoutManager);
-        }else if(deviceType.IsTablet()){
-            gridLayoutManager = new GridLayoutManager(this.getContext(),2);
-            recyclerView.setLayoutManager(gridLayoutManager);
         }
 
 
