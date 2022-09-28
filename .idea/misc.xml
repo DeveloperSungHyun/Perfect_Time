@@ -9,6 +9,7 @@
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable-v24/sound_icon.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable-v24/star_icon.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable-v24/vibration_icon.xml" value="0.274" />
+        <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/calendar_icon.xml" value="0.2775" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/card_view_dp_value.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/exit.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/file_list_1item_background.xml" value="0.274" />
@@ -27,12 +28,14 @@
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/group_list_item_bottom.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/group_list_item_middle.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/group_list_item_top.xml" value="0.274" />
+        <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/home_icon.xml" value="0.2775" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.274" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/settings.xml" value="0.2825" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/test.xml" value="0.274" />
+        <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/drawable/transparent_background.xml" value="0.283" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/activae_list_group_view.xml" value="0.3697916666666667" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/activae_list_view.xml" value="0.37916666666666665" />
-        <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/activity_main.xml" value="0.2791791363830697" />
+        <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/day_of_the_week_itemview.xml" value="0.353125" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/disabled_list_view.xml" value="0.4703125" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/file_list_1item_view.xml" value="0.4661458333333333" />
@@ -53,6 +56,7 @@
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/timer_settings_view.xml" value="0.2791791363830697" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/timer_sound_setting_view.xml" value="0.2791791363830697" />
         <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/layout/timer_vibration_setting_view.xml" value="0.3234375" />
+        <entry key="..\:/DevelopFile/AndriodStudio/Perfect_Time/app/src/main/res/menu/button_nav.xml" value="0.27618640444634457" />
       </map>
     </option>
   </component>

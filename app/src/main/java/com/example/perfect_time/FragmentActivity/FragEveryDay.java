@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.perfect_time.DeviceType;
+import com.example.perfect_time.MainActivity;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListAdapter;
 import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
@@ -119,6 +120,7 @@ public class FragEveryDay extends Fragment {
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
 
         recyclerView.setAdapter(recyclerView_listAdapter);
+
 
         TimerAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
