@@ -30,6 +30,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Timer;
+
 public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigationView;
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
+        Intent intent = new Intent(this, TimerService.class);
+        startService(intent);
 
     }
 

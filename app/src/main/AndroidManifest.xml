@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.perfect_time">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Perfect_Time">
+        <service
+            android:name=".TimerService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -18,10 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.TimerSettings"/>
-        <activity android:name=".Activity.TimerSoundSetting"/>
-        <activity android:name=".Activity.TimerVibrationSetting"/>
-        <activity android:name=".Activity.Preferences"/>
+        <activity android:name=".Activity.TimerSettings" />
+        <activity android:name=".Activity.TimerSoundSetting" />
+        <activity android:name=".Activity.TimerVibrationSetting" />
+        <activity android:name=".Activity.Preferences" />
     </application>
 
 </manifest>
