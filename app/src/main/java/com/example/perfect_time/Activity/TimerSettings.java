@@ -159,9 +159,6 @@ public class TimerSettings extends Activity {
         if(time24_to_12Hour.getAmPm()) TextView_AmPm.setText("오후");
         else TextView_AmPm.setText("오전");
 
-        EditText_Name.setText(settingValue.getName());
-        EditText_Memo.setText(settingValue.getMemo());
-
         Switch_Important.setChecked(settingValue.isImportant());
 
         Switch_sound.setChecked(settingValue.isSound_Activate());
@@ -301,6 +298,8 @@ public class TimerSettings extends Activity {
                 settingValue.setTime_Hour(h);
                 settingValue.setTime_Minute(m);
 
+                settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
+                settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
                 InterfaceSetting();
             }
         } ,settingValue.getTime_Hour(), settingValue.getTime_Minute(), false);
@@ -345,6 +344,9 @@ public class TimerSettings extends Activity {
                 }else if(division == 2){// 자동 알링끄기
                     settingValue.setAutoOffTime(Time);
                 }
+
+                settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
+                settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
                 InterfaceSetting();
             }
         });

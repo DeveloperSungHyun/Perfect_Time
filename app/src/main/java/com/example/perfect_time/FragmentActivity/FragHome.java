@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class FragHome extends Fragment {
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
 
     Button DayTimeList;
+    TextView DayTime_y_m_d, DayTime_week, disDay;
 
     ArrayList<RecyclerView_ListItem> ListItem;      //리사이클러뷰 아이템 리스트데이터
 
@@ -65,6 +67,10 @@ public class FragHome extends Fragment {
     private void IdMapping(View view){
         recyclerView = view.findViewById(R.id.recyclerview);
         DayTimeList = view.findViewById(R.id.DayTimeList);
+
+//        DayTime_y_m_d = view.findViewById(R.id.DayTime_y_m_d);
+//        DayTime_week = view.findViewById(R.id.DayTime_week);
+//        disDay = view.findViewById(R.id.disDay);
 
     }
 

@@ -9,7 +9,7 @@
         android:id="@+id/EveryDay"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="icon1"/>
-    <item />
+
     <item
         android:id="@+id/DayOfTheWeek"
         android:icon="@drawable/ic_baseline_settings_24"

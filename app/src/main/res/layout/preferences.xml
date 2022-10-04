@@ -13,6 +13,7 @@
         android:background="#3434FF">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BackButton"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:background="@drawable/exit"

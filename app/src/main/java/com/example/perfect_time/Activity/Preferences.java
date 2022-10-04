@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -21,11 +23,15 @@ public class Preferences extends Activity {
     Switch Switch_BatteryLow_Notification;
     Switch Switch_Wear;
 
+    Button BackButton;
+
     void IdMapping(){
         Switch_AllTimer_Off = findViewById(R.id.Switch_AllTimer_Off);
         Switch_AutoTableMode = findViewById(R.id.Switch_AutoTableMode);
         Switch_BatteryLow_Notification = findViewById(R.id.Switch_BatteryLow_Notification);
         Switch_Wear = findViewById(R.id.Switch_Wear);
+
+        BackButton = findViewById(R.id.BackButton);
 
     }
     @Override
@@ -81,6 +87,13 @@ public class Preferences extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 systemDataSave.setData_WearData(b);
+            }
+        });
+
+        BackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

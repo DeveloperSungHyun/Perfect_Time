@@ -8,12 +8,15 @@ import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.perfect_time.Activity.Preferences;
 import com.example.perfect_time.Activity.TimerSettings;
@@ -31,9 +34,9 @@ public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigationView;
 
-    Button SystemSettings;
+    ImageView SystemSetting;
 
-    FloatingActionButton AddButton;
+    ImageButton AddButton;
 
     BottomAppBar bottomAppBar;
 
@@ -41,8 +44,10 @@ public class MainActivity extends AppCompatActivity{
     int SceneNumber = 0;
 
     private void IdMapping(){
-        AddButton = findViewById(R.id.AddButton);
+        //AddButton = findViewById(R.id.AddButton);
         //BottomAppBar = findViewById(R.id.BottomAppBar);
+
+        SystemSetting = findViewById(R.id.SystemSetting);
     }
 
     @Override
@@ -87,49 +92,49 @@ public class MainActivity extends AppCompatActivity{
         //bottomNavigationView = BottomAppBar.FAB_ANIMATION_MODE_SCALE;
 
 
-        AddButton.setOnClickListener(new View.OnClickListener() {
+//        AddButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                switch (SceneNumber){
+//                    case 0:{
+//                        AddButton.willNotDraw();
+//                        break;
+//                    }
+//                    case 1:{
+//                        Intent intent = new Intent(view.getContext(), TimerSettings.class);
+//                        intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
+//                        intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
+//                        startActivity(intent);
+//
+//                        break;
+//                    }
+//                    case 2:{
+//                        Intent intent = new Intent(view.getContext(), TimerSettings.class);
+//                        intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
+//                        intent.putExtra("TimerViewType", FragmentType.fragWeek);
+//                        startActivity(intent);
+//
+//                        break;
+//                    }
+//                    case 3:{
+//                        Intent intent = new Intent(view.getContext(), TimerSettings.class);
+//                        intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
+//                        intent.putExtra("TimerViewType", FragmentType.fragDate);
+//                        startActivity(intent);
+//                    }
+//                }
+//            }
+//        });
+
+        SystemSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                switch (SceneNumber){
-                    case 0:{
-                        AddButton.willNotDraw();
-                        break;
-                    }
-                    case 1:{
-                        Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                        intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                        intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
-                        startActivity(intent);
-
-                        break;
-                    }
-                    case 2:{
-                        Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                        intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                        intent.putExtra("TimerViewType", FragmentType.fragWeek);
-                        startActivity(intent);
-
-                        break;
-                    }
-                    case 3:{
-                        Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                        intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                        intent.putExtra("TimerViewType", FragmentType.fragDate);
-                        startActivity(intent);
-                    }
-                }
+                Intent intent = new Intent(MainActivity.this, Preferences.class);
+                startActivity(intent);
             }
         });
 
-//        SystemSettings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, Preferences.class);
-//                startActivity(intent);
-//            }
-//        });
-//
 
 
     }
