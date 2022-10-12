@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.MenuItem;
@@ -61,7 +62,8 @@ public class MainActivity extends AppCompatActivity{
 
         IdMapping();
 
-
+        Intent intent = new Intent(this, TimerService.class);
+        intent.setAction("start");
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         //getSupportFragmentManager().beginTransaction().add(R.id.frame_container,new FragHome()).commit();
 
@@ -73,6 +75,13 @@ public class MainActivity extends AppCompatActivity{
                     case R.id.Home:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragHome()).commit();
                         SceneNumber = 0;
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            startForegroundService(intent);
+                        }else {
+                            startService(intent);
+                        }
+
                         break;
                     case R.id.EveryDay:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragEveryDay()).commit();
@@ -85,6 +94,8 @@ public class MainActivity extends AppCompatActivity{
                     case R.id.Date:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragDate()).commit();
                         SceneNumber = 3;
+
+                        stopService(intent);
                         break;
                 }
                 return true;
@@ -137,9 +148,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-
-        Intent intent = new Intent(this, TimerService.class);
-        startService(intent);
 
     }
 

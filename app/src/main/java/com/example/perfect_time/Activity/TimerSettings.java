@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +46,7 @@ import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.Time24_to_12Hour;
+import com.example.perfect_time.TimerService;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -268,8 +270,15 @@ public class TimerSettings extends Activity {
                     }
 
                     Intent intent = new Intent();
-                    intent.putExtra("UpData", 1);
                     setResult(RESULT_OK, intent);
+                    //========================================================================설정완료
+                    Intent ServiceIntent = new Intent(view.getContext(), TimerService.class);
+                    ServiceIntent.putExtra("test", 1);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        startForegroundService(ServiceIntent);
+                    } else {
+                        startService(ServiceIntent);
+                    }
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();

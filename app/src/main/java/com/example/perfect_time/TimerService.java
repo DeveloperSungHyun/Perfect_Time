@@ -1,5 +1,6 @@
 package com.example.perfect_time;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,15 +12,24 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Window;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.example.perfect_time.Activity.TimerSettings;
+
+import java.util.Calendar;
+
 public class TimerService extends Service {
 
-    BackGroundTask task;
+    Thread thread;
+    int count;
 
-    int value;
+    OneDayTimeList oneDayTimeList;
+
+    int y, m, d;
+
     public TimerService() {
     }
 
@@ -29,62 +39,75 @@ public class TimerService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        task = new BackGroundTask();
-        task.execute();
+        Calendar calendar = Calendar.getInstance();
 
-        //BackGroundLoopCode();
-        //startForeground(1, new Notification());
-        return START_NOT_STICKY;//서비스가 중지되도 다시시작
-    }
+        y = calendar.get(Calendar.YEAR);
+        m = calendar.get(Calendar.MONDAY) + 1;
+        d = calendar.get(Calendar.DATE);
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void BackGroundLoopCode(){
+        oneDayTimeList = new OneDayTimeList(this, y, m, d);
 
-    }
+        oneDayTimeList.getTimeList();
 
-    class BackGroundTask extends AsyncTask<Integer, String, Integer>{
-        String result = "";
+        if("start".equals(intent.getAction())){
+            ForeGroundService();
+            if(thread == null){
+                thread = new Thread("Service"){
+                    @Override
+                    public void run() {
+                        while (true){
+                            try {
+                                count++;
+                                Thread.sleep(1000);
+                            }catch (InterruptedException e){
+                                break;
+                            }
 
-
-        @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-        @Override
-        protected Integer doInBackground(Integer... values) {
-            while (isCancelled() == false){
-                try {
-                    Thread.sleep(1000);
-                    value++;
-                    Log.d("count", "num---" + value);
-                }catch (InterruptedException e){
-
-                }
+                            Log.d("서비스 실행중", "count: " + count);
+                        }
+                    }
+                };
+                thread.start();
             }
-            return value;
+
+        }
+        return START_STICKY;//서비스가 중지되도 다시시작
+
+    }
+
+    private void ForeGroundService(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+        builder.setSmallIcon(R.drawable.calendar_icon);
+        builder.setContentText("test");
+        builder.setContentTitle("title");
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(new NotificationChannel("default", "test", NotificationManager.IMPORTANCE_DEFAULT));
+
         }
 
-        @Override
-        protected void onProgressUpdate(String... values) {
-            Log.d("업데이트", "test");
-        }
 
-        @Override
-        protected void onPostExecute(Integer integer) {
-            value = 0;
-        }
-
-        @Override
-        protected void onCancelled() {
-            value = 0;
-        }
-
+        startForeground(1, builder.build());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-    }
 
+        Log.d("서비스 중지", "OnDestroy");
+
+        if(thread != null){
+            thread.interrupt();
+            thread = null;
+            count = 0;
+        }
+    }
 }
