@@ -187,7 +187,7 @@ public class TimerSettings extends Activity {
         TimeSetting_Dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         nowTime_H = calendar.get(Calendar.HOUR_OF_DAY);//24시 형식
-        nowTime_M = calendar.get(Calendar.MINUTE);//24시 형식
+        nowTime_M = calendar.get(Calendar.MINUTE);
 
         TimerViewType = getIntent().getIntExtra("TimerViewType", 0);//받은 데이터 알람타입
         TimerSettingType = getIntent().getIntExtra("TimerSettingType", 0);//1: 데이터 추가, 2: 데이터 변경, 3: 데이터 복사
@@ -273,10 +273,10 @@ public class TimerSettings extends Activity {
                     setResult(RESULT_OK, intent);
                     //========================================================================설정완료
                     Intent ServiceIntent = new Intent(view.getContext(), TimerService.class);
-                    ServiceIntent.putExtra("test", 1);
+                    ServiceIntent.setAction("start");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         startForegroundService(ServiceIntent);
-                    } else {
+                    }else {
                         startService(ServiceIntent);
                     }
                     finish();

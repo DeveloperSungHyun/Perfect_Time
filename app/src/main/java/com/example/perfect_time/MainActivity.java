@@ -75,13 +75,6 @@ public class MainActivity extends AppCompatActivity{
                     case R.id.Home:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragHome()).commit();
                         SceneNumber = 0;
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            startForegroundService(intent);
-                        }else {
-                            startService(intent);
-                        }
-
                         break;
                     case R.id.EveryDay:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragEveryDay()).commit();
@@ -95,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragDate()).commit();
                         SceneNumber = 3;
 
-                        stopService(intent);
+                        //stopService(intent);
                         break;
                 }
                 return true;
@@ -148,6 +141,12 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }else {
+            startService(intent);
+        }
 
     }
 
