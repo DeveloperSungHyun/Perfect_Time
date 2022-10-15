@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
+import androidx.work.ForegroundUpdater;
 
 import android.content.Intent;
 import android.media.Image;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(this, TimerService.class);
         intent.setAction("start");
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_container,new FragHome()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragHome()).commit();
 
         //case 함수를 통해 클릭 받을 때마다 화면 변경하기
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -142,10 +143,15 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent);
-        }else {
-            startService(intent);
+
+        if(TimerService.isServiceRunning(this) == false){//서비스가 실행이 아닐떄
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent);
+            }else {
+                startService(intent);
+            }
+
         }
 
     }
