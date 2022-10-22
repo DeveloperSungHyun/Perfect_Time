@@ -21,6 +21,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.perfect_time.Activity.TimerSettings;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,7 +32,6 @@ public class TimerService extends Service {
     private List<All_Time> all_timeList;
 
     All_Time NextTimer = null;
-    All_Time NowTimer = null;
 
     All_Time all_time = null;
 
@@ -44,6 +44,10 @@ public class TimerService extends Service {
 
     int y, m, d;
     int NowTime_H, NowTime_M;
+
+    //String AllNextTimeList;
+    ArrayList<String> AllNextTimeList = new ArrayList<>();
+    String str_AllNextTimeList;
 
     public TimerService() {
     }
@@ -65,28 +69,16 @@ public class TimerService extends Service {
         NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
         NowTime_M = calendar.get(Calendar.MINUTE);
 
-        oneDayTimeList = new OneDayTimeList(this, y, m, d);
+        oneDayTimeList = new OneDayTimeList(this, y, m, d);//하루일정 가져오기
 
         all_timeList = oneDayTimeList.getTimeList();
+        NextTimer = null;
+        BackgroundServiceLogic(calendar);
+        if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList);
 
         if("start".equals(intent.getAction())){
-            NowTimer = null;
 
-            for (int i = 0; i < all_timeList.size(); i++) {
-
-                if(all_timeList.get(i).getTime_Hour() > NowTime_H ||
-                        (all_timeList.get(i).getTime_Hour() == NowTime_H && all_timeList.get(i).getTime_Minute() > NowTime_M)){
-                    if(i > 0) NowTimer = all_timeList.get(i - 1);//다음 알림
-                    else NowTimer = all_timeList.get(0);
-                    break;
-                }
-
-            }
-            NowTimer.setPopup_Activate(!NowTimer.isPopup_Activate());
-            NowTimer.setSound_Activate(!NowTimer.isSound_Activate());
-            NowTimer.setVibration_Activate(!NowTimer.isVibration_Activate());
-
-            ForeGroundService(NowTimer, false);
+            //ForeGroundService(NextTimer, false);
 
             if(thread == null){
                 thread = new Thread("Service"){
@@ -114,7 +106,7 @@ public class TimerService extends Service {
 
     }
 
-    private void ForeGroundService(All_Time all_time, Boolean beforehandTime){
+    private void ForeGroundService(String Title, String Content, List<String> AllNextTimeList){
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
@@ -122,8 +114,8 @@ public class TimerService extends Service {
 
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        if(all_time != null){
-            if(beforehandTime){
+        if(all_timeList != null){
+            if(false){
                 builder = new NotificationCompat.Builder(this, "HeadUp");
             }else{
                 builder = new NotificationCompat.Builder(this, "NoneHeadUp");
@@ -132,19 +124,29 @@ public class TimerService extends Service {
             builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
             builder.setSmallIcon(R.drawable.calendar_icon);
             builder.setTicker("알람 간단한 설명");
-            builder.setContentTitle(all_time.getName());
-            builder.setContentText(all_time.getMemo());
-            builder.setStyle(new NotificationCompat.BigTextStyle()
-                    .bigText(all_time.getMemo()));
+            builder.setContentTitle(Title);
+            builder.setContentText(Content);
+            if(AllNextTimeList != null){
+
+//                for (String a : AllNextTimeList){
+//                    str_AllNextTimeList += a + "\n";
+//                }
+                str_AllNextTimeList = AllNextTimeList.get(0);
+                for (int i = 1; i < AllNextTimeList.size(); i++) {
+                    str_AllNextTimeList += "\n" + AllNextTimeList.get(i);
+                }
+                builder.setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(str_AllNextTimeList));
+            }
 
             builder.setContentIntent(pendingIntent);
-            if(beforehandTime){
+            if(false){
                 Log.d("Popup_Activate", "==========");
                 builder.setFullScreenIntent(pendingIntent, true);
             }
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                if(beforehandTime){
+                if(false){
                     manager.createNotificationChannel(new NotificationChannel("HeadUp", "HeadUp", NotificationManager.IMPORTANCE_HIGH));
                 }else {
                     manager.createNotificationChannel(new NotificationChannel("NoneHeadUp", "NoneHeadUp", NotificationManager.IMPORTANCE_LOW));
@@ -152,34 +154,61 @@ public class TimerService extends Service {
 
             }
 
+        }else{//알람 데이터가 없다면
+            builder = new NotificationCompat.Builder(this, "NoneHeadUp");
+
+            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
+            builder.setSmallIcon(R.drawable.calendar_icon);
+            builder.setTicker("알람 간단한 설명");
+            builder.setContentTitle("없음");
+            builder.setContentText("없음");
+
+            builder.setContentIntent(pendingIntent);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                manager.createNotificationChannel(new NotificationChannel("NoneHeadUp", "NoneHeadUp", NotificationManager.IMPORTANCE_LOW));
+            }
         }
 
         startForeground(1, builder.build());
     }
 
+    boolean OneTimer = true;
     private void BackgroundServiceLogic(Calendar calendar){
 
         NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
         NowTime_M = calendar.get(Calendar.MINUTE);
 
-        if(NextTimer == null){
-            for (int i = 0; i < all_timeList.size(); i++) {
+        if(all_timeList != null){
+            if(NextTimer == null){
+                for (int i = 0; i < all_timeList.size(); i++) {
+                    if(all_timeList.get(i).isVibration_Activate()){
+                        if(all_timeList.get(i).getTime_Hour() > NowTime_H ||
+                                (all_timeList.get(i).getTime_Hour() == NowTime_H && all_timeList.get(i).getTime_Minute() > NowTime_M)){
 
-                if(all_timeList.get(i).getTime_Hour() > NowTime_H ||
-                        (all_timeList.get(i).getTime_Hour() == NowTime_H && all_timeList.get(i).getTime_Minute() > NowTime_M)){
-                    NextTimer = all_timeList.get(i);//다음 알림
-                    break;
+                            if(NextTimer == null)NextTimer = all_timeList.get(i);//다음 알림
+                            //AllNextTimeList += all_timeList.get(i) + "\n";
+                            AllNextTimeList.add((i + 1) + ". " + all_timeList.get(i).getName() + " (" + all_timeList.get(i).getTime_Hour() + "시 " + all_timeList.get(i).getTime_Minute() + "분)");
+                            Log.d("==========================", all_timeList.get(i).getName());
+                        }else{//다음 알림이 없을때
+                            ForeGroundService("오늘 일정", "일정이 없습니다.", null);
+                        }
+                    }
+
                 }
 
+
+            }else if(NextTimer.getTime_Hour() == NowTime_H && NextTimer.getTime_Minute() == NowTime_M){//알람시간이 됬을경우
+                if(NextTimer != null) ForeGroundService(NextTimer.getName(), NextTimer.getMemo(), null);
+                Log.d("==============", "5");
+                NextTimer = null;
             }
 
-
+        }else{
+            Log.d("==============", "6");
+            ForeGroundService("오늘 일정", "일정이 없습니다.", null);
         }
 
-        if(NextTimer.getTime_Hour() == NowTime_H && NextTimer.getTime_Minute() == NowTime_M){//알람시간이 됬을경우
-            if(NextTimer != null) ForeGroundService(NextTimer, false);
-            NextTimer = null;
-        }
 
     }
 
