@@ -300,6 +300,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 notifyItemRemoved(holder.getAdapterPosition());
 
                                 Toast.makeText(view.getContext(), "알람이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     }

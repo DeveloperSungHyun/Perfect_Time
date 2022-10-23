@@ -72,6 +72,7 @@ public class TimerService extends Service {
         oneDayTimeList = new OneDayTimeList(this, y, m, d);//하루일정 가져오기
 
         all_timeList = oneDayTimeList.getTimeList();
+
         NextTimer = null;
         BackgroundServiceLogic(calendar);
         if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList);
@@ -173,14 +174,30 @@ public class TimerService extends Service {
         startForeground(1, builder.build());
     }
 
-    boolean OneTimer = true;
+    boolean TimerListUpData = false;
     private void BackgroundServiceLogic(Calendar calendar){
 
         NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
         NowTime_M = calendar.get(Calendar.MINUTE);
 
+        if(NowTime_H == 0 && NowTime_M > 0 && TimerListUpData == true){
+
+            y = calendar.get(Calendar.YEAR);
+            m = calendar.get(Calendar.MONDAY) + 1;
+            d = calendar.get(Calendar.DATE);
+
+            oneDayTimeList = new OneDayTimeList(this, y, m, d);//하루일정 가져오기
+
+            all_timeList = oneDayTimeList.getTimeList();
+
+            TimerListUpData = false;
+        } else {
+            TimerListUpData = true;
+        }
+
         if(all_timeList != null){
             if(NextTimer == null){
+                AllNextTimeList.clear();
                 for (int i = 0; i < all_timeList.size(); i++) {
                     if(all_timeList.get(i).isVibration_Activate()){
                         if(all_timeList.get(i).getTime_Hour() > NowTime_H ||

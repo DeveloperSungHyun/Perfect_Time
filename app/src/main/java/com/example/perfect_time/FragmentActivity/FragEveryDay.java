@@ -69,6 +69,7 @@ public class FragEveryDay extends Fragment {
         }else if(data.getIntExtra("UpData", 0) == 1){//데이터가 업데이트 됬을떄
             Toast.makeText(getContext(), "업데이트 됨", Toast.LENGTH_SHORT).show();
             Log.d("UpData","===================== no");
+
         }
     }
 
