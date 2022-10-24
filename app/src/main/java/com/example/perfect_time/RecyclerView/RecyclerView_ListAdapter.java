@@ -363,7 +363,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         if(Time_h_12 == 0) Time_h_12 = 12;
 
-        holder.TextView_Time.setText(Time_h_12 + " : " + getItem.getTime_Minute());
+        holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
 
         if(getItem.isSound_Activate()) holder.ImageView_sound.setVisibility(View.VISIBLE);
         else holder.ImageView_sound.setVisibility(View.GONE);

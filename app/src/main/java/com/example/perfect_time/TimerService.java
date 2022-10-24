@@ -30,6 +30,8 @@ public class TimerService extends Service {
 
     NotificationCompat.Builder builder;
     private List<All_Time> all_timeList;
+    private Beforehand beforehand;
+    private List<Beforehand> beforehandList;
 
     All_Time NextTimer = null;
 
@@ -72,9 +74,15 @@ public class TimerService extends Service {
         oneDayTimeList = new OneDayTimeList(this, y, m, d);//하루일정 가져오기
 
         all_timeList = oneDayTimeList.getTimeList();
+        beforehandList = new ArrayList<>();
 
         NextTimer = null;
         BackgroundServiceLogic(calendar);
+
+        for (int i = 0; i < beforehandList.size(); i++) {
+            Log.d("=======================rrr", beforehandList.get(i).Time_h + ", " + beforehandList.get(i).Time_m + ", " + beforehandList.get(i).TimerName);
+
+        }
         if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList);
 
         if("start".equals(intent.getAction())){
@@ -190,11 +198,14 @@ public class TimerService extends Service {
 
             all_timeList = oneDayTimeList.getTimeList();
 
+
             TimerListUpData = false;
         } else {
             TimerListUpData = true;
         }
 
+
+        //============================================================알람 발생코드
         if(all_timeList != null){
             if(NextTimer == null){
                 AllNextTimeList.clear();
@@ -225,7 +236,36 @@ public class TimerService extends Service {
             Log.d("==============", "6");
             ForeGroundService("오늘 일정", "일정이 없습니다.", null);
         }
+        //=========================================================================
 
+        int Time_h, Time_m;
+        String TimerName = null;
+        beforehandList.clear();
+
+        for(All_Time item : oneDayTimeList.getTimeList()){
+
+            if(item.isBeforehand()){
+                if(item.getTime_Minute() >= item.getBeforehandTime() / 60){
+                    Time_m = item.getTime_Minute() - item.getBeforehandTime() / 60;
+                    Time_h = item.getTime_Hour();
+                }else{
+                    Time_m = (item.getTime_Minute() + 60) - item.getBeforehandTime() / 60;
+                    Time_h = item.getTime_Hour() - 1;
+                }
+
+                TimerName = item.getName();
+
+                beforehand = new Beforehand(Time_h, Time_m, TimerName);
+                beforehandList.add(beforehand);
+            }
+
+
+        }
+
+        //=============================================================예고 발생코드
+        if(beforehandList != null){
+
+        }
 
     }
 
@@ -252,5 +292,17 @@ public class TimerService extends Service {
         }
 
         return false;
+    }
+
+    public class Beforehand{
+
+        int Time_h, Time_m;
+        String TimerName = null;
+        public Beforehand(int Time_h, int Time_m, String TimerName){
+            this.Time_h = Time_h;
+            this.Time_m = Time_m;
+            this.TimerName = TimerName;
+
+        }
     }
 }

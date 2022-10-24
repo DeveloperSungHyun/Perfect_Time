@@ -14,7 +14,7 @@ public class Time24_to_12Hour {
         else if(Time24Hour >= 13) Time12Hour = Time24Hour - 12;
         else Time12Hour = Time24Hour;
 
-        return Time12Hour;
+        return Time24Hour;
     }
 
     public boolean getAmPm(){

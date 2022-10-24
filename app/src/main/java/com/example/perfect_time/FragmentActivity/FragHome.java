@@ -56,7 +56,7 @@ public class FragHome extends Fragment {
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
 
     int y, m, d;
-    Boolean ToDay = true;
+    Boolean ToDay = false;
 
     public static FragHome newInstance(){
         FragHome fragHome = new FragHome();
@@ -193,18 +193,34 @@ public class FragHome extends Fragment {
 
     int viewType = 1;
     private void recyclerView_ListShow(){
-        for(All_Time data : all_times){
 
-//            int Color;
+        for(All_Time data : all_times){
 
             if(data.isTimer_Activate() == true){
 
-//                if(calendar.get(Calendar.HOUR) < data.getTime_Hour() ||
-//                        (calendar.get(Calendar.HOUR) == data.getTime_Hour() && calendar.get(Calendar.MINUTE) < data.getTime_Minute())){
-//                    Color = 0xFF000000;
-//                }else{
-//                    Color = 0xFF000000;
-//                }
+                if(ToDay) viewType = 1;
+                else viewType = 2;
+
+                recyclerView_listItem =
+                        new RecyclerView_ListItem(1
+                                , data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
+                                data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(),null, 0xFF000000, FragmentType.fragHome);
+
+                ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+            }
+        }
+
+
+        //=======================
+
+        oneDayTimeList = new OneDayTimeList(view.getContext(), y, m, d + 1);
+
+        int ItemNumCount = 0;
+        for(All_Time data : oneDayTimeList.getTimeList()){
+
+            ItemNumCount++;
+
+            if(data.isTimer_Activate() == true){
 
                 if(ToDay) viewType = 1;
                 else viewType = 2;
@@ -216,6 +232,8 @@ public class FragHome extends Fragment {
 
                 ListItem.add(recyclerView_listItem);//리스트 아이템 추가
             }
+
+            if(ItemNumCount >= 3) break;
         }
 
         recyclerView_listAdapter.notifyDataSetChanged();//
