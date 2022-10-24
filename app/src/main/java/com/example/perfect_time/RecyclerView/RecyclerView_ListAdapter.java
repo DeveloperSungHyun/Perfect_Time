@@ -64,8 +64,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             }
             case 2:{
                 another_day = false;
-                view = inflater.inflate(R.layout.disabled_list_view, parent, false);
-                return new DisabledListView(view);
+                view = inflater.inflate(R.layout.next_day_line, parent, false);
+                return new NextDayLine(view);
             }
         }
 
@@ -454,6 +454,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             ImageView_vibration = itemView.findViewById(R.id.ImageView_vibration);
             ImageView_popup = itemView.findViewById(R.id.ImageView_popup);
 
+        }
+    }
+
+    public class NextDayLine extends RecyclerView.ViewHolder{
+
+        public NextDayLine(@NonNull View itemView) {
+            super(itemView);
         }
     }
 }

@@ -211,7 +211,15 @@ public class FragHome extends Fragment {
         }
 
 
+
+
         //=======================
+
+        recyclerView_listItem =
+                new RecyclerView_ListItem(2,false, false, null, null, 0, 0,
+                        false, false, false,null, 0xFF000000, FragmentType.fragHome);
+
+        ListItem.add(recyclerView_listItem);//리스트 아이템 추가
 
         oneDayTimeList = new OneDayTimeList(view.getContext(), y, m, d + 1);
 
@@ -226,7 +234,7 @@ public class FragHome extends Fragment {
                 else viewType = 2;
 
                 recyclerView_listItem =
-                        new RecyclerView_ListItem(viewType
+                        new RecyclerView_ListItem(1
                                 , data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
                                 data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(),null, 0xFF000000, FragmentType.fragHome);
 
