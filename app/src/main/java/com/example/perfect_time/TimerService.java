@@ -34,8 +34,7 @@ public class TimerService extends Service {
     private List<Beforehand> beforehandList;
 
     All_Time NextTimer = null;
-
-    All_Time all_time = null;
+    Beforehand NextBeforehand = null;
 
     Calendar calendar;
 
@@ -76,14 +75,37 @@ public class TimerService extends Service {
         all_timeList = oneDayTimeList.getTimeList();
         beforehandList = new ArrayList<>();
 
+
+
+        int Time_h, Time_m;
+        String TimerName = null;
+        beforehandList.clear();
+
+        for(All_Time item : oneDayTimeList.getTimeList()){
+
+            if(item.isBeforehand()){
+                if(item.getTime_Minute() >= item.getBeforehandTime() / 60){
+                    Time_m = item.getTime_Minute() - item.getBeforehandTime() / 60;
+                    Time_h = item.getTime_Hour();
+                }else{
+                    Time_m = (item.getTime_Minute() + 60) - item.getBeforehandTime() / 60;
+                    Time_h = item.getTime_Hour() - 1;
+                }
+
+                TimerName = item.getName();
+
+                beforehand = new Beforehand(Time_h, Time_m, TimerName);
+                beforehandList.add(beforehand);
+            }
+
+
+        }
+
+        beforehand = null;
         NextTimer = null;
         BackgroundServiceLogic(calendar);
 
-        for (int i = 0; i < beforehandList.size(); i++) {
-            Log.d("=======================rrr", beforehandList.get(i).Time_h + ", " + beforehandList.get(i).Time_m + ", " + beforehandList.get(i).TimerName);
-
-        }
-        if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList);
+        if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList, false);
 
         if("start".equals(intent.getAction())){
 
@@ -115,7 +137,7 @@ public class TimerService extends Service {
 
     }
 
-    private void ForeGroundService(String Title, String Content, List<String> AllNextTimeList){
+    private void ForeGroundService(String Title, String Content, List<String> AllNextTimeList, boolean NotificationHead){
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
@@ -124,7 +146,7 @@ public class TimerService extends Service {
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if(all_timeList != null){
-            if(false){
+            if(NotificationHead){
                 builder = new NotificationCompat.Builder(this, "HeadUp");
             }else{
                 builder = new NotificationCompat.Builder(this, "NoneHeadUp");
@@ -149,13 +171,12 @@ public class TimerService extends Service {
             }
 
             builder.setContentIntent(pendingIntent);
-            if(false){
-                Log.d("Popup_Activate", "==========");
+            if(NotificationHead){
                 builder.setFullScreenIntent(pendingIntent, true);
             }
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                if(false){
+                if(NotificationHead){
                     manager.createNotificationChannel(new NotificationChannel("HeadUp", "HeadUp", NotificationManager.IMPORTANCE_HIGH));
                 }else {
                     manager.createNotificationChannel(new NotificationChannel("NoneHeadUp", "NoneHeadUp", NotificationManager.IMPORTANCE_LOW));
@@ -217,9 +238,9 @@ public class TimerService extends Service {
                             if(NextTimer == null)NextTimer = all_timeList.get(i);//다음 알림
                             //AllNextTimeList += all_timeList.get(i) + "\n";
                             AllNextTimeList.add((i + 1) + ". " + all_timeList.get(i).getName() + " (" + all_timeList.get(i).getTime_Hour() + "시 " + all_timeList.get(i).getTime_Minute() + "분)");
-                            Log.d("==========================", all_timeList.get(i).getName());
                         }else{//다음 알림이 없을때
-                            ForeGroundService("오늘 일정", "일정이 없습니다.", null);
+                            //ForeGroundService("오늘 일정", "일정이 없습니다.", null);
+                            //Log.d("ForeGroundService", "알림내용 없음1");
                         }
                     }
 
@@ -227,46 +248,41 @@ public class TimerService extends Service {
 
 
             }else if(NextTimer.getTime_Hour() == NowTime_H && NextTimer.getTime_Minute() == NowTime_M){//알람시간이 됬을경우
-                if(NextTimer != null) ForeGroundService(NextTimer.getName(), NextTimer.getMemo(), null);
-                Log.d("==============", "5");
-                NextTimer = null;
+                if(NextTimer != null){
+                    ForeGroundService(NextTimer.getName(), NextTimer.getMemo(), null, false);
+                    NextTimer = null;
+                }
+
             }
 
         }else{
-            Log.d("==============", "6");
-            ForeGroundService("오늘 일정", "일정이 없습니다.", null);
+            ForeGroundService("오늘 일정", "일정이 없습니다.", null, false);
         }
         //=========================================================================
 
-        int Time_h, Time_m;
-        String TimerName = null;
-        beforehandList.clear();
+        //=============================================================예고 발생코드
+        if(beforehandList != null) {
 
-        for(All_Time item : oneDayTimeList.getTimeList()){
+            if(beforehand == null) {
+                Log.d("==================1", "");
+                for (int i = 0; i < beforehandList.size(); i++) {
+                    Log.d("==================2", "");
+                    if (beforehandList.get(i).Time_h > NowTime_H ||
+                            (beforehandList.get(i).Time_h == NowTime_H && beforehandList.get(i).Time_m > NowTime_M)) {
 
-            if(item.isBeforehand()){
-                if(item.getTime_Minute() >= item.getBeforehandTime() / 60){
-                    Time_m = item.getTime_Minute() - item.getBeforehandTime() / 60;
-                    Time_h = item.getTime_Hour();
-                }else{
-                    Time_m = (item.getTime_Minute() + 60) - item.getBeforehandTime() / 60;
-                    Time_h = item.getTime_Hour() - 1;
+                        beforehand = beforehandList.get(i);//다음 알림
+                        Log.d("beforehand", "=============" + beforehand.TimerName);
+                        break;
+                    }
+                }
+            }else if(beforehand.Time_h == NowTime_H && beforehand.Time_m == NowTime_M){//알람시간이 됬을경우
+                if(beforehand != null){
+                    ForeGroundService(beforehand.TimerName, "곧 알람이 울립니다.", null, true);
+                    beforehand = null;
                 }
 
-                TimerName = item.getName();
-
-                beforehand = new Beforehand(Time_h, Time_m, TimerName);
-                beforehandList.add(beforehand);
             }
-
-
         }
-
-        //=============================================================예고 발생코드
-        if(beforehandList != null){
-
-        }
-
     }
 
     @Override
