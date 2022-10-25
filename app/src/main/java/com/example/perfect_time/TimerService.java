@@ -106,6 +106,7 @@ public class TimerService extends Service {
         BackgroundServiceLogic(calendar);
 
         if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList, false);
+        else ForeGroundService("알람이 없습니다.", null, null, false);
 
         if("start".equals(intent.getAction())){
 
@@ -249,7 +250,10 @@ public class TimerService extends Service {
 
             }else if(NextTimer.getTime_Hour() == NowTime_H && NextTimer.getTime_Minute() == NowTime_M){//알람시간이 됬을경우
                 if(NextTimer != null){
-                    ForeGroundService(NextTimer.getName(), NextTimer.getMemo(), null, false);
+                    AllNextTimeList.clear();
+
+                    AllNextTimeList.add(NextTimer.getMemo());
+                    ForeGroundService(NextTimer.getName(), NextTimer.getMemo(), AllNextTimeList, false);
                     NextTimer = null;
                 }
 
