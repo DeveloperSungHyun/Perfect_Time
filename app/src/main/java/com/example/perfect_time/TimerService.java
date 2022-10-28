@@ -46,6 +46,8 @@ public class TimerService extends Service {
     int y, m, d;
     int NowTime_H, NowTime_M;
 
+    int AutoOffTime_h, AutoOffTime_m;
+
     //String AllNextTimeList;
     ArrayList<String> AllNextTimeList = new ArrayList<>();
     String str_AllNextTimeList;
@@ -228,6 +230,7 @@ public class TimerService extends Service {
 
 
         //============================================================알람 발생코드
+
         if(all_timeList != null){
             if(NextTimer == null){
                 AllNextTimeList.clear();
@@ -249,11 +252,20 @@ public class TimerService extends Service {
 
 
             }else if(NextTimer.getTime_Hour() == NowTime_H && NextTimer.getTime_Minute() == NowTime_M){//알람시간이 됬을경우
+                Log.d("=============================", "A");
                 if(NextTimer != null){
                     AllNextTimeList.clear();
 
                     AllNextTimeList.add(NextTimer.getMemo());
                     ForeGroundService(NextTimer.getName(), NextTimer.getMemo(), AllNextTimeList, false);
+
+                    if((NextTimer.getTime_Minute() + NextTimer.getAutoOffTime() / 60) >= 60){
+                        AutoOffTime_m = (NextTimer.getTime_Minute() + NextTimer.getAutoOffTime() / 60) - 60;
+                        AutoOffTime_h = NextTimer.getTime_Hour() + 1;
+                    }else{
+                        AutoOffTime_m = NextTimer.getTime_Minute() + NextTimer.getAutoOffTime() / 60;
+                        AutoOffTime_h = NextTimer.getTime_Hour();
+                    }
                     NextTimer = null;
                 }
 
@@ -286,6 +298,13 @@ public class TimerService extends Service {
                 }
 
             }
+        }
+
+        //=============================================================알림 차단코드
+        if(AutoOffTime_h == NowTime_H && AutoOffTime_m == NowTime_M){
+            if(NextTimer != null && NextTimer.isVibration_Activate())ForeGroundService("다음 일정", NextTimer.getName(), AllNextTimeList, false);
+            else ForeGroundService("알람이 없습니다.", null, null, false);
+            AutoOffTime_h = AutoOffTime_m = 0;
         }
     }
 
