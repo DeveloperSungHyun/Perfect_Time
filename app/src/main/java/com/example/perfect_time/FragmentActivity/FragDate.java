@@ -95,6 +95,7 @@ public class FragDate extends Fragment {
         }
 
         recyclerView_listAdapter.notifyDataSetChanged();//
+        recyclerView_listItem = null;
     }
 
     @Nullable

@@ -89,6 +89,7 @@ public class FragEveryDay extends Fragment {
                             data.getTime_Minute(), data.isSound_Activate(), data.isVibration_Activate(), data.isPopup_Activate(),null, 0xFF000000, FragmentType.fragEveryDay);
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+            recyclerView_listItem = null;
         }
 
         recyclerView_listAdapter.notifyDataSetChanged();//
