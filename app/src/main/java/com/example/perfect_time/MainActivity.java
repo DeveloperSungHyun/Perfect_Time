@@ -8,10 +8,14 @@ import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 import androidx.work.ForegroundUpdater;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.view.DragEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -62,6 +66,17 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         IdMapping();
+
+        PowerManager pm= (PowerManager) getSystemService(Context.POWER_SERVICE);
+        String packageName= getPackageName();
+        if (pm.isIgnoringBatteryOptimizations(packageName) ){
+
+        } else {    // 메모리 최적화가 되어 있다면, 풀기 위해 설정 화면 띄움.
+            Intent intent=new Intent();
+            intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:" + packageName));
+            startActivityForResult(intent,0);
+        }
 
         Intent intent = new Intent(this, TimerService.class);
         intent.setAction("start");

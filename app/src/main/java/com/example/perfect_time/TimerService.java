@@ -1,5 +1,6 @@
 package com.example.perfect_time;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.Notification;
@@ -13,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.Window;
 
@@ -26,6 +28,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TimerService extends Service {
+    private static PowerManager.WakeLock sCpuWakeLock;
+    PowerManager pm;
+
     NotificationManager manager;
 
     NotificationCompat.Builder builder;
@@ -122,10 +127,12 @@ public class TimerService extends Service {
 
     }
 
+    @SuppressLint("InvalidWakeLockTag")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //현재 날짜 시간 가져오기
         StartSettings();
+
 
 
         if("start".equals(intent.getAction())){
@@ -163,26 +170,28 @@ public class TimerService extends Service {
         NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
         NowTime_M = calendar.get(Calendar.MINUTE);
 
-        if(all_timeList.get(TimerCount).getTime_Hour() == NowTime_H && all_timeList.get(TimerCount).getTime_Minute() == NowTime_M){
+        if(all_timeList.get(TimerCount).getTime_Hour() == NowTime_H && all_timeList.get(TimerCount).getTime_Minute() == NowTime_M && all_timeList.size() > TimerCount){
 
             ForeGroundService(all_timeList.get(TimerCount).getName(), all_timeList.get(TimerCount).getMemo(),all_timeList.get(TimerCount).getMemo(), false);
 
             TimerCount++;//다음 타이머 리스트
         }
 
-        if(beforehandList.get(Beforehand_TimerCount).Time_h == NowTime_H && beforehandList.get(Beforehand_TimerCount).Time_m == NowTime_M){
+        if(beforehandList.get(Beforehand_TimerCount).Time_h == NowTime_H && beforehandList.get(Beforehand_TimerCount).Time_m == NowTime_M && beforehandList.size() > Beforehand_TimerCount){
 
-            ForeGroundService(all_timeList.get(TimerCount).getName(), all_timeList.get(TimerCount).getMemo(), null, true);
+            ForeGroundService(all_timeList.get(TimerCount).getName(), all_timeList.get(TimerCount).getBeforehandTime() + "분 뒤에 알림이 울립니다.", null, true);
 
             Beforehand_TimerCount++;//다음 예고 타이머 리스트
 
         }
     }
 
+    @SuppressLint("InvalidWakeLockTag")
     private void ForeGroundService(String Title, String Content, String AllNextTimeList, boolean NotificationHead){
 
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        //Intent intent = new Intent(this, MainActivity.class);
+        Intent fullScreenIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, fullScreenIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         //builder.setContentIntent(pendingIntent);
 
         manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -190,16 +199,44 @@ public class TimerService extends Service {
         if(all_timeList != null){
             if(NotificationHead){
                 builder = new NotificationCompat.Builder(this, "HeadUp");
-                builder.setFullScreenIntent(pendingIntent, true);
+
+                pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+                sCpuWakeLock = pm.newWakeLock(
+                        PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
+                                PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                                PowerManager.ON_AFTER_RELEASE, "hi");
+
+                sCpuWakeLock.acquire();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
                     manager.createNotificationChannel(new NotificationChannel("HeadUp", "HeadUp", NotificationManager.IMPORTANCE_HIGH));
+
+
+                }
+
+                if (sCpuWakeLock != null) {
+                    sCpuWakeLock.release();
+                    sCpuWakeLock = null;
                 }
             }else{
                 builder = new NotificationCompat.Builder(this, "NoneHeadUp");
 
+                pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+                sCpuWakeLock = pm.newWakeLock(
+                        PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
+                                PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                                PowerManager.ON_AFTER_RELEASE, "hi");
+
+                sCpuWakeLock.acquire();
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     manager.createNotificationChannel(new NotificationChannel("NoneHeadUp", "NoneHeadUp", NotificationManager.IMPORTANCE_LOW));
+                }
+
+                if (sCpuWakeLock != null) {
+                    sCpuWakeLock.release();
+                    sCpuWakeLock = null;
                 }
             }
 
@@ -209,6 +246,12 @@ public class TimerService extends Service {
             builder.setContentTitle(Title);
             builder.setContentText(Content);
             builder.setContentIntent(pendingIntent);
+            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+            builder.addAction(R.drawable.calendar_icon, getString(R.string.app_name), pendingIntent);
+            builder.setFullScreenIntent(pendingIntent, true);
+            builder.setPriority(0);
+            builder.setDefaults(Notification.DEFAULT_VIBRATE);
+            builder.setColor(0xFFFF0000);
 
             if(AllNextTimeList != null){
 
