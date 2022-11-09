@@ -198,7 +198,7 @@ public class TimerService extends Service {
 
         if(all_timeList != null){
             if(NotificationHead){
-                builder = new NotificationCompat.Builder(this, "HeadUp");
+                builder = new NotificationCompat.Builder(this, "HeadUp1");
 
                 pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
                 sCpuWakeLock = pm.newWakeLock(
@@ -210,7 +210,7 @@ public class TimerService extends Service {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                    manager.createNotificationChannel(new NotificationChannel("HeadUp", "HeadUp", NotificationManager.IMPORTANCE_HIGH));
+                    manager.createNotificationChannel(new NotificationChannel("HeadUp1", "HeadUp1", NotificationManager.IMPORTANCE_HIGH));
 
 
                 }
