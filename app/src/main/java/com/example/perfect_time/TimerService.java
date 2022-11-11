@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.view.Window;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.example.perfect_time.Activity.DeviceOff;
 import com.example.perfect_time.Activity.TimerSettings;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TimerService extends Service {
+    private ScreenReceiver screenReceiver = null;
     private static PowerManager.WakeLock sCpuWakeLock;
     PowerManager pm;
 
@@ -124,6 +127,12 @@ public class TimerService extends Service {
 //        for (Beforehand beforehand : beforehandList){
 //            Log.d("===================beforehand", beforehand.Time_h + " : " + beforehand.Time_m + " , " + beforehand.TimerName);
 //        }
+
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
     }
 

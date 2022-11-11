@@ -32,6 +32,8 @@
         <activity android:name=".Activity.TimerSoundSetting" />
         <activity android:name=".Activity.TimerVibrationSetting" />
         <activity android:name=".Activity.Preferences" />
+        <activity android:name=".Activity.DeviceOff"/>
+        <receiver android:name=".ScreenReceiver"/>
     </application>
 
 </manifest>
