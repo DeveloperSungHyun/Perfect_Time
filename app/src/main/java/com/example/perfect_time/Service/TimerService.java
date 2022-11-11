@@ -1,8 +1,7 @@
-package com.example.perfect_time;
+package com.example.perfect_time.Service;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,20 +9,20 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.Window;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.example.perfect_time.Activity.DeviceOff;
-import com.example.perfect_time.Activity.TimerSettings;
+import com.example.perfect_time.All_Time;
+import com.example.perfect_time.MainActivity;
+import com.example.perfect_time.OneDayTimeList;
+import com.example.perfect_time.R;
+import com.example.perfect_time.ScreenReceiver;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,9 +33,7 @@ public class TimerService extends Service {
     private static PowerManager.WakeLock sCpuWakeLock;
     PowerManager pm;
 
-    NotificationManager manager;
-
-    NotificationCompat.Builder builder;
+    NotificationCompat.Builder builder_timer, builder_beforehandList;
     private List<All_Time> all_timeList;
     private Beforehand beforehand;
     private List<Beforehand> beforehandList;
@@ -130,9 +127,31 @@ public class TimerService extends Service {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onCreate() {
         super.onCreate();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel beforehand = new NotificationChannel("beforehand", "알림예고", NotificationManager.IMPORTANCE_LOW);//체널 생성
+            beforehand.setBypassDnd(true);
+            //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
+            beforehand.setLightColor(0xFFFF0000);
+            notificationManager.createNotificationChannel(beforehand);
+
+
+            NotificationChannel timer = new NotificationChannel("timer", "알람", NotificationManager.IMPORTANCE_HIGH);//체널 생성
+            timer.setBypassDnd(true);
+            timer.setShowBadge(true);
+            timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
+            timer.setLightColor(0xFFFFFFFF);
+            //timer.setLockscreenVisibility();
+            notificationManager.createNotificationChannel(timer);
+
+        }
 
     }
 
@@ -195,81 +214,45 @@ public class TimerService extends Service {
         }
     }
 
-    @SuppressLint("InvalidWakeLockTag")
     private void ForeGroundService(String Title, String Content, String AllNextTimeList, boolean NotificationHead){
-
-        //Intent intent = new Intent(this, MainActivity.class);
-        Intent fullScreenIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, fullScreenIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        //builder.setContentIntent(pendingIntent);
-
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if(all_timeList != null){
             if(NotificationHead){
-                builder = new NotificationCompat.Builder(this, "HeadUp1");
+                builder_timer = new NotificationCompat.Builder(this, "timer");
 
-                pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-                sCpuWakeLock = pm.newWakeLock(
-                        PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
-                                PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                                PowerManager.ON_AFTER_RELEASE, "hi");
+                builder_timer.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
+                builder_timer.setSmallIcon(R.drawable.calendar_icon);
+                builder_timer.setTicker("알람 간단한 설명");
+                builder_timer.setContentTitle(Title);
+                builder_timer.setContentText(Content);
+                builder_timer.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+                builder_timer.setPriority(0);
+                builder_timer.setDefaults(Notification.DEFAULT_VIBRATE);
 
-                sCpuWakeLock.acquire();
+                startForeground(1, builder_timer.build());
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                    manager.createNotificationChannel(new NotificationChannel("HeadUp1", "HeadUp1", NotificationManager.IMPORTANCE_HIGH));
-
-
-                }
-
-                if (sCpuWakeLock != null) {
-                    sCpuWakeLock.release();
-                    sCpuWakeLock = null;
-                }
             }else{
-                builder = new NotificationCompat.Builder(this, "NoneHeadUp");
+                builder_beforehandList = new NotificationCompat.Builder(this, "beforehand");
 
-                pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-                sCpuWakeLock = pm.newWakeLock(
-                        PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
-                                PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                                PowerManager.ON_AFTER_RELEASE, "hi");
+                builder_beforehandList.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
+                builder_beforehandList.setSmallIcon(R.drawable.calendar_icon);
+                builder_beforehandList.setTicker("알람 간단한 설명");
+                builder_beforehandList.setContentTitle(Title);
+                builder_beforehandList.setContentText(Content);
+                builder_beforehandList.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+                builder_beforehandList.setPriority(0);
+                builder_beforehandList.setDefaults(Notification.DEFAULT_VIBRATE);
 
-                sCpuWakeLock.acquire();
+                startForeground(1, builder_beforehandList.build());
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    manager.createNotificationChannel(new NotificationChannel("NoneHeadUp", "NoneHeadUp", NotificationManager.IMPORTANCE_LOW));
-                }
+//                if(AllNextTimeList != null){
+//                    builder_beforehandList.setStyle(new NotificationCompat.BigTextStyle().bigText(AllNextTimeList));
+//                }
 
-                if (sCpuWakeLock != null) {
-                    sCpuWakeLock.release();
-                    sCpuWakeLock = null;
-                }
-            }
-
-            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
-            builder.setSmallIcon(R.drawable.calendar_icon);
-            builder.setTicker("알람 간단한 설명");
-            builder.setContentTitle(Title);
-            builder.setContentText(Content);
-            builder.setContentIntent(pendingIntent);
-            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-            builder.addAction(R.drawable.calendar_icon, getString(R.string.app_name), pendingIntent);
-            builder.setFullScreenIntent(pendingIntent, true);
-            builder.setPriority(0);
-            builder.setDefaults(Notification.DEFAULT_VIBRATE);
-            builder.setColor(0xFFFF0000);
-
-            if(AllNextTimeList != null){
-
-                builder.setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(AllNextTimeList));
             }
 
         }
-        startForeground(1, builder.build());
+
     }
 
     @Override

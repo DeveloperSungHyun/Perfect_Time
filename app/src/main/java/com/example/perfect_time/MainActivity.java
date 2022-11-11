@@ -3,40 +3,27 @@ package com.example.perfect_time;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.room.Room;
-import androidx.viewpager.widget.ViewPager;
-import androidx.work.ForegroundUpdater;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
-import android.view.DragEvent;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.perfect_time.Activity.Preferences;
-import com.example.perfect_time.Activity.TimerSettings;
 import com.example.perfect_time.FragmentActivity.FragDate;
 import com.example.perfect_time.FragmentActivity.FragEveryDay;
 import com.example.perfect_time.FragmentActivity.FragHome;
 import com.example.perfect_time.FragmentActivity.FragWeek;
-import com.example.perfect_time.FragmentActivity.FragmentType;
+import com.example.perfect_time.Service.TimerService;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity{
 

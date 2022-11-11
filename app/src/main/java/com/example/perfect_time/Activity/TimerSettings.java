@@ -19,18 +19,13 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.room.Room;
 
 import com.example.perfect_time.DayOfTheWeek_Adapter;
 import com.example.perfect_time.DayOfTheWeek_Item;
@@ -41,14 +36,11 @@ import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.DayOfTheWeek.DB_Week;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
-import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
-import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.Time24_to_12Hour;
-import com.example.perfect_time.TimerService;
+import com.example.perfect_time.Service.TimerService;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.List;
 
