@@ -160,9 +160,9 @@ public class TimerSettings extends Activity {
         Switch_popup.setChecked(settingValue.isPopup_Activate());
 
         Switch_beforehand.setChecked(settingValue.isBeforehand());
-        TextView_beforehand_Set.setText(new Second_to_Minute(settingValue.getBeforehandTime()).getTypeChange());
+        TextView_beforehand_Set.setText(settingValue.getBeforehandTime() + "분");
 
-        TextView_HolidayOff_Set.setText(new Second_to_Minute(settingValue.getAutoOffTime()).getTypeChange());
+        TextView_HolidayOff_Set.setText(settingValue.getAutoOffTime() + "분");
 
     }
     @Override
@@ -202,7 +202,7 @@ public class TimerSettings extends Activity {
 
             @Override
             public void onClick(View view) {
-                int TimeValue[] = {60, 180, 300, 600, 1800};
+                int TimeValue[] = {1, 3, 5, 10, 30};
 
                 TimeSettingDialog(TimeValue, 1);
             }
@@ -211,7 +211,7 @@ public class TimerSettings extends Activity {
         TextView_HolidayOff_Set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int TimeValue[] = {10, 30, 60, 180, 600};
+                int TimeValue[] = {1, 2, 3, 5};
 
                 TimeSettingDialog(TimeValue, 2);
             }
@@ -324,7 +324,7 @@ public class TimerSettings extends Activity {
 
 
         for(int i = 0; i < ArraySize; i++){
-            versionArray[i] = new Second_to_Minute(TimeValue[i]).getTypeChange();
+            versionArray[i] = TimeValue[i] + "분";
         }
 
         AlertDialog.Builder dlg = new AlertDialog.Builder(TimerSettings.this);
@@ -362,28 +362,6 @@ public class TimerSettings extends Activity {
     }
 
 
-    class Second_to_Minute{
-        int Second;
-
-        String value;
-
-        public Second_to_Minute(int Second) {
-            this.Second = Second;
-        }
-
-        public String getTypeChange(){
-
-            if(Second >= 60){
-                value = Second / 60 + "분";
-            }else{
-                value = Second + "초";
-            }
-
-            return value;
-        }
-
-    }
-
     private void NewTimerCommonLogic(){//알람 추가시 디폴트 값
 
         settingValue.setTimer_Activate(true);//알람 활성화 유무
@@ -405,9 +383,9 @@ public class TimerSettings extends Activity {
         settingValue.setPopup_Activate(false);
 
         settingValue.setBeforehand(true);
-        settingValue.setBeforehandTime(60 * 5);//초단위
+        settingValue.setBeforehandTime(5);//분단위
 
-        settingValue.setAutoOffTime(60);
+        settingValue.setAutoOffTime(1);
 
         InterfaceSetting();
     }
