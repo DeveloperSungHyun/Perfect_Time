@@ -12,6 +12,8 @@ public class TimerSequential {
     Calendar calendar;
     int NowTime_H, NowTime_M;
 
+    int Num_Count = 0;
+    //==============================
     OneDayTimeList oneDayTimeList;
 
     int ToDayTimer_H, ToDayTimer_M;
@@ -28,6 +30,7 @@ public class TimerSequential {
 
     public void TimeListSetting(){
 
+        Num_Count = 0;
         for(All_Time all_time : oneDayTimeList.getTimeList()){
 
             calendar = Calendar.getInstance();
@@ -43,11 +46,20 @@ public class TimerSequential {
                     ToDayTimer_Memo = all_time.getMemo();
                     Important = all_time.isImportant();
 
+                    Num_Count++;
                     Log.d("Time", all_time.getTime_Hour() + " : " + all_time.getTime_Minute() + " | " + all_time.getName());
                     break;
                 }
             }
         }
+    }
+
+    public int get_ToDayTimerSize(){//알람 리스트 개수
+        return oneDayTimeList.getTimeList().size();
+    }
+
+    public int get_NextTimerSize(){//남은 알람 개수
+        return get_ToDayTimerSize() - Num_Count;
     }
 
     public int getToDayTimer_H() {
