@@ -55,26 +55,10 @@ public class TimerService extends Service {
 
     void StartSettings(){
 
-        calendar = Calendar.getInstance();
-
-        y = calendar.get(Calendar.YEAR);
-        m = calendar.get(Calendar.MONDAY) + 1;
-        d = calendar.get(Calendar.DATE);
-
-        oneDayTimeList = new OneDayTimeList(this, y, m, d);//하루일정 가져오기
-        timerSequential = new TimerSequential(oneDayTimeList);//알람 정보
+        timerSequential = new TimerSequential(this);//알람 정보
+        timerSequential.TimeDataUpDate();
     }
 
-    void TimeListUpDate(){
-
-        timerSequential.TimeListSetting();
-
-        Timer_H = timerSequential.getToDayTimer_H();
-        Timer_M = timerSequential.getToDayTimer_M();
-
-        Timer_Name = timerSequential.getToDayTimer_Name();
-        Timer_Memo = timerSequential.getToDayTimer_Memo();
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -108,8 +92,6 @@ public class TimerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         //현재 날짜 시간 가져오기
         StartSettings();
-        TimeListUpDate();
-
 
         if("start".equals(intent.getAction())){
             ForeGroundService("다음일정", "오늘 알림이 없습니다.", null, false);
@@ -151,7 +133,6 @@ public class TimerService extends Service {
         Log.d("Timer_H", "====" + Timer_Name);
         if(Timer_H == NewTime_H && Timer_M == NewTime_M){
             ForeGroundService(Timer_Name, Timer_Memo, Timer_Memo, false);
-            TimeListUpDate();
         }
 
     }
