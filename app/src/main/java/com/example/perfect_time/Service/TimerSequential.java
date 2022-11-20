@@ -8,7 +8,6 @@ import com.example.perfect_time.OneDayTimeList;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class TimerSequential {
 
@@ -19,25 +18,8 @@ public class TimerSequential {
     //==============================
     OneDayTimeList oneDayTimeList;
 
-    ArrayList<TimeData> timeDataArrayList, Warning_timeDataArrayList;
-
-    int Warning_ToDayTimer_H, Warning_ToDayTimer_M;
-    String Warning_ToDayTimer_Name, Warning_ToDayTimer_Memo;
-    boolean Warning_Important;
-
-    private class TimeData{//알람 데이터 클레스
-        int Timer_H, Timer_M;
-        String Timer_Name, Timer_Memo;
-        boolean Important;
-
-        TimeData(int Timer_H,int Timer_M,String Timer_Name,String Timer_Memo,boolean Important){
-            this.Timer_H = Timer_H;
-            this.Timer_M = Timer_M;
-            this.Timer_Name = Timer_Name;
-            this.Timer_Memo = Timer_Memo;
-            this.Important = Important;
-        }
-    }
+    ArrayList<Warning_TimeData> Warning_timeDataArrayList;
+    ArrayList<All_Time> ToDayTimerData;
 
     public TimerSequential(Context context){
         this.context = context;
@@ -58,7 +40,7 @@ public class TimerSequential {
 
         oneDayTimeList = new OneDayTimeList(context, y, m, d);//하루일정 가져오기
 
-        timeDataArrayList = new ArrayList<>();
+        ToDayTimerData = new ArrayList<>();
         Warning_timeDataArrayList = new ArrayList<>();
 
 
@@ -68,8 +50,7 @@ public class TimerSequential {
                 int Hour = all_time.getTime_Hour();
                 int Minute = all_time.getTime_Minute();
 
-                TimeData timeData = new TimeData(Hour, Minute, all_time.getName(), all_time.getMemo(), all_time.isImportant());
-                timeDataArrayList.add(timeData);
+                ToDayTimerData.add(all_time);
 
                 if(Minute - all_time.getBeforehandTime() < 0){
                     Minute = Minute - all_time.getBeforehandTime() + 60;
@@ -79,7 +60,7 @@ public class TimerSequential {
                 }
 
                 if(Hour >= 0){
-                    TimeData timeData_1 = new TimeData(Hour, Minute, all_time.getName(), all_time.getMemo(), all_time.isImportant());
+                    Warning_TimeData timeData_1 = new Warning_TimeData(Hour, Minute, all_time.getName(), all_time.getMemo(), all_time.isImportant());
                     Warning_timeDataArrayList.add(timeData_1);
                 }
 
@@ -108,7 +89,7 @@ public class TimerSequential {
                         Minute = Minute - all_time.getBeforehandTime() + 60;
                         Hour = 23;
 
-                        TimeData timeData_1 = new TimeData(Hour, Minute, all_time.getName(), all_time.getMemo(), all_time.isImportant());
+                        Warning_TimeData timeData_1 = new Warning_TimeData(Hour, Minute, all_time.getName(), all_time.getMemo(), all_time.isImportant());
                         Warning_timeDataArrayList.add(timeData_1);
                     }
                 }
@@ -127,24 +108,78 @@ public class TimerSequential {
                     Min_Index = j;
                 }
             }
-            TimeData SaveDate = Warning_timeDataArrayList.get(i);
+            Warning_TimeData SaveDate = Warning_timeDataArrayList.get(i);
             Warning_timeDataArrayList.set(i, Warning_timeDataArrayList.get(Min_Index));
             Warning_timeDataArrayList.set(Min_Index, SaveDate);
         }
 
 
-        for(TimeData data : Warning_timeDataArrayList){//TEST
+        for(Warning_TimeData data : Warning_timeDataArrayList){//TEST
             Log.d("===timeDataArrayList====", data.Timer_Name + data.Timer_H + " : " + data.Timer_M);
+        }
+
+        for(All_Time data : ToDayTimerData){//TEST
+            Log.d("===ToDayTimerData====", data.getName() + data.getTime_Hour() + " : " + data.getTime_Minute());
         }
     }
 
+    //=================================================
 
-
-    public void Warning_TimeListSetting(){
-
-
+    public ArrayList<All_Time> ToDayTimer_getData(){
+        return ToDayTimerData;
     }
 
-    //=================================================
+    public ArrayList<Warning_TimeData> ToDay_WarningTimer_getData(){
+        return Warning_timeDataArrayList;
+    }
+
+    public All_Time Next_getTimer(){
+        calendar = Calendar.getInstance();
+
+        int NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
+        int NowTime_M = calendar.get(Calendar.MINUTE);
+
+        for(All_Time time : ToDayTimer_getData()){
+            if(NowTime_H < time.getTime_Hour() || (NowTime_H == time.getTime_Hour() && NowTime_M < time.getTime_Minute())){
+                return time;
+            }
+        }
+
+        return null;
+    }
+
+    public Warning_TimeData NextWarning_getTimer(){
+        calendar = Calendar.getInstance();
+
+        int NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
+        int NowTime_M = calendar.get(Calendar.MINUTE);
+
+        Log.d("NowTime_H=========================", NowTime_H + " : " + NowTime_M);
+
+        for(Warning_TimeData time : ToDay_WarningTimer_getData()){
+            if(NowTime_H < time.Timer_H || (NowTime_H == time.Timer_H && NowTime_M < time.Timer_M)){
+                return time;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<All_Time> NextTimerList(){
+
+        ArrayList<All_Time> all_times = new ArrayList<>();
+        calendar = Calendar.getInstance();
+
+        int NowTime_H = calendar.get(Calendar.HOUR_OF_DAY);
+        int NowTime_M = calendar.get(Calendar.MINUTE);
+
+        for(All_Time time : ToDayTimer_getData()){
+            if(NowTime_H < time.getTime_Hour() || (NowTime_H == time.getTime_Hour() && NowTime_M < time.getTime_Minute())){
+                all_times.add(time);
+            }
+        }
+
+        return all_times;
+    }
 
 }

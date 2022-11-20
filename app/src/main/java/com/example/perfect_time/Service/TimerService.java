@@ -29,19 +29,17 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TimerService extends Service {
-
     NotificationCompat.Builder builder_timer, builder_beforehandList;
-
     Calendar calendar;
-
     Thread thread;
 
-    OneDayTimeList oneDayTimeList;
     TimerSequential timerSequential;
+
+    All_Time Next_Timer = null;
+    Warning_TimeData NextWarning_Timer = null;
 
     int y, m, d;
 
-    int Timer_H, Timer_M;
     String Timer_Name, Timer_Memo;
 
     public TimerService() {
@@ -56,7 +54,10 @@ public class TimerService extends Service {
     void StartSettings(){
 
         timerSequential = new TimerSequential(this);//알람 정보
-        timerSequential.TimeDataUpDate();
+        timerSequential.TimeDataUpDate();//알람 업데이트
+
+        Next_Timer = timerSequential.Next_getTimer();
+        NextWarning_Timer = timerSequential.NextWarning_getTimer();
     }
 
 
@@ -94,7 +95,8 @@ public class TimerService extends Service {
         StartSettings();
 
         if("start".equals(intent.getAction())){
-            ForeGroundService("다음일정", "오늘 알림이 없습니다.", null, false);
+            NextTimer_NotificationShow();
+
             //ForeGroundService("오늘알림", "일정","일정 목록", false);
 
             if(thread == null){
@@ -125,14 +127,29 @@ public class TimerService extends Service {
     }
 
     private void BackgroundServiceLogic(Calendar calendar){
+
         int NewTime_H, NewTime_M;
 
         NewTime_H = calendar.get(Calendar.HOUR_OF_DAY);
         NewTime_M = calendar.get(Calendar.MINUTE);
 
-        Log.d("Timer_H", "====" + Timer_Name);
-        if(Timer_H == NewTime_H && Timer_M == NewTime_M){
-            ForeGroundService(Timer_Name, Timer_Memo, Timer_Memo, false);
+        if(Next_Timer == null){
+            Next_Timer = timerSequential.Next_getTimer();
+        }
+        if(NextWarning_Timer == null){
+            NextWarning_Timer = timerSequential.NextWarning_getTimer();
+        }
+
+        if(Next_Timer.getTime_Hour() == NewTime_H && Next_Timer.getTime_Minute() == NewTime_M){
+            ForeGroundService(Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), false);
+
+            Next_Timer = null;
+        }
+
+        if(NextWarning_Timer.Timer_H == NewTime_H && NextWarning_Timer.Timer_M == NewTime_M){
+            ForeGroundService(Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), true);
+
+            NextWarning_Timer = null;
         }
 
     }
@@ -180,8 +197,23 @@ public class TimerService extends Service {
     }
 
     void NextTimer_NotificationShow(){
-        ForeGroundService("다음일정", "다음 일정은 없습니다.", null, false);
-    }
+        String NameList = "";
+        if(timerSequential.NextTimerList().size() > 0){
+            for (int i = 0; i < timerSequential.NextTimerList().size(); i++){
+                All_Time time = timerSequential.NextTimerList().get(i);
+                NameList += "(" + time.getTime_Hour() + "시 " + time.getTime_Minute() + "분) " + time.getName();
+
+                if(time.isImportant()){
+                    NameList += "★";
+                }
+                if(i < timerSequential.NextTimerList().size() - 1){
+                    NameList += "\n";
+                }
+            }
+            ForeGroundService("다음일정", NameList, null, false);
+        } else if(timerSequential.NextTimerList().size() == 0){
+            ForeGroundService("다음일정", "오늘 알림이 없습니다.", null, false);
+        }    }
 
     @Override
     public void onDestroy() {
