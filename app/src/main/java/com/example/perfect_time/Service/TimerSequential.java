@@ -174,7 +174,7 @@ public class TimerSequential {
         int NowTime_M = calendar.get(Calendar.MINUTE);
 
         for(All_Time time : ToDayTimer_getData()){
-            if(NowTime_H < time.getTime_Hour() || (NowTime_H == time.getTime_Hour() && NowTime_M < time.getTime_Minute())){
+            if(NowTime_H < time.getTime_Hour() || (NowTime_H == time.getTime_Hour() && NowTime_M <= time.getTime_Minute())){
                 all_times.add(time);
             }
         }

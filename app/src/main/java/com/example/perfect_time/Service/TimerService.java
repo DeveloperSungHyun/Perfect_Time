@@ -126,6 +126,7 @@ public class TimerService extends Service {
 
     }
 
+    int AutoOffTime = 0;
     private void BackgroundServiceLogic(Calendar calendar){
 
         int NewTime_H, NewTime_M;
@@ -133,23 +134,29 @@ public class TimerService extends Service {
         NewTime_H = calendar.get(Calendar.HOUR_OF_DAY);
         NewTime_M = calendar.get(Calendar.MINUTE);
 
-        if(Next_Timer == null){
-            Next_Timer = timerSequential.Next_getTimer();
+        if(Next_Timer != null) {
+            if (Next_Timer.getTime_Hour() == NewTime_H && Next_Timer.getTime_Minute() == NewTime_M) {
+                ForeGroundService(Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), false);
+                AutoOffTime = Next_Timer.getTime_Minute() + Next_Timer.getAutoOffTime();
+                if (AutoOffTime >= 60) AutoOffTime = -60;
+
+            } else if (AutoOffTime == NewTime_M) {
+                Next_Timer = timerSequential.Next_getTimer();
+                NextTimer_NotificationShow();
+            }
+        }else{
+
+            if(NewTime_H == 0 && NewTime_M == 0 && timerSequential.NextTimerList().size() == 0){//하루가 지나면 알람데이터 갱신
+                StartSettings();
+            }
         }
-        if(NextWarning_Timer == null){
-            NextWarning_Timer = timerSequential.NextWarning_getTimer();
-        }
 
-        if(Next_Timer.getTime_Hour() == NewTime_H && Next_Timer.getTime_Minute() == NewTime_M){
-            ForeGroundService(Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), false);
+        if(NextWarning_Timer != null) {
+            if (NextWarning_Timer.Timer_H == NewTime_H && NextWarning_Timer.Timer_M == NewTime_M) {
+                ForeGroundService(Next_Timer.getTime_Minute() + "분에 " + Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), true);
 
-            Next_Timer = null;
-        }
-
-        if(NextWarning_Timer.Timer_H == NewTime_H && NextWarning_Timer.Timer_M == NewTime_M){
-            ForeGroundService(Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), true);
-
-            NextWarning_Timer = null;
+                NextWarning_Timer = timerSequential.NextWarning_getTimer();
+            }
         }
 
     }
@@ -210,10 +217,16 @@ public class TimerService extends Service {
                     NameList += "\n";
                 }
             }
-            ForeGroundService("다음일정", NameList, null, false);
+            ForeGroundService("다음일정", NameList, NameList, false);
         } else if(timerSequential.NextTimerList().size() == 0){
-            ForeGroundService("다음일정", "오늘 알림이 없습니다.", null, false);
-        }    }
+            if(timerSequential.ToDayTimerData.size() > 0){
+                ForeGroundService("다음일정", "다음 일정은 없습니다.", null, false);
+            }else{
+                ForeGroundService("다음일정", "오늘 일정이 없습니다.", null, false);
+            }
+
+        }
+    }
 
     @Override
     public void onDestroy() {
