@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -32,8 +33,7 @@
         <activity android:name=".Activity.TimerSoundSetting" />
         <activity android:name=".Activity.TimerVibrationSetting" />
         <activity android:name=".Activity.Preferences" />
-        <activity android:name=".Activity.DeviceOff"/>
-        <receiver android:name=".ScreenReceiver"/>
+
     </application>
 
 </manifest>

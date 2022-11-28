@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -19,16 +18,16 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.example.perfect_time.All_Time;
-import com.example.perfect_time.MainActivity;
-import com.example.perfect_time.OneDayTimeList;
 import com.example.perfect_time.R;
-import com.example.perfect_time.ScreenReceiver;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class TimerService extends Service {
+
+    PowerManager powerManager;
+
+    PowerManager.WakeLock wakeLock;
+
     NotificationCompat.Builder builder_timer, builder_beforehandList;
     Calendar calendar;
     Thread thread;
@@ -38,11 +37,8 @@ public class TimerService extends Service {
     All_Time Next_Timer = null;
     Warning_TimeData NextWarning_Timer = null;
 
-    int y, m, d;
-
-    String Timer_Name, Timer_Memo;
-
     public TimerService() {
+
     }
 
     @Override
@@ -56,15 +52,23 @@ public class TimerService extends Service {
         timerSequential = new TimerSequential(this);//알람 정보
         timerSequential.TimeDataUpDate();//알람 업데이트
 
-        Next_Timer = timerSequential.Next_getTimer();
-        NextWarning_Timer = timerSequential.NextWarning_getTimer();
+        Next_Timer = timerSequential.Next_getTimer();//다음 알림
+        NextWarning_Timer = timerSequential.NextWarning_getTimer();//다음 알림예고
     }
 
 
+    @SuppressLint("InvalidWakeLockTag")
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "WAKELOCK");
+
+
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -127,6 +131,7 @@ public class TimerService extends Service {
     }
 
     int AutoOffTime = 0;
+    int AutoOffTime_h = 0;
     private void BackgroundServiceLogic(Calendar calendar){
 
         int NewTime_H, NewTime_M;
@@ -138,7 +143,13 @@ public class TimerService extends Service {
             if (Next_Timer.getTime_Hour() == NewTime_H && Next_Timer.getTime_Minute() == NewTime_M) {
                 ForeGroundService(Next_Timer.getName(), Next_Timer.getMemo(), Next_Timer.getMemo(), false);
                 AutoOffTime = Next_Timer.getTime_Minute() + Next_Timer.getAutoOffTime();
-                if (AutoOffTime >= 60) AutoOffTime = -60;
+                AutoOffTime_h = Next_Timer.getTime_Hour();
+                if (AutoOffTime >= 60){
+                    AutoOffTime = -60;
+
+                    AutoOffTime_h++;
+                    if(AutoOffTime_h == 24) AutoOffTime_h = 0;
+                }
 
             } else if (AutoOffTime == NewTime_M) {
                 Next_Timer = timerSequential.Next_getTimer();
@@ -162,7 +173,6 @@ public class TimerService extends Service {
     }
 
     private void ForeGroundService(String Title, String Content, String AllNextTimeList, boolean NotificationHead){
-
         if(true){
             if(NotificationHead){
                 builder_beforehandList = new NotificationCompat.Builder(this, "beforehand");
@@ -200,7 +210,6 @@ public class TimerService extends Service {
             }
 
         }
-
     }
 
     void NextTimer_NotificationShow(){
@@ -245,8 +254,9 @@ public class TimerService extends Service {
         ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
 
         for (ActivityManager.RunningServiceInfo rsi : am.getRunningServices(Integer.MAX_VALUE)) {
-            if (TimerService.class.getName().equals(rsi.service.getClassName())) //[서비스이름]에 본인 것을 넣는다.
-            return true;
+            if (TimerService.class.getName().equals(rsi.service.getClassName())) { //[서비스이름]에 본인 것을 넣는다.
+                return true;
+            }
         }
 
         return false;
