@@ -39,7 +39,6 @@ import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.Time24_to_12Hour;
-import com.example.perfect_time.Service.TimerService;
 
 import java.util.Calendar;
 import java.util.List;
@@ -264,13 +263,6 @@ public class TimerSettings extends Activity {
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     //========================================================================설정완료
-                    Intent ServiceIntent = new Intent(view.getContext(), TimerService.class);
-                    ServiceIntent.setAction("start");
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        startForegroundService(ServiceIntent);
-                    }else {
-                        startService(ServiceIntent);
-                    }
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();

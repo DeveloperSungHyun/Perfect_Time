@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.perfect_time">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -15,10 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Perfect_Time">
-        <service
-            android:name=".Service.TimerService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <activity
             android:name=".MainActivity"
@@ -33,6 +28,7 @@
         <activity android:name=".Activity.TimerSoundSetting" />
         <activity android:name=".Activity.TimerVibrationSetting" />
         <activity android:name=".Activity.Preferences" />
+        <receiver android:name=".AlarmService"/>
 
     </application>
 

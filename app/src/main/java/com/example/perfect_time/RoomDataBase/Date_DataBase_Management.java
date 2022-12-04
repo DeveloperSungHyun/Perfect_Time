@@ -15,9 +15,12 @@ import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
 import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
 import com.example.perfect_time.SettingValue;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Date_DataBase_Management {
+
+    Calendar calendar;
 
     DB_Date db_date;
     DateDao dateDao;
@@ -40,6 +43,19 @@ public class Date_DataBase_Management {
 
     public void setInsert(SettingValue settingValue, int y, int m, int d){
 
+        int ID_Number = 12;
+
+        for (int i = 1; i < getData().size() + 1; i++) {
+            for (DB_Date db_date : getData()){
+                if(db_date.getUniqueID() == i * 10 + 2){
+                    break;
+                }else if(db_date.getUniqueID() == getData().get(getData().size() - 1).getUniqueID()){
+                    ID_Number = i * 10 + 2;
+                }
+            }
+
+        }
+        db_date.setUniqueID(ID_Number);
 
         db_date.setTimer_Activate(settingValue.isTimer_Activate());
         db_date.setImportant(settingValue.isImportant());
@@ -85,6 +101,8 @@ public class Date_DataBase_Management {
         db_date.setDate_Month(m);
         db_date.setDate_Day(d);
 
+        db_date.setUniqueID(dateDao.getDate().get(UpDataItem_ID).getUniqueID());
+
         db_date.setName(settingValue.getName());
         db_date.setMemo(settingValue.getMemo());
 
@@ -119,6 +137,8 @@ public class Date_DataBase_Management {
         db_date.setDate_Year(getData().get(DataId).getDate_Year());
         db_date.setDate_Month(getData().get(DataId).getDate_Month());
         db_date.setDate_Day(getData().get(DataId).getDate_Day());
+
+        db_date.setUniqueID(dateDao.getDate().get(UpDataItem_ID).getUniqueID());
 
         db_date.setName(getData().get(DataId).getName());
         db_date.setMemo(getData().get(DataId).getMemo());

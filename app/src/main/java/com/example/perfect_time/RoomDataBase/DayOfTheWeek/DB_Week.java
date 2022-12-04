@@ -9,6 +9,8 @@ public class DB_Week {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
 
+    private int UniqueID;
+
     private boolean Timer_Activate;         //알람 활성화
     private boolean Important;              //중요알람 표시
 
@@ -35,6 +37,14 @@ public class DB_Week {
 
     public int getId() {
         return id;
+    }
+
+    public int getUniqueID() {
+        return UniqueID;
+    }
+
+    public void setUniqueID(int uniqueID) {
+        UniqueID = uniqueID;
     }
 
     public void setId(int id) {

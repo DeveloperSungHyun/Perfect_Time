@@ -8,6 +8,16 @@ public class DB_EveryDay {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
 
+    private int UniqueID;
+
+    public int getUniqueID() {
+        return UniqueID;
+    }
+
+    public void setUniqueID(int uniqueID) {
+        UniqueID = uniqueID;
+    }
+
     private boolean Timer_Activate;         //알람 활성화
     private boolean Important;              //중요알람 표시
 

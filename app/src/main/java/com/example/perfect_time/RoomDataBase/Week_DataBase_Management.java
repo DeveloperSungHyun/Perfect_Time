@@ -15,11 +15,12 @@ import com.example.perfect_time.RoomDataBase.Everyday.EveryDao;
 import com.example.perfect_time.RoomDataBase.Everyday.EveryDayDataBase;
 import com.example.perfect_time.SettingValue;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Week_DataBase_Management {
 
-
+    Calendar calendar;
 
     DB_Week db_week;
     WeekDao weekDao;
@@ -41,7 +42,19 @@ public class Week_DataBase_Management {
     }
 
     public void setInsert(SettingValue settingValue, int DayOfTheWeek){
+        int ID_Number = 11;
 
+        for (int i = 1; i < getData().size() + 1; i++) {
+            for (DB_Week db_week : getData()){
+                if(db_week.getUniqueID() == i * 10 + 1){
+                    break;
+                }else if(db_week.getUniqueID() == getData().get(getData().size() - 1).getUniqueID()){
+                    ID_Number = i * 10 + 1;
+                }
+            }
+
+        }
+        db_week.setUniqueID(ID_Number);
 
         db_week.setTimer_Activate(settingValue.isTimer_Activate());
         db_week.setImportant(settingValue.isImportant());
@@ -94,6 +107,8 @@ public class Week_DataBase_Management {
 
         db_week.setDayOfTheWeek(DayOfTheWeek);
 
+        db_week.setUniqueID(weekDao.getWeek().get(UpDataItem_ID).getUniqueID());
+
         db_week.setName(settingValue.getName());
         db_week.setMemo(settingValue.getMemo());
 
@@ -126,6 +141,8 @@ public class Week_DataBase_Management {
         db_week.setImportant(getData().get(DataId).isImportant());
 
         db_week.setDayOfTheWeek(getData().get(DataId).getDayOfTheWeek());
+
+        db_week.setUniqueID(weekDao.getWeek().get(UpDataItem_ID).getUniqueID());
 
         db_week.setName(getData().get(DataId).getName());
         db_week.setMemo(getData().get(DataId).getMemo());
