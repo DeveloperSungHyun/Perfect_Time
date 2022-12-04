@@ -3,6 +3,8 @@ package com.example.perfect_time;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +13,20 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.perfect_time.Activity.TimerSettings;
+
 public class AlarmService extends BroadcastReceiver {
     NotificationCompat.Builder builder_timer, builder_beforehandList;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        Intent busRouteIntent = new Intent(context, TimerSettings.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(busRouteIntent);
+        PendingIntent busRoutePendingIntent =
+                stackBuilder.getPendingIntent(1, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -38,15 +49,21 @@ public class AlarmService extends BroadcastReceiver {
 
         }
 
+
         builder_beforehandList = new NotificationCompat.Builder(context, "beforehand");
 
         builder_beforehandList.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
         builder_beforehandList.setSmallIcon(R.drawable.calendar_icon);
         builder_beforehandList.setTicker("알람 간단한 설명");
-        builder_beforehandList.setContentTitle("Title");
-        builder_beforehandList.setContentText("Content");
+        builder_beforehandList.setContentTitle(intent.getStringExtra("Name"));
+        builder_beforehandList.setContentText(intent.getStringExtra("Memo"));
         builder_beforehandList.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder_beforehandList.setPriority(0);
-        builder_beforehandList.setDefaults(Notification.DEFAULT_VIBRATE);
+        builder_beforehandList.setDefaults(Notification.PRIORITY_HIGH);
+        builder_beforehandList.setContentIntent(busRoutePendingIntent);
+
+        int id=(int)System.currentTimeMillis();
+
+        notificationManager.notify(id,builder_beforehandList.build());
     }
 }

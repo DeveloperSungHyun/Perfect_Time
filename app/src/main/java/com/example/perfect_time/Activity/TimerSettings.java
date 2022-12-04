@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.perfect_time.AlarmServiceManagement;
 import com.example.perfect_time.DayOfTheWeek_Adapter;
 import com.example.perfect_time.DayOfTheWeek_Item;
 import com.example.perfect_time.FragmentActivity.FragmentType;
@@ -263,6 +264,10 @@ public class TimerSettings extends Activity {
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     //========================================================================설정완료
+
+                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
+                    alarmServiceManagement.All_AddAlarm();
+
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "알람 이름을 적어주세요", Toast.LENGTH_SHORT).show();
