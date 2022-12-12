@@ -41,7 +41,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTimer_Activate(settingValue.isTimer_Activate());
         db_everyDay.setImportant(settingValue.isImportant());
 
-        for (int i = 1; i < getData().size() + 1; i++) {
+        for (int i = 1; i <= getData().size() + 1; i++) {
             for (DB_EveryDay everyDay : getData()){
                 if(everyDay.getUniqueID() == i * 10){
                     break;

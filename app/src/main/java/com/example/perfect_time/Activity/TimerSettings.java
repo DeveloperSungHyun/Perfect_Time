@@ -55,6 +55,8 @@ public class TimerSettings extends Activity {
     DayOfTheWeek_TimerSettings dayOfTheWeek_timerSettings;
     Date_TimerSettings date_timerSettings;
 
+    AlarmServiceManagement alarmServiceManagement;
+
     GridView GridView_WeekSelectView;
     TextView TextView_Date;
 
@@ -223,6 +225,8 @@ public class TimerSettings extends Activity {
             public void onClick(View view) {
                 //everyDay_timerSettings.NewAddTimer();
 
+                alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
+
 
                 settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
                 settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
@@ -233,30 +237,63 @@ public class TimerSettings extends Activity {
                         case FragmentType.fragEveryDay:{
                             if(TimerSettingType == 1){//데이터 추가
                                 everyDay_timerSettings.NewAddTimer();
+
+                                alarmServiceManagement.All_AddAlarm();
+
                             }else if(TimerSettingType == 2){//데이터 변경
                                 everyDay_timerSettings.TimerUpData();
+
+                                EveryDay_DataBase_Management everyDay_dataBase_management = new EveryDay_DataBase_Management(getApplicationContext());
+                                int UniqueID = everyDay_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+                                Log.d("UniqueID", " 번호 " + UniqueID);
+                                alarmServiceManagement.AlarmUpDate(UniqueID);
                             }else if(TimerSettingType == 3){
                                 everyDay_timerSettings.NewAddTimer();
+
+                                alarmServiceManagement.All_AddAlarm();
                             }
                             break;
                         }
                         case FragmentType.fragWeek:{
                             if(TimerSettingType == 1){//데이터 추가
                                 dayOfTheWeek_timerSettings.NewAddTimer();
+
+                                alarmServiceManagement.All_AddAlarm(dayOfTheWeek_timerSettings.DayOfTheWeek);
+
                             }else if(TimerSettingType == 2){//데이터 변경
                                 dayOfTheWeek_timerSettings.TimerUpData();
+
+                                Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(getApplicationContext());
+                                int UniqueID = week_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+                                Log.d("UniqueID", " 번호 " + UniqueID);
+                                alarmServiceManagement.AlarmUpDate_week(UniqueID, week_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDayOfTheWeek());
                             }else if(TimerSettingType == 3){
                                 dayOfTheWeek_timerSettings.NewAddTimer();
+
+                                alarmServiceManagement.All_AddAlarm(dayOfTheWeek_timerSettings.DayOfTheWeek);
                             }
                             break;
                         }
                         case FragmentType.fragDate:{
                             if(TimerSettingType == 1){//데이터 추가
                                 date_timerSettings.NewAddTimer();
+
+                                alarmServiceManagement.All_AddAlarm(date_timerSettings.y, date_timerSettings.m, date_timerSettings.d);
+
                             }else if(TimerSettingType == 2){//데이터 변경
                                 date_timerSettings.TimerUpData();
+
+                                Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(getApplicationContext());
+                                int UniqueID = date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+                                Log.d("UniqueID", " 번호 " + UniqueID);
+                                alarmServiceManagement.AlarmUpDate_data(UniqueID,
+                                        date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDate_Year(),
+                                        date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDate_Month(),
+                                        date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDate_Day());
                             }else if(TimerSettingType == 3){
                                 date_timerSettings.NewAddTimer();
+
+                                alarmServiceManagement.All_AddAlarm(date_timerSettings.y, date_timerSettings.m, date_timerSettings.d);
                             }
                         }
                     }
@@ -264,9 +301,6 @@ public class TimerSettings extends Activity {
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     //========================================================================설정완료
-
-                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
-                    alarmServiceManagement.All_AddAlarm();
 
                     finish();
                 }else{

@@ -44,7 +44,7 @@ public class Week_DataBase_Management {
     public void setInsert(SettingValue settingValue, int DayOfTheWeek){
         int ID_Number = 11;
 
-        for (int i = 1; i < getData().size() + 1; i++) {
+        for (int i = 1; i <= getData().size() + 1; i++) {
             for (DB_Week db_week : getData()){
                 if(db_week.getUniqueID() == i * 10 + 1){
                     break;

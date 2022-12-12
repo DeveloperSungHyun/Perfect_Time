@@ -45,7 +45,7 @@ public class Date_DataBase_Management {
 
         int ID_Number = 12;
 
-        for (int i = 1; i < getData().size() + 1; i++) {
+        for (int i = 1; i <= getData().size() + 1; i++) {
             for (DB_Date db_date : getData()){
                 if(db_date.getUniqueID() == i * 10 + 2){
                     break;

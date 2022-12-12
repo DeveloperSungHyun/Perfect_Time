@@ -21,6 +21,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.perfect_time.Activity.TimerSettings;
+import com.example.perfect_time.AlarmServiceManagement;
 import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
@@ -227,14 +228,20 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
                                     EveryDay_DataBase_Management everyDay_dataBase_management =
                                             new EveryDay_DataBase_Management(view.getContext());
+                                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
 
                                     if(everyDay_dataBase_management.getData().get(position).isTimer_Activate()){
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
                                         everyDay_dataBase_management.setTimeOnOff(position, false);
+
+                                        alarmServiceManagement.Delete_Alarm(everyDay_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
+
                                         ToastText = "알림이 꺼졌습니다.";
                                     }else{
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         everyDay_dataBase_management.setTimeOnOff(position, true);
+
+                                        alarmServiceManagement.All_AddAlarm();
                                         ToastText = "알림이 켜졌습니다.";
                                     }
                                 }
@@ -242,13 +249,20 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                     Week_DataBase_Management week_dataBase_management =
                                             new Week_DataBase_Management(view.getContext());
 
+                                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
+
                                     if(week_dataBase_management.getData().get(position).isTimer_Activate()){
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
                                         week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), false);
+
+                                        alarmServiceManagement.Delete_Alarm(week_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
+
                                         ToastText = "알림이 꺼졌습니다.";
                                     }else{
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
+
+                                        alarmServiceManagement.All_AddAlarm(week_dataBase_management.getData().get(holder.getAdapterPosition()).getDayOfTheWeek());
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 
@@ -257,14 +271,24 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                     Date_DataBase_Management date_dataBase_management =
                                             new Date_DataBase_Management(view.getContext());
 
+                                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
 
                                     if(date_dataBase_management.getData().get(position).isTimer_Activate()){
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
                                         date_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), false);
+
+                                        alarmServiceManagement.Delete_Alarm(date_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
+
                                         ToastText = "알림이 꺼졌습니다.";
                                     }else{
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         date_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
+
+                                        alarmServiceManagement.All_AddAlarm(
+                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Year(),
+                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Month(),
+                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Day()
+                                        );
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 
@@ -279,11 +303,17 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                     EveryDay_DataBase_Management everyDay_dataBase_management =
                                             new EveryDay_DataBase_Management(view.getContext());
 
+                                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
+                                    alarmServiceManagement.Delete_Alarm(everyDay_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
+
                                     everyDay_dataBase_management.setDelete(holder.getAdapterPosition());
                                 }
                                 if(getItem.getFragmentType() == FragmentType.fragWeek){
                                     Week_DataBase_Management week_dataBase_management =
                                             new Week_DataBase_Management(view.getContext());
+
+                                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
+                                    alarmServiceManagement.Delete_Alarm(week_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
 
                                     week_dataBase_management.setDelete(holder.getAdapterPosition());
 
@@ -291,6 +321,9 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 if(getItem.getFragmentType() == FragmentType.fragDate){
                                     Date_DataBase_Management date_dataBase_management =
                                             new Date_DataBase_Management(view.getContext());
+
+                                    AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(view.getContext());
+                                    alarmServiceManagement.Delete_Alarm(date_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
 
                                     date_dataBase_management.setDelete(holder.getAdapterPosition());
 

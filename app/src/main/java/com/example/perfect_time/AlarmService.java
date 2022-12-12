@@ -15,12 +15,61 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.perfect_time.Activity.TimerSettings;
 
+import java.util.Calendar;
+
 public class AlarmService extends BroadcastReceiver {
     NotificationCompat.Builder builder_timer, builder_beforehandList;
+
+    Calendar calendar;
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        calendar = Calendar.getInstance();
+
+//        switch (intent.getIntExtra("Type", 3)){
+//            case 0: {
+//                NotificationShow(context, intent);
+//                break;
+//            }
+//            case 1: {
+//                if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
+//                    NotificationShow(context, intent);
+//                }
+//                break;
+//            }
+//            case 2: {
+//                if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
+//                        intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
+//                        intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
+//                    NotificationShow(context, intent);
+//                }
+//                break;
+//            }
+//        }
+
+        if(intent.getIntExtra("Type", 3) == 0){
+            NotificationShow(context, intent);
+        }
+
+        if(intent.getIntExtra("Type", 3) == 1){
+            if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
+                NotificationShow(context, intent);
+            }
+        }
+
+        if(intent.getIntExtra("Type", 3) == 2){
+            if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
+                    intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
+                    intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
+                NotificationShow(context, intent);
+            }
+        }
+
+
+    }
+
+    void NotificationShow(Context context, Intent intent){
         Intent busRouteIntent = new Intent(context, TimerSettings.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
