@@ -18,7 +18,7 @@ import com.example.perfect_time.Activity.TimerSettings;
 import java.util.Calendar;
 
 public class AlarmService extends BroadcastReceiver {
-    NotificationCompat.Builder builder_timer, builder_beforehandList;
+    NotificationCompat.Builder builder;
 
     Calendar calendar;
 
@@ -49,12 +49,12 @@ public class AlarmService extends BroadcastReceiver {
 //        }
 
         if(intent.getIntExtra("Type", 3) == 0){
-            NotificationShow(context, intent);
+            NotificationShow(context, intent, intent.getBooleanExtra("Important", false));
         }
 
         if(intent.getIntExtra("Type", 3) == 1){
             if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
-                NotificationShow(context, intent);
+                NotificationShow(context, intent, intent.getBooleanExtra("Important", false));
             }
         }
 
@@ -62,14 +62,20 @@ public class AlarmService extends BroadcastReceiver {
             if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
                     intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
                     intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
-                NotificationShow(context, intent);
+                NotificationShow(context, intent, intent.getBooleanExtra("Important", false));
             }
+        }
+
+        if(intent.getIntExtra("Type", 3) == 3){
+            AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
+            alarmServiceManagement.All_TImerSetting();
+
         }
 
 
     }
 
-    void NotificationShow(Context context, Intent intent){
+    void NotificationShow(Context context, Intent intent, Boolean Important){
         Intent busRouteIntent = new Intent(context, TimerSettings.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -81,11 +87,11 @@ public class AlarmService extends BroadcastReceiver {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            NotificationChannel beforehand = new NotificationChannel("beforehand", "알림예고", NotificationManager.IMPORTANCE_HIGH);//체널 생성
-            beforehand.setBypassDnd(true);
+            NotificationChannel Important_timer = new NotificationChannel("Important_timer", "알림예고", NotificationManager.IMPORTANCE_HIGH);//체널 생성
+            Important_timer.setBypassDnd(true);
             //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
-            beforehand.setLightColor(0xFFFF0000);
-            notificationManager.createNotificationChannel(beforehand);
+            Important_timer.setLightColor(0xFFFF0000);
+            notificationManager.createNotificationChannel(Important_timer);
 
 
             NotificationChannel timer = new NotificationChannel("timer", "알람", NotificationManager.IMPORTANCE_LOW);//체널 생성
@@ -99,20 +105,21 @@ public class AlarmService extends BroadcastReceiver {
         }
 
 
-        builder_beforehandList = new NotificationCompat.Builder(context, "beforehand");
+        if(Important) builder = new NotificationCompat.Builder(context, "Important_timer");
+        else builder = new NotificationCompat.Builder(context, "timer");
 
-        builder_beforehandList.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
-        builder_beforehandList.setSmallIcon(R.drawable.calendar_icon);
-        builder_beforehandList.setTicker("알람 간단한 설명");
-        builder_beforehandList.setContentTitle(intent.getStringExtra("Name"));
-        builder_beforehandList.setContentText(intent.getStringExtra("Memo"));
-        builder_beforehandList.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        builder_beforehandList.setPriority(0);
-        builder_beforehandList.setDefaults(Notification.PRIORITY_HIGH);
-        builder_beforehandList.setContentIntent(busRoutePendingIntent);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
+        builder.setSmallIcon(R.drawable.calendar_icon);
+        builder.setTicker("알람 간단한 설명");
+        builder.setContentTitle(intent.getStringExtra("Name"));
+        builder.setContentText(intent.getStringExtra("Memo"));
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setPriority(0);
+        builder.setDefaults(Notification.PRIORITY_HIGH);
+        builder.setContentIntent(busRoutePendingIntent);
 
         int id=(int)System.currentTimeMillis();
 
-        notificationManager.notify(id,builder_beforehandList.build());
+        notificationManager.notify(id,builder.build());
     }
 }

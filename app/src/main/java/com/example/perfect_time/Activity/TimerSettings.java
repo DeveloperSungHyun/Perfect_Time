@@ -258,7 +258,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(dayOfTheWeek_timerSettings.DayOfTheWeek);
+                                alarmServiceManagement.All_AddAlarm_week();
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 dayOfTheWeek_timerSettings.TimerUpData();
@@ -270,7 +270,7 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(dayOfTheWeek_timerSettings.DayOfTheWeek);
+                                alarmServiceManagement.All_AddAlarm_week();
                             }
                             break;
                         }
@@ -278,7 +278,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(date_timerSettings.y, date_timerSettings.m, date_timerSettings.d);
+                                alarmServiceManagement.All_AddAlarm_data();
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 date_timerSettings.TimerUpData();
@@ -293,7 +293,7 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(date_timerSettings.y, date_timerSettings.m, date_timerSettings.d);
+                                alarmServiceManagement.All_AddAlarm_data();
                             }
                         }
                     }

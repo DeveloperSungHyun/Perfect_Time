@@ -262,7 +262,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
 
-                                        alarmServiceManagement.All_AddAlarm(week_dataBase_management.getData().get(holder.getAdapterPosition()).getDayOfTheWeek());
+                                        alarmServiceManagement.All_AddAlarm_week();
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 
@@ -284,11 +284,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         date_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
 
-                                        alarmServiceManagement.All_AddAlarm(
-                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Year(),
-                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Month(),
-                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Day()
-                                        );
+                                        alarmServiceManagement.All_AddAlarm_data();
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 

@@ -55,14 +55,16 @@ public class AlarmServiceManagement {
                 intent.putExtra("Type", 0);
                 intent.putExtra("Name", everyDay.getName());
                 intent.putExtra("Memo", everyDay.getMemo());
+                intent.putExtra("Important", everyDay.isImportant());
 
                 AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
+
             }
         }
 
     }
 
-    public void All_AddAlarm(int week){
+    public void All_AddAlarm_week(){
         Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(context);
 
         for (DB_Week db_week : week_dataBase_management.getData()){
@@ -71,7 +73,8 @@ public class AlarmServiceManagement {
                 intent.putExtra("Type", 1);
                 intent.putExtra("Name", db_week.getName());
                 intent.putExtra("Memo", db_week.getMemo());
-                intent.putExtra("week", week);
+                intent.putExtra("week", db_week.getDayOfTheWeek());
+                intent.putExtra("Important", db_week.isImportant());
 
                 AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
             }
@@ -79,7 +82,7 @@ public class AlarmServiceManagement {
 
     }
 
-    public void All_AddAlarm(int y, int m, int d){
+    public void All_AddAlarm_data(){
         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
 
         for (DB_Date db_date : date_dataBase_management.getData()){
@@ -88,9 +91,10 @@ public class AlarmServiceManagement {
                 intent.putExtra("Type", 2);
                 intent.putExtra("Name", db_date.getName());
                 intent.putExtra("Memo", db_date.getMemo());
-                intent.putExtra("y", y);
-                intent.putExtra("m", m);
-                intent.putExtra("d", d);
+                intent.putExtra("y", db_date.getDate_Year());
+                intent.putExtra("m", db_date.getDate_Month());
+                intent.putExtra("d", db_date.getDate_Day());
+                intent.putExtra("Important", db_date.isImportant());
 
                 AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
             }
@@ -110,6 +114,7 @@ public class AlarmServiceManagement {
                     intent = new Intent(context, AlarmService.class);
                     intent.putExtra("Name", everyDay.getName());
                     intent.putExtra("Memo", everyDay.getMemo());
+                    intent.putExtra("Important", everyDay.isImportant());
 
                     AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
                 }
@@ -129,6 +134,7 @@ public class AlarmServiceManagement {
                     intent.putExtra("Name", db_week.getName());
                     intent.putExtra("Memo", db_week.getMemo());
                     intent.putExtra("week", week);
+                    intent.putExtra("Important", db_week.isImportant());
 
                     AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
                 }
@@ -150,6 +156,7 @@ public class AlarmServiceManagement {
                     intent.putExtra("y", y);
                     intent.putExtra("m", m);
                     intent.putExtra("d", d);
+                    intent.putExtra("Important", db_date.isImportant());
 
                     AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
                 }
@@ -190,5 +197,16 @@ public class AlarmServiceManagement {
         alarmIntent.cancel();
         alarmIntent = null;
         alarmManager = null;
+    }
+
+    public void All_TImerSetting(){
+        All_AddAlarm();
+        All_AddAlarm_week();
+        All_AddAlarm_data();
+
+        intent = new Intent(context, AlarmService.class);
+        intent.putExtra("Type", 3);
+
+        AlarmManager_add(intent, 0, 0, 0);
     }
 }
