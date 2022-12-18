@@ -11,18 +11,27 @@ public class SettingValue {
     private static int Time_Hour;                  //시간 시
     private static int Time_Minute;                //시간 분
 
-    private static boolean Sound_Activate;         //소리알림 활성화 유무
-    private static int Sound_volume;               //소리크기
-
+    private static boolean HeadUp_Activate;
     private static boolean Vibration_Activate;     //진동알림 활성화 유무
-    private static int Vibration_volume;           //진동세기
-
     private static boolean Popup_Activate;         //팝업알림 활성화 유무
+    private static boolean AutoDisplay_On;
 
-    private static boolean beforehand;                //알림 예고
-    private static int beforehandTime;                //알림 예고 시간
+    public static boolean isHeadUp_Activate() {
+        return HeadUp_Activate;
+    }
 
-    private static int AutoOffTime;                    //알람 자동끄기
+    public static void setHeadUp_Activate(boolean headUp_Activate) {
+        HeadUp_Activate = headUp_Activate;
+    }
+
+    public static boolean isAutoDisplay_On() {
+        return AutoDisplay_On;
+    }
+
+    public static void setAutoDisplay_On(boolean autoDisplay_On) {
+        AutoDisplay_On = autoDisplay_On;
+    }
+
 
     public boolean isTimer_Activate() {
         return Timer_Activate;
@@ -72,36 +81,12 @@ public class SettingValue {
         Time_Minute = time_Minute;
     }
 
-    public boolean isSound_Activate() {
-        return Sound_Activate;
-    }
-
-    public void setSound_Activate(boolean sound_Activate) {
-        Sound_Activate = sound_Activate;
-    }
-
-    public int getSound_volume() {
-        return Sound_volume;
-    }
-
-    public void setSound_volume(int sound_volume) {
-        Sound_volume = sound_volume;
-    }
-
     public boolean isVibration_Activate() {
         return Vibration_Activate;
     }
 
     public void setVibration_Activate(boolean vibration_Activate) {
         Vibration_Activate = vibration_Activate;
-    }
-
-    public int getVibration_volume() {
-        return Vibration_volume;
-    }
-
-    public void setVibration_volume(int vibration_volume) {
-        Vibration_volume = vibration_volume;
     }
 
     public boolean isPopup_Activate() {
@@ -112,27 +97,4 @@ public class SettingValue {
         Popup_Activate = popup_Activate;
     }
 
-    public boolean isBeforehand() {
-        return beforehand;
-    }
-
-    public void setBeforehand(boolean beforehand) {
-        this.beforehand = beforehand;
-    }
-
-    public int getBeforehandTime() {
-        return beforehandTime;
-    }
-
-    public void setBeforehandTime(int beforehandTime) {
-        this.beforehandTime = beforehandTime;
-    }
-
-    public int getAutoOffTime() {
-        return AutoOffTime;
-    }
-
-    public void setAutoOffTime(int autoOff) {
-        AutoOffTime = autoOff;
-    }
 }

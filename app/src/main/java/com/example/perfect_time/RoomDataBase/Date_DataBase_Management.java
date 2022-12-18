@@ -70,18 +70,10 @@ public class Date_DataBase_Management {
         db_date.setTime_Hour(settingValue.getTime_Hour());
         db_date.setTime_Minute(settingValue.getTime_Minute());
 
-        db_date.setSound_Activate(settingValue.isSound_Activate());
-        db_date.setSound_volume(settingValue.getSound_volume());
-
         db_date.setVibration_Activate(settingValue.isVibration_Activate());
-        db_date.setVibration_volume(settingValue.getVibration_volume());
-
+        db_date.setHeadUp_Activate(settingValue.isHeadUp_Activate());
         db_date.setPopup_Activate(settingValue.isPopup_Activate());
-
-        db_date.setBeforehand(settingValue.isBeforehand());
-        db_date.setBeforehandTime(settingValue.getBeforehandTime());
-
-        db_date.setAutoOffTime(settingValue.getAutoOffTime());
+        db_date.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
         dateDao.setInsert(db_date);
     }
@@ -109,18 +101,10 @@ public class Date_DataBase_Management {
         db_date.setTime_Hour(settingValue.getTime_Hour());
         db_date.setTime_Minute(settingValue.getTime_Minute());
 
-        db_date.setSound_Activate(settingValue.isSound_Activate());
-        db_date.setSound_volume(settingValue.getSound_volume());
-
         db_date.setVibration_Activate(settingValue.isVibration_Activate());
-        db_date.setVibration_volume(settingValue.getVibration_volume());
-
+        db_date.setHeadUp_Activate(settingValue.isHeadUp_Activate());
         db_date.setPopup_Activate(settingValue.isPopup_Activate());
-
-        db_date.setBeforehand(settingValue.isBeforehand());
-        db_date.setBeforehandTime(settingValue.getBeforehandTime());
-
-        db_date.setAutoOffTime(settingValue.getAutoOffTime());
+        db_date.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
         dateDao.setUpdate(db_date);
     }
@@ -146,18 +130,10 @@ public class Date_DataBase_Management {
         db_date.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_date.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_date.setSound_Activate(getData().get(DataId).isSound_Activate());
-        db_date.setSound_volume(getData().get(DataId).getSound_volume());
-
         db_date.setVibration_Activate(getData().get(DataId).isVibration_Activate());
-        db_date.setVibration_volume(getData().get(DataId).getVibration_volume());
-
+        db_date.setHeadUp_Activate(getData().get(DataId).isHeadUp_Activate());
         db_date.setPopup_Activate(getData().get(DataId).isPopup_Activate());
-
-        db_date.setBeforehand(getData().get(DataId).isBeforehand());
-        db_date.setBeforehandTime(getData().get(DataId).getBeforehandTime());
-
-        db_date.setAutoOffTime(getData().get(DataId).getAutoOffTime());
+        db_date.setAutoDisplay_On(getData().get(DataId).isAutoDisplay_On());
 
         dateDao.setUpdate(db_date);
     }

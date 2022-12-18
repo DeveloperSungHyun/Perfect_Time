@@ -60,18 +60,10 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(settingValue.getTime_Hour());
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
-        db_everyDay.setSound_Activate(settingValue.isSound_Activate());
-        db_everyDay.setSound_volume(settingValue.getSound_volume());
-
         db_everyDay.setVibration_Activate(settingValue.isVibration_Activate());
-        db_everyDay.setVibration_volume(settingValue.getVibration_volume());
-
+        db_everyDay.setHeadUp_Activate(settingValue.isHeadUp_Activate());
         db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
-
-        db_everyDay.setBeforehand(settingValue.isBeforehand());
-        db_everyDay.setBeforehandTime(settingValue.getBeforehandTime());
-
-        db_everyDay.setAutoOffTime(settingValue.getAutoOffTime());
+        db_everyDay.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
         everyDao.setInsert(db_everyDay);
     }
@@ -91,19 +83,10 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(settingValue.getTime_Hour());
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
-        db_everyDay.setSound_Activate(settingValue.isSound_Activate());
-        db_everyDay.setSound_volume(settingValue.getSound_volume());
-
         db_everyDay.setVibration_Activate(settingValue.isVibration_Activate());
-        db_everyDay.setVibration_volume(settingValue.getVibration_volume());
-
+        db_everyDay.setHeadUp_Activate(settingValue.isHeadUp_Activate());
         db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
-
-        db_everyDay.setBeforehand(settingValue.isBeforehand());
-        db_everyDay.setBeforehandTime(settingValue.getBeforehandTime());
-
-        db_everyDay.setAutoOffTime(settingValue.getAutoOffTime());
-
+        db_everyDay.setAutoDisplay_On(settingValue.isAutoDisplay_On());
         everyDao.setUpdate(db_everyDay);
     }
 
@@ -124,18 +107,10 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_everyDay.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_everyDay.setSound_Activate(getData().get(DataId).isSound_Activate());
-        db_everyDay.setSound_volume(getData().get(DataId).getSound_volume());
-
         db_everyDay.setVibration_Activate(getData().get(DataId).isVibration_Activate());
-        db_everyDay.setVibration_volume(getData().get(DataId).getVibration_volume());
-
+        db_everyDay.setHeadUp_Activate(getData().get(DataId).isHeadUp_Activate());
         db_everyDay.setPopup_Activate(getData().get(DataId).isPopup_Activate());
-
-        db_everyDay.setBeforehand(getData().get(DataId).isBeforehand());
-        db_everyDay.setBeforehandTime(getData().get(DataId).getBeforehandTime());
-
-        db_everyDay.setAutoOffTime(getData().get(DataId).getAutoOffTime());
+        db_everyDay.setAutoDisplay_On(getData().get(DataId).isAutoDisplay_On());
 
         everyDao.setUpdate(db_everyDay);
     }

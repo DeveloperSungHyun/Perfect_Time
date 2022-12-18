@@ -72,18 +72,10 @@ public class TimerSettings extends Activity {
 
     Switch Switch_Important;//중요알림표시
 
-    Switch Switch_sound;//소리알림
-    Button sound_SettingButton;//소리설정
-
     Switch Switch_vibration;//진동알림
-    Button Vibration_SettingButton;//진동설정
-
+    Switch Switch_HeadUp;//소리알림
     Switch Switch_popup;//팝업설정
-
-    Switch Switch_beforehand;//알림예고
-    TextView TextView_beforehand_Set;//알림예고 시간설정
-
-    TextView TextView_HolidayOff_Set;//알림자동꺼짐 시간설정
+    Switch Switch_AutoDisplay_On;//자동화면 켜짐
 
     TextView TextView_SaveButton;
     TextView TextView_No_SaveButton;
@@ -110,19 +102,10 @@ public class TimerSettings extends Activity {
 
         Switch_Important = findViewById(R.id.Switch_Important);
 
-        Switch_sound = findViewById(R.id.Switch_sound);
-        sound_SettingButton = findViewById(R.id.sound_SettingButton);
-
         Switch_vibration = findViewById(R.id.Switch_vibration);
-        Vibration_SettingButton = findViewById(R.id.Vibration_SettingButton);
-
+        Switch_HeadUp = findViewById(R.id.Switch_HeadUp);
         Switch_popup = findViewById(R.id.Switch_popup);
-
-        Switch_beforehand = findViewById(R.id.Switch_beforehand);
-        TextView_beforehand_Set = findViewById(R.id.TextView_beforehand_Set);
-
-        TextView_HolidayOff_Set = findViewById(R.id.TextView_HolidayOff_Set);
-
+        Switch_AutoDisplay_On = findViewById(R.id.Switch_AutoDisplay_On);
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
         TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
@@ -157,14 +140,11 @@ public class TimerSettings extends Activity {
 
         Switch_Important.setChecked(settingValue.isImportant());
 
-        Switch_sound.setChecked(settingValue.isSound_Activate());
         Switch_vibration.setChecked(settingValue.isVibration_Activate());
+        Switch_HeadUp.setChecked(settingValue.isHeadUp_Activate());
         Switch_popup.setChecked(settingValue.isPopup_Activate());
+        Switch_AutoDisplay_On.setChecked(settingValue.isAutoDisplay_On());
 
-        Switch_beforehand.setChecked(settingValue.isBeforehand());
-        TextView_beforehand_Set.setText(settingValue.getBeforehandTime() + "분");
-
-        TextView_HolidayOff_Set.setText(settingValue.getAutoOffTime() + "분");
 
     }
     @Override
@@ -200,26 +180,6 @@ public class TimerSettings extends Activity {
             }
         });
 
-        TextView_beforehand_Set.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                int TimeValue[] = {1, 3, 5, 10, 30};
-
-                TimeSettingDialog(TimeValue, 1);
-            }
-        });
-
-        TextView_HolidayOff_Set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int TimeValue[] = {1, 2, 3, 5};
-
-                TimeSettingDialog(TimeValue, 2);
-            }
-        });
-
-
         TextView_SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,6 +207,7 @@ public class TimerSettings extends Activity {
                                 int UniqueID = everyDay_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
                                 Log.d("UniqueID", " 번호 " + UniqueID);
                                 alarmServiceManagement.AlarmUpDate(UniqueID);
+
                             }else if(TimerSettingType == 3){
                                 everyDay_timerSettings.NewAddTimer();
 
@@ -258,7 +219,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(dayOfTheWeek_timerSettings.DayOfTheWeek);
+                                alarmServiceManagement.All_AddAlarm();
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 dayOfTheWeek_timerSettings.TimerUpData();
@@ -270,7 +231,7 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(dayOfTheWeek_timerSettings.DayOfTheWeek);
+                                alarmServiceManagement.All_AddAlarm();
                             }
                             break;
                         }
@@ -278,7 +239,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(date_timerSettings.y, date_timerSettings.m, date_timerSettings.d);
+                                alarmServiceManagement.All_AddAlarm();
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 date_timerSettings.TimerUpData();
@@ -293,7 +254,7 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm(date_timerSettings.y, date_timerSettings.m, date_timerSettings.d);
+                                alarmServiceManagement.All_AddAlarm();
                             }
                         }
                     }
@@ -338,59 +299,7 @@ public class TimerSettings extends Activity {
         timePickerDialog.show();
     }
 
-    int Time;
-    int ArrayTimeInDex;
-    private void TimeSettingDialog(int TimeValue[], int division){
 
-        int ArraySize = TimeValue.length;
-        String[] versionArray = new String[ArraySize];
-        if(division == 1) Time = settingValue.getBeforehandTime();
-        else Time = settingValue.getAutoOffTime();
-
-        for (int i = 0; i < ArraySize; i++) {
-            ArrayTimeInDex = i;
-            if(TimeValue[i] == Time) break;
-        }
-
-
-
-        for(int i = 0; i < ArraySize; i++){
-            versionArray[i] = TimeValue[i] + "분";
-        }
-
-        AlertDialog.Builder dlg = new AlertDialog.Builder(TimerSettings.this);
-
-
-        dlg.setSingleChoiceItems(versionArray, ArrayTimeInDex, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Time = TimeValue[i];
-            }
-        });
-
-        dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(division == 1){// 알림 예고
-                    settingValue.setBeforehandTime(Time);
-                }else if(division == 2){// 자동 알링끄기
-                    settingValue.setAutoOffTime(Time);
-                }
-
-                settingValue.setName(EditText_Name.getText().toString());                                       //알람이름
-                settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
-                InterfaceSetting();
-            }
-        });
-        dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        dlg.show();
-    }
 
 
     private void NewTimerCommonLogic(){//알람 추가시 디폴트 값
@@ -405,18 +314,10 @@ public class TimerSettings extends Activity {
 
         settingValue.setImportant(false);
 
-        settingValue.setSound_Activate(true);
-        settingValue.setSound_volume(70);
-
         settingValue.setVibration_Activate(true);
-        settingValue.setVibration_volume(70);//100분률
-
+        settingValue.setHeadUp_Activate(false);
         settingValue.setPopup_Activate(false);
-
-        settingValue.setBeforehand(true);
-        settingValue.setBeforehandTime(5);//분단위
-
-        settingValue.setAutoOffTime(1);
+        settingValue.setAutoDisplay_On(true);
 
         InterfaceSetting();
     }
@@ -439,17 +340,17 @@ public class TimerSettings extends Activity {
             }
         });
 
-        Switch_sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {          //소리알림
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                settingValue.setSound_Activate(b);
-            }
-        });
-
         Switch_vibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {      //진동알림
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 settingValue.setVibration_Activate(b);
+            }
+        });
+
+        Switch_HeadUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                settingValue.setHeadUp_Activate(isChecked);
             }
         });
 
@@ -460,29 +361,10 @@ public class TimerSettings extends Activity {
             }
         });
 
-        Switch_beforehand.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {     //알림예고
+        Switch_AutoDisplay_On.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                settingValue.setBeforehand(b);
-            }
-        });
-
-        //=========================================================
-
-        sound_SettingButton.setOnClickListener(new View.OnClickListener() {//소리알림 설정엑티비티 이동
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TimerSettings.this, TimerSoundSetting.class);
-                startActivity(intent);
-
-            }
-        });
-
-        Vibration_SettingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TimerSettings.this, TimerVibrationSetting.class);
-                startActivity(intent);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                settingValue.setAutoDisplay_On(isChecked);
             }
         });
 
@@ -525,9 +407,6 @@ public class TimerSettings extends Activity {
         }
     }
 
-    private void TimeShow(){
-
-    }
 }
 
 class EveryDay_TimerSettings{
@@ -556,11 +435,6 @@ class EveryDay_TimerSettings{
 
         everyDay_dataBase_management = new EveryDay_DataBase_Management(context);
 
-//        if(TimerSettingType == 1){
-//            NewAddTimer();
-//        }else if(TimerSettingType == 2){
-//            EditTimer();
-//        }
     }
 
     protected void NewAddTimer(){
@@ -586,18 +460,11 @@ class EveryDay_TimerSettings{
 
         settingValue.setImportant(db_everyDay.isImportant());
 
-        settingValue.setSound_Activate(db_everyDay.isSound_Activate());
-        settingValue.setSound_volume(db_everyDay.getSound_volume());
 
         settingValue.setVibration_Activate(db_everyDay.isVibration_Activate());
-        settingValue.setVibration_volume(db_everyDay.getVibration_volume());
-
+        settingValue.setHeadUp_Activate(db_everyDay.isHeadUp_Activate());
         settingValue.setPopup_Activate(db_everyDay.isPopup_Activate());
-
-        settingValue.setBeforehand(db_everyDay.isBeforehand());
-        settingValue.setBeforehandTime(db_everyDay.getBeforehandTime());
-
-        settingValue.setAutoOffTime(db_everyDay.getAutoOffTime());
+        settingValue.setAutoDisplay_On(db_everyDay.isAutoDisplay_On());
 
     }
 
@@ -697,18 +564,11 @@ class DayOfTheWeek_TimerSettings{
 
         settingValue.setImportant(db_week.isImportant());
 
-        settingValue.setSound_Activate(db_week.isSound_Activate());
-        settingValue.setSound_volume(db_week.getSound_volume());
-
         settingValue.setVibration_Activate(db_week.isVibration_Activate());
-        settingValue.setVibration_volume(db_week.getVibration_volume());
-
+        settingValue.setHeadUp_Activate(db_week.isPopup_Activate());
         settingValue.setPopup_Activate(db_week.isPopup_Activate());
+        settingValue.setAutoDisplay_On(db_week.isAutoDisplay_On());
 
-        settingValue.setBeforehand(db_week.isBeforehand());
-        settingValue.setBeforehandTime(db_week.getBeforehandTime());
-
-        settingValue.setAutoOffTime(db_week.getAutoOffTime());
     }
 
     protected void TimerUpData(){
@@ -773,8 +633,8 @@ class Date_TimerSettings{
         DB_Date db_date;
         db_dateList = date_dataBase_management.getData();
 
-        db_date = db_dateList.get(ActivityView.getIntent().getIntExtra("ItemID", 0));//ActivityView.getIntent().getIntExtra("ItemID", 0)
         Log.d("인텐트 데이터 입력", "ItemID " + ActivityView.getIntent().getIntExtra("ItemID", 0));
+        db_date = db_dateList.get(ActivityView.getIntent().getIntExtra("ItemID", 0));//ActivityView.getIntent().getIntExtra("ItemID", 0)
 
         settingValue.setTimer_Activate(db_date.isTimer_Activate());
 
@@ -791,18 +651,11 @@ class Date_TimerSettings{
 
         settingValue.setImportant(db_date.isImportant());
 
-        settingValue.setSound_Activate(db_date.isSound_Activate());
-        settingValue.setSound_volume(db_date.getSound_volume());
 
         settingValue.setVibration_Activate(db_date.isVibration_Activate());
-        settingValue.setVibration_volume(db_date.getVibration_volume());
-
+        settingValue.setHeadUp_Activate(db_date.isPopup_Activate());
         settingValue.setPopup_Activate(db_date.isPopup_Activate());
-
-        settingValue.setBeforehand(db_date.isBeforehand());
-        settingValue.setBeforehandTime(db_date.getBeforehandTime());
-
-        settingValue.setAutoOffTime(db_date.getAutoOffTime());
+        settingValue.setAutoDisplay_On(db_date.isAutoDisplay_On());
     }
 
     protected void TimerUpData(){

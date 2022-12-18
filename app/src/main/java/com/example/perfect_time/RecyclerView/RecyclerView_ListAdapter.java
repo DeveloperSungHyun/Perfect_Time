@@ -133,9 +133,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
 
 
-        if(getItem.isSound_Activate()) holder.ImageView_sound.setVisibility(View.VISIBLE);
-        else holder.ImageView_sound.setVisibility(View.GONE);
-
         if(getItem.isVibration_Activate()) holder.ImageView_vibration.setVisibility(View.VISIBLE);
         else holder.ImageView_vibration.setVisibility(View.GONE);
 
@@ -262,7 +259,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
 
-                                        alarmServiceManagement.All_AddAlarm(week_dataBase_management.getData().get(holder.getAdapterPosition()).getDayOfTheWeek());
+                                        alarmServiceManagement.All_AddAlarm();
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 
@@ -284,11 +281,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         date_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
 
-                                        alarmServiceManagement.All_AddAlarm(
-                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Year(),
-                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Month(),
-                                                date_dataBase_management.getData().get(holder.getAdapterPosition()).getDate_Day()
-                                        );
+                                        alarmServiceManagement.All_AddAlarm_data();
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 
@@ -397,9 +390,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         if(Time_h_12 == 0) Time_h_12 = 12;
 
         holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
-
-        if(getItem.isSound_Activate()) holder.ImageView_sound.setVisibility(View.VISIBLE);
-        else holder.ImageView_sound.setVisibility(View.GONE);
 
         if(getItem.isVibration_Activate()) holder.ImageView_vibration.setVisibility(View.VISIBLE);
         else holder.ImageView_vibration.setVisibility(View.GONE);

@@ -67,18 +67,10 @@ public class Week_DataBase_Management {
         db_week.setTime_Hour(settingValue.getTime_Hour());
         db_week.setTime_Minute(settingValue.getTime_Minute());
 
-        db_week.setSound_Activate(settingValue.isSound_Activate());
-        db_week.setSound_volume(settingValue.getSound_volume());
-
         db_week.setVibration_Activate(settingValue.isVibration_Activate());
-        db_week.setVibration_volume(settingValue.getVibration_volume());
-
+        db_week.setHeadUp_Activate(settingValue.isHeadUp_Activate());
         db_week.setPopup_Activate(settingValue.isPopup_Activate());
-
-        db_week.setBeforehand(settingValue.isBeforehand());
-        db_week.setBeforehandTime(settingValue.getBeforehandTime());
-
-        db_week.setAutoOffTime(settingValue.getAutoOffTime());
+        db_week.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
         weekDao.setInsert(db_week);
     }
@@ -115,18 +107,10 @@ public class Week_DataBase_Management {
         db_week.setTime_Hour(settingValue.getTime_Hour());
         db_week.setTime_Minute(settingValue.getTime_Minute());
 
-        db_week.setSound_Activate(settingValue.isSound_Activate());
-        db_week.setSound_volume(settingValue.getSound_volume());
-
         db_week.setVibration_Activate(settingValue.isVibration_Activate());
-        db_week.setVibration_volume(settingValue.getVibration_volume());
-
+        db_week.setHeadUp_Activate(settingValue.isHeadUp_Activate());
         db_week.setPopup_Activate(settingValue.isPopup_Activate());
-
-        db_week.setBeforehand(settingValue.isBeforehand());
-        db_week.setBeforehandTime(settingValue.getBeforehandTime());
-
-        db_week.setAutoOffTime(settingValue.getAutoOffTime());
+        db_week.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
         weekDao.setUpdate(db_week);
     }
@@ -150,18 +134,10 @@ public class Week_DataBase_Management {
         db_week.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_week.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_week.setSound_Activate(getData().get(DataId).isSound_Activate());
-        db_week.setSound_volume(getData().get(DataId).getSound_volume());
-
         db_week.setVibration_Activate(getData().get(DataId).isVibration_Activate());
-        db_week.setVibration_volume(getData().get(DataId).getVibration_volume());
-
+        db_week.setHeadUp_Activate(getData().get(DataId).isHeadUp_Activate());
         db_week.setPopup_Activate(getData().get(DataId).isPopup_Activate());
-
-        db_week.setBeforehand(getData().get(DataId).isBeforehand());
-        db_week.setBeforehandTime(getData().get(DataId).getBeforehandTime());
-
-        db_week.setAutoOffTime(getData().get(DataId).getAutoOffTime());
+        db_week.setAutoDisplay_On(getData().get(DataId).isAutoDisplay_On());
 
         weekDao.setUpdate(db_week);
     }

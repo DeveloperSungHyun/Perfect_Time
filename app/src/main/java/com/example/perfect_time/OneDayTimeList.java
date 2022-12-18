@@ -69,14 +69,11 @@ public class OneDayTimeList {
             all_time.setMemo(db_everyDay.getMemo());
             all_time.setTime_Hour(db_everyDay.getTime_Hour());
             all_time.setTime_Minute(db_everyDay.getTime_Minute());
-            all_time.setSound_Activate(db_everyDay.isSound_Activate());
-            all_time.setSound_volume(db_everyDay.getSound_volume());
             all_time.setVibration_Activate(db_everyDay.isVibration_Activate());
-            all_time.setVibration_volume(db_everyDay.getVibration_volume());
+            all_time.setHeadUp_Activate(db_everyDay.isHeadUp_Activate());
             all_time.setPopup_Activate(db_everyDay.isPopup_Activate());
-            all_time.setBeforehand(db_everyDay.isBeforehand());
-            all_time.setBeforehandTime(db_everyDay.getBeforehandTime());
-            all_time.setAutoOffTime(db_everyDay.getAutoOffTime());
+            all_time.setAutoDisplay_On(db_everyDay.isAutoDisplay_On());
+
 
             all_times.add(all_time);
 
@@ -112,14 +109,10 @@ public class OneDayTimeList {
                 all_time.setMemo(db_week.getMemo());
                 all_time.setTime_Hour(db_week.getTime_Hour());
                 all_time.setTime_Minute(db_week.getTime_Minute());
-                all_time.setSound_Activate(db_week.isSound_Activate());
-                all_time.setSound_volume(db_week.getSound_volume());
                 all_time.setVibration_Activate(db_week.isVibration_Activate());
-                all_time.setVibration_volume(db_week.getVibration_volume());
+                all_time.setHeadUp_Activate(db_week.isHeadUp_Activate());
                 all_time.setPopup_Activate(db_week.isPopup_Activate());
-                all_time.setBeforehand(db_week.isBeforehand());
-                all_time.setBeforehandTime(db_week.getBeforehandTime());
-                all_time.setAutoOffTime(db_week.getAutoOffTime());
+                all_time.setAutoDisplay_On(db_week.isAutoDisplay_On());
 
                 all_times.add(all_time);
             }
@@ -148,14 +141,10 @@ public class OneDayTimeList {
                 all_time.setMemo(db_date.getMemo());
                 all_time.setTime_Hour(db_date.getTime_Hour());
                 all_time.setTime_Minute(db_date.getTime_Minute());
-                all_time.setSound_Activate(db_date.isSound_Activate());
-                all_time.setSound_volume(db_date.getSound_volume());
                 all_time.setVibration_Activate(db_date.isVibration_Activate());
-                all_time.setVibration_volume(db_date.getVibration_volume());
+                all_time.setHeadUp_Activate(db_date.isHeadUp_Activate());
                 all_time.setPopup_Activate(db_date.isPopup_Activate());
-                all_time.setBeforehand(db_date.isBeforehand());
-                all_time.setBeforehandTime(db_date.getBeforehandTime());
-                all_time.setAutoOffTime(db_date.getAutoOffTime());
+                all_time.setAutoDisplay_On(db_date.isAutoDisplay_On());
 
                 all_times.add(all_time);
             }

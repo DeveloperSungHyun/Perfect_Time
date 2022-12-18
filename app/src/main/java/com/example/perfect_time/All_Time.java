@@ -11,18 +11,38 @@ public class All_Time {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean Sound_Activate;         //소리알림 활성화 유무
-    private int Sound_volume;               //소리크기
-
     private boolean Vibration_Activate;     //진동알림 활성화 유무
-    private int Vibration_volume;           //진동세기
-
+    private boolean isHeadUp_Activate;
     private boolean Popup_Activate;         //팝업알림 활성화 유무
+    private boolean AutoDisplay_On;
 
-    private boolean beforehand;                //알림 예고
-    private int beforehandTime;                //알림 예고 시간
+    public void setTime_Hour(int time_Hour) {
+        Time_Hour = time_Hour;
+    }
 
-    private int AutoOffTime;                    //알람 자동끄기
+    public int getTime_Minute() {
+        return Time_Minute;
+    }
+
+    public void setTime_Minute(int time_Minute) {
+        Time_Minute = time_Minute;
+    }
+
+    public boolean isHeadUp_Activate() {
+        return isHeadUp_Activate;
+    }
+
+    public void setHeadUp_Activate(boolean headUp_Activate) {
+        isHeadUp_Activate = headUp_Activate;
+    }
+
+    public boolean isAutoDisplay_On() {
+        return AutoDisplay_On;
+    }
+
+    public void setAutoDisplay_On(boolean autoDisplay_On) {
+        AutoDisplay_On = autoDisplay_On;
+    }
 
     public boolean isTimer_Activate() {
         return Timer_Activate;
@@ -60,48 +80,12 @@ public class All_Time {
         return Time_Hour;
     }
 
-    public void setTime_Hour(int time_Hour) {
-        Time_Hour = time_Hour;
-    }
-
-    public int getTime_Minute() {
-        return Time_Minute;
-    }
-
-    public void setTime_Minute(int time_Minute) {
-        Time_Minute = time_Minute;
-    }
-
-    public boolean isSound_Activate() {
-        return Sound_Activate;
-    }
-
-    public void setSound_Activate(boolean sound_Activate) {
-        Sound_Activate = sound_Activate;
-    }
-
-    public int getSound_volume() {
-        return Sound_volume;
-    }
-
-    public void setSound_volume(int sound_volume) {
-        Sound_volume = sound_volume;
-    }
-
     public boolean isVibration_Activate() {
         return Vibration_Activate;
     }
 
     public void setVibration_Activate(boolean vibration_Activate) {
         Vibration_Activate = vibration_Activate;
-    }
-
-    public int getVibration_volume() {
-        return Vibration_volume;
-    }
-
-    public void setVibration_volume(int vibration_volume) {
-        Vibration_volume = vibration_volume;
     }
 
     public boolean isPopup_Activate() {
@@ -112,27 +96,4 @@ public class All_Time {
         Popup_Activate = popup_Activate;
     }
 
-    public boolean isBeforehand() {
-        return beforehand;
-    }
-
-    public void setBeforehand(boolean beforehand) {
-        this.beforehand = beforehand;
-    }
-
-    public int getBeforehandTime() {
-        return beforehandTime;
-    }
-
-    public void setBeforehandTime(int beforehandTime) {
-        this.beforehandTime = beforehandTime;
-    }
-
-    public int getAutoOffTime() {
-        return AutoOffTime;
-    }
-
-    public void setAutoOffTime(int autoOffTime) {
-        AutoOffTime = autoOffTime;
-    }
 }

@@ -99,7 +99,8 @@ public class AlarmService extends BroadcastReceiver {
         }
 
 
-        builder_beforehandList = new NotificationCompat.Builder(context, "beforehand");
+        if(intent.getBooleanExtra("Important", true) == true) builder_beforehandList = new NotificationCompat.Builder(context, "beforehand");
+        else builder_beforehandList = new NotificationCompat.Builder(context, "timer");
 
         builder_beforehandList.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
         builder_beforehandList.setSmallIcon(R.drawable.calendar_icon);

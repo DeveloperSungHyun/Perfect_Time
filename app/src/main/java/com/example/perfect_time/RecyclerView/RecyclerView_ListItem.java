@@ -16,15 +16,48 @@ public class RecyclerView_ListItem {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean Sound_Activate;         //소리알림 활성화 유무
-    private boolean Vibration_Activate;     //진동알림 활성화 유무
-    private boolean Popup_Activate;         //팝업알림 활성화 유무
+    private boolean vibration_Activate;     //진동알림 활성화 유무
+    private boolean headUp_Activate;
+    private boolean popup_Activate;         //팝업알림 활성화 유무
+    private boolean autoDisplay_On;
 
     private int FragmentType;//프레그먼트 타입(매일, 요일, 날짜)
 
+    public boolean isVibration_Activate() {
+        return vibration_Activate;
+    }
+
+    public void setVibration_Activate(boolean vibration_Activate) {
+        this.vibration_Activate = vibration_Activate;
+    }
+
+    public boolean isHeadUp_Activate() {
+        return headUp_Activate;
+    }
+
+    public void setHeadUp_Activate(boolean headUp_Activate) {
+        this.headUp_Activate = headUp_Activate;
+    }
+
+    public boolean isPopup_Activate() {
+        return popup_Activate;
+    }
+
+    public void setPopup_Activate(boolean popup_Activate) {
+        this.popup_Activate = popup_Activate;
+    }
+
+    public boolean isAutoDisplay_On() {
+        return autoDisplay_On;
+    }
+
+    public void setAutoDisplay_On(boolean autoDisplay_On) {
+        this.autoDisplay_On = autoDisplay_On;
+    }
+
     public RecyclerView_ListItem
             (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
-             int time_Minute, boolean sound_Activate, boolean vibration_Activate, boolean popup_Activate, String dayText, int dayTextColor, int fragment_Type) {
+             int time_Minute, boolean Vibration_Activate, boolean HeadUp_Activate,boolean Popup_Activate, boolean AutoDisplay_On, String dayText, int dayTextColor, int fragment_Type) {
 
         ViewType = viewType;
         Timer_Activate = timer_Activate;
@@ -35,9 +68,10 @@ public class RecyclerView_ListItem {
         Memo = memo;
         Time_Hour = time_Hour;
         Time_Minute = time_Minute;
-        Sound_Activate = sound_Activate;
         Vibration_Activate = vibration_Activate;
+        HeadUp_Activate = headUp_Activate;
         Popup_Activate = popup_Activate;
+        AutoDisplay_On = autoDisplay_On;
         FragmentType = fragment_Type;
     }
 
@@ -113,29 +147,6 @@ public class RecyclerView_ListItem {
         Time_Minute = time_Minute;
     }
 
-    public boolean isSound_Activate() {
-        return Sound_Activate;
-    }
-
-    public void setSound_Activate(boolean sound_Activate) {
-        Sound_Activate = sound_Activate;
-    }
-
-    public boolean isVibration_Activate() {
-        return Vibration_Activate;
-    }
-
-    public void setVibration_Activate(boolean vibration_Activate) {
-        Vibration_Activate = vibration_Activate;
-    }
-
-    public boolean isPopup_Activate() {
-        return Popup_Activate;
-    }
-
-    public void setPopup_Activate(boolean popup_Activate) {
-        Popup_Activate = popup_Activate;
-    }
 
     public int getFragmentType() {
         return FragmentType;
