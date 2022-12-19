@@ -51,11 +51,20 @@ public class AlarmServiceManagement {
 
         for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()){
             if(everyDay.isTimer_Activate()){
+
+                boolean alarm[] = new boolean[4];
+                alarm[0] = everyDay.isVibration_Activate();
+                alarm[1] = everyDay.isHeadUp_Activate();
+                alarm[2] = everyDay.isPopup_Activate();
+                alarm[3] = everyDay.isAutoDisplay_On();
+
                 intent = new Intent(context, AlarmService.class);
                 intent.putExtra("Type", 0);
                 intent.putExtra("Name", everyDay.getName());
                 intent.putExtra("Memo", everyDay.getMemo());
                 intent.putExtra("Important", everyDay.isImportant());
+
+                intent.putExtra("alarm", alarm);
 
                 AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
 
@@ -69,12 +78,21 @@ public class AlarmServiceManagement {
 
         for (DB_Week db_week : week_dataBase_management.getData()){
             if(db_week.isTimer_Activate()){
+
+                boolean alarm[] = new boolean[4];
+                alarm[0] = db_week.isVibration_Activate();
+                alarm[1] = db_week.isHeadUp_Activate();
+                alarm[2] = db_week.isPopup_Activate();
+                alarm[3] = db_week.isAutoDisplay_On();
+
                 intent = new Intent(context, AlarmService.class);
                 intent.putExtra("Type", 1);
                 intent.putExtra("Name", db_week.getName());
                 intent.putExtra("Memo", db_week.getMemo());
                 intent.putExtra("week", db_week.getDayOfTheWeek());
                 intent.putExtra("Important", db_week.isImportant());
+
+                intent.putExtra("alarm", alarm);
 
                 AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
             }
@@ -87,6 +105,13 @@ public class AlarmServiceManagement {
 
         for (DB_Date db_date : date_dataBase_management.getData()){
             if(db_date.isTimer_Activate()){
+
+                boolean alarm[] = new boolean[4];
+                alarm[0] = db_date.isVibration_Activate();
+                alarm[1] = db_date.isHeadUp_Activate();
+                alarm[2] = db_date.isPopup_Activate();
+                alarm[3] = db_date.isAutoDisplay_On();
+
                 intent = new Intent(context, AlarmService.class);
                 intent.putExtra("Type", 2);
                 intent.putExtra("Name", db_date.getName());
@@ -95,6 +120,8 @@ public class AlarmServiceManagement {
                 intent.putExtra("m", db_date.getDate_Month());
                 intent.putExtra("d", db_date.getDate_Day());
                 intent.putExtra("Important", db_date.isImportant());
+
+                intent.putExtra("alarm", alarm);
 
                 AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
             }
@@ -111,11 +138,18 @@ public class AlarmServiceManagement {
         for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()){
             if(everyDay.isTimer_Activate()){
                 if(everyDay.getUniqueID() == UniqueID){
+                    boolean alarm[] = new boolean[4];
+                    alarm[0] = everyDay.isVibration_Activate();
+                    alarm[1] = everyDay.isHeadUp_Activate();
+                    alarm[2] = everyDay.isPopup_Activate();
+                    alarm[3] = everyDay.isAutoDisplay_On();
+
                     Intent intent = new Intent(context, AlarmService.class);
                     intent.putExtra("Type", 0);
                     intent.putExtra("Name", everyDay.getName());
                     intent.putExtra("Memo", everyDay.getMemo());
                     intent.putExtra("Important", everyDay.isImportant());
+                    intent.putExtra("alarm", alarm);
 
                     AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
                 }
@@ -130,12 +164,20 @@ public class AlarmServiceManagement {
         for (DB_Week db_week : week_dataBase_management.getData()){
             if(db_week.isTimer_Activate()){
                 if(db_week.getUniqueID() == UniqueID){
+                    boolean alarm[] = new boolean[4];
+                    alarm[0] = db_week.isVibration_Activate();
+                    alarm[1] = db_week.isHeadUp_Activate();
+                    alarm[2] = db_week.isPopup_Activate();
+                    alarm[3] = db_week.isAutoDisplay_On();
+
                     Intent intent = new Intent(context, AlarmService.class);
                     intent.putExtra("Type", 1);
                     intent.putExtra("Name", db_week.getName());
                     intent.putExtra("Memo", db_week.getMemo());
                     intent.putExtra("week", week);
                     intent.putExtra("Important", db_week.isImportant());
+
+                    intent.putExtra("alarm", alarm);
 
                     AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
                 }
@@ -150,6 +192,12 @@ public class AlarmServiceManagement {
         for (DB_Date db_date : date_dataBase_management.getData()){
             if(db_date.isTimer_Activate()){
                 if(db_date.getUniqueID() == UniqueID){
+                    boolean alarm[] = new boolean[4];
+                    alarm[0] = db_date.isVibration_Activate();
+                    alarm[1] = db_date.isHeadUp_Activate();
+                    alarm[2] = db_date.isPopup_Activate();
+                    alarm[3] = db_date.isAutoDisplay_On();
+
                     Intent intent = new Intent(context, AlarmService.class);
                     intent.putExtra("Type", 2);
                     intent.putExtra("Name", db_date.getName());
@@ -158,6 +206,8 @@ public class AlarmServiceManagement {
                     intent.putExtra("m", m);
                     intent.putExtra("d", d);
                     intent.putExtra("Important", db_date.isImportant());
+
+                    intent.putExtra("alarm", alarm);
 
                     AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
                 }

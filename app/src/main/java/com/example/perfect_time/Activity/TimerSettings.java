@@ -347,7 +347,7 @@ public class TimerSettings extends Activity {
             }
         });
 
-        Switch_HeadUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch_HeadUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() { //해드업
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settingValue.setHeadUp_Activate(isChecked);
@@ -361,7 +361,7 @@ public class TimerSettings extends Activity {
             }
         });
 
-        Switch_AutoDisplay_On.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch_AutoDisplay_On.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {//화면켜짐
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 settingValue.setAutoDisplay_On(isChecked);
