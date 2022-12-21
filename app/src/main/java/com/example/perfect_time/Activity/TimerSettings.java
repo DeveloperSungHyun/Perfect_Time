@@ -219,7 +219,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm();
+                                alarmServiceManagement.All_AddAlarm_week();
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 dayOfTheWeek_timerSettings.TimerUpData();
@@ -227,11 +227,12 @@ public class TimerSettings extends Activity {
                                 Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(getApplicationContext());
                                 int UniqueID = week_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
                                 Log.d("UniqueID", " 번호 " + UniqueID);
-                                alarmServiceManagement.AlarmUpDate_week(UniqueID, week_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDayOfTheWeek());
+                                alarmServiceManagement.AlarmUpDate_week(UniqueID);
+
                             }else if(TimerSettingType == 3){
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm();
+                                alarmServiceManagement.All_AddAlarm_week();
                             }
                             break;
                         }
@@ -239,7 +240,7 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm();
+                                alarmServiceManagement.All_AddAlarm_data();
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 date_timerSettings.TimerUpData();
@@ -247,14 +248,11 @@ public class TimerSettings extends Activity {
                                 Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(getApplicationContext());
                                 int UniqueID = date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
                                 Log.d("UniqueID", " 번호 " + UniqueID);
-                                alarmServiceManagement.AlarmUpDate_data(UniqueID,
-                                        date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDate_Year(),
-                                        date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDate_Month(),
-                                        date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getDate_Day());
+                                alarmServiceManagement.AlarmUpDate_data(UniqueID);
                             }else if(TimerSettingType == 3){
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm();
+                                alarmServiceManagement.All_AddAlarm_data();
                             }
                         }
                     }
@@ -565,7 +563,7 @@ class DayOfTheWeek_TimerSettings{
         settingValue.setImportant(db_week.isImportant());
 
         settingValue.setVibration_Activate(db_week.isVibration_Activate());
-        settingValue.setHeadUp_Activate(db_week.isPopup_Activate());
+        settingValue.setHeadUp_Activate(db_week.isHeadUp_Activate());
         settingValue.setPopup_Activate(db_week.isPopup_Activate());
         settingValue.setAutoDisplay_On(db_week.isAutoDisplay_On());
 
@@ -653,7 +651,7 @@ class Date_TimerSettings{
 
 
         settingValue.setVibration_Activate(db_date.isVibration_Activate());
-        settingValue.setHeadUp_Activate(db_date.isPopup_Activate());
+        settingValue.setHeadUp_Activate(db_date.isHeadUp_Activate());
         settingValue.setPopup_Activate(db_date.isPopup_Activate());
         settingValue.setAutoDisplay_On(db_date.isAutoDisplay_On());
     }

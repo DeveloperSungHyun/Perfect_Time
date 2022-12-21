@@ -95,6 +95,7 @@ public class AlarmServiceManagement {
                 intent.putExtra("alarm", alarm);
 
                 AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
+                Log.d("All_AddAlarm_week", "command================");
             }
         }
 
@@ -158,7 +159,9 @@ public class AlarmServiceManagement {
 
     }
 
-    public void AlarmUpDate_week(int UniqueID, int week){
+    public void AlarmUpDate_week(int UniqueID){
+        Delete_Alarm(UniqueID);
+
         Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(context);
 
         for (DB_Week db_week : week_dataBase_management.getData()){
@@ -174,7 +177,7 @@ public class AlarmServiceManagement {
                     intent.putExtra("Type", 1);
                     intent.putExtra("Name", db_week.getName());
                     intent.putExtra("Memo", db_week.getMemo());
-                    intent.putExtra("week", week);
+                    intent.putExtra("week", db_week.getDayOfTheWeek());
                     intent.putExtra("Important", db_week.isImportant());
 
                     intent.putExtra("alarm", alarm);
@@ -186,7 +189,9 @@ public class AlarmServiceManagement {
 
     }
 
-    public void AlarmUpDate_data(int UniqueID, int y, int m, int d){
+    public void AlarmUpDate_data(int UniqueID){
+        Delete_Alarm(UniqueID);
+
         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
 
         for (DB_Date db_date : date_dataBase_management.getData()){
@@ -202,9 +207,9 @@ public class AlarmServiceManagement {
                     intent.putExtra("Type", 2);
                     intent.putExtra("Name", db_date.getName());
                     intent.putExtra("Memo", db_date.getMemo());
-                    intent.putExtra("y", y);
-                    intent.putExtra("m", m);
-                    intent.putExtra("d", d);
+                    intent.putExtra("y", db_date.getDate_Year());
+                    intent.putExtra("m", db_date.getDate_Month());
+                    intent.putExtra("d", db_date.getDate_Day());
                     intent.putExtra("Important", db_date.isImportant());
 
                     intent.putExtra("alarm", alarm);

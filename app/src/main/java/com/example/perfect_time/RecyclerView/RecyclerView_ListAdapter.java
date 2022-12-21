@@ -259,7 +259,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                         holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
                                         week_dataBase_management.setTimeOnOff(holder.getAdapterPosition(), true);
 
-                                        alarmServiceManagement.All_AddAlarm();
+                                        alarmServiceManagement.All_AddAlarm_week();
                                         ToastText = "알림이 켜졌습니다.";
                                     }
 
