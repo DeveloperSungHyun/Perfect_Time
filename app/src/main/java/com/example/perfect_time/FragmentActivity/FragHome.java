@@ -48,9 +48,6 @@ public class FragHome extends Fragment {
     RecyclerView_ListAdapter recyclerView_listAdapter;
     RecyclerView_ListItem recyclerView_listItem;    //리사이클러뷰 아이템
 
-    Button DayTimeList;
-    TextView DayTime_y_m_d, DayTime_week, disDay;
-
     ArrayList<RecyclerView_ListItem> ListItem;      //리사이클러뷰 아이템 리스트데이터
 
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
@@ -58,19 +55,9 @@ public class FragHome extends Fragment {
     int y, m, d;
     Boolean ToDay = false;
 
-    public static FragHome newInstance(){
-        FragHome fragHome = new FragHome();
-
-        return fragHome;
-    }
-
     private void IdMapping(View view){
         recyclerView = view.findViewById(R.id.recyclerview);
-        DayTimeList = view.findViewById(R.id.DayTimeList);
 
-//        DayTime_y_m_d = view.findViewById(R.id.DayTime_y_m_d);
-//        DayTime_week = view.findViewById(R.id.DayTime_week);
-//        disDay = view.findViewById(R.id.disDay);
 
     }
 
@@ -123,70 +110,6 @@ public class FragHome extends Fragment {
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
 
         recyclerView.setAdapter(recyclerView_listAdapter);
-
-        for (All_Time data : all_times){
-            Log.d("======================", " " + data.getName());
-        }
-
-        DayTimeList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String item[] = {"오늘 일정", "내일 일정", "모래 일정", "날짜 지정"};
-
-                AlertDialog.Builder builder;
-
-                builder = new AlertDialog.Builder(view.getContext());
-
-                builder.setItems(item, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0:{
-                                ToDay = true;
-
-                                y = calendar.get(Calendar.YEAR);//24시 형식
-                                m = calendar.get(Calendar.MONTH) + 1;//24시 형식
-                                d = calendar.get((Calendar.DATE));
-
-                                DayTimeList.setText("오늘 일정");
-                                break;
-                            }
-                            case 1:{
-                                ToDay = false;
-
-                                y = calendar.get(Calendar.YEAR);//24시 형식
-                                m = calendar.get(Calendar.MONTH) + 1;//24시 형식
-                                d = calendar.get((Calendar.DATE)) + 1;
-
-                                DayTimeList.setText("내일 일정");
-                                break;
-                            }
-                            case 2:{
-                                ToDay = false;
-
-                                y = calendar.get(Calendar.YEAR);//24시 형식
-                                m = calendar.get(Calendar.MONTH) + 1;//24시 형식
-                                d = calendar.get((Calendar.DATE)) + 2;
-
-                                DayTimeList.setText("모래 일정");
-                                break;
-                            }
-                        }
-
-                        ListItem.clear();
-                        oneDayTimeList = new OneDayTimeList(view.getContext(), y, m, d);
-
-                        all_times = oneDayTimeList.getTimeList();
-
-                        recyclerView_ListShow();
-                    }
-                });
-                builder.show();
-
-            }
-        });
-
 
         return view;
     }

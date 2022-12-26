@@ -60,12 +60,6 @@ public class FragWeek extends Fragment {
     String WeekText[] = {"일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"};
     int DayTextColor;
 
-    public static FragWeek newInstance(){
-        FragWeek fragWeek = new FragWeek();
-
-        return fragWeek;
-    }
-
     private void IdMapping(View view){
         TimerAddButton = view.findViewById(R.id.TimerAddButton);//알람 추가 버튼
         recyclerView = view.findViewById(R.id.recyclerview);

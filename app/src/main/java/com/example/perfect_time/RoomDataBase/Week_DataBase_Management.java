@@ -20,8 +20,6 @@ import java.util.List;
 
 public class Week_DataBase_Management {
 
-    Calendar calendar;
-
     DB_Week db_week;
     WeekDao weekDao;
     WeekDataBase weekDataBase;

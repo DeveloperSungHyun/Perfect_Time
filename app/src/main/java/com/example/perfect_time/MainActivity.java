@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.perfect_time.Activity.Preferences;
 import com.example.perfect_time.FragmentActivity.FragDate;
@@ -19,16 +20,25 @@ import com.example.perfect_time.FragmentActivity.FragHome;
 import com.example.perfect_time.FragmentActivity.FragWeek;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigationView;
     ImageView SystemSetting;
 
+    TextView TextView_Date;
+
+    Calendar calendar;
+
     int SceneNumber = 0;
+
+    int y, m, d, w;
 
     private void IdMapping(){
 
         SystemSetting = findViewById(R.id.SystemSetting);
+        TextView_Date = findViewById(R.id.TextView_Date);
     }
 
     @Override
@@ -39,6 +49,25 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         IdMapping();
+
+        calendar = Calendar.getInstance();
+
+        y = calendar.get(Calendar.YEAR);//24시 형식
+        m = calendar.get(Calendar.MONTH) + 1;//24시 형식
+        d = calendar.get((Calendar.DATE));
+        w = calendar.get((Calendar.DAY_OF_WEEK));
+
+        String DayOfWeek = null;
+        switch (w){
+            case 0: DayOfWeek = "일"; break;
+            case 1: DayOfWeek = "월"; break;
+            case 2: DayOfWeek = "화"; break;
+            case 3: DayOfWeek = "수"; break;
+            case 4: DayOfWeek = "목"; break;
+            case 5: DayOfWeek = "금"; break;
+            case 6: DayOfWeek = "토"; break;
+        }
+        TextView_Date.setText(y + "년 " + m + "월 " + d + "일 " + DayOfWeek + "요일");
 
 
         AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());//알람메니저 등록

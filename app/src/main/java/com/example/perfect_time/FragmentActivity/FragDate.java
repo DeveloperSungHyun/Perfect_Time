@@ -61,11 +61,6 @@ public class FragDate extends Fragment {
 
     private String DayText;
 
-    public static FragDate newInstance(){
-        FragDate fragDate = new FragDate();
-
-        return fragDate;
-    }
 
     private void IdMapping(View view){
         TimerAddButton = view.findViewById(R.id.TimerAddButton);//알람 추가 버튼

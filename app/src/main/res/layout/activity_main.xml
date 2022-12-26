@@ -15,6 +15,7 @@
         android:paddingRight="10dp"
         android:background="@color/purple_500">
         <TextView
+            android:id="@+id/TextView_Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2022년 10월 4일 화요일"

@@ -46,13 +46,6 @@ public class FragEveryDay extends Fragment {
 
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
 
-    public static FragEveryDay newInstance(){
-        FragEveryDay fragEveryDay = new FragEveryDay();
-
-        return fragEveryDay;
-    }
-
-
     private void IdMapping(View view){
         TimerAddButton = view.findViewById(R.id.TimerAddButton);//알람 추가 버튼
         recyclerView = view.findViewById(R.id.recyclerview);

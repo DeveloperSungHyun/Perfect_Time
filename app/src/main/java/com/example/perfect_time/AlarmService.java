@@ -27,26 +27,6 @@ public class AlarmService extends BroadcastReceiver {
 
         calendar = Calendar.getInstance();
 
-//        switch (intent.getIntExtra("Type", 3)){
-//            case 0: {
-//                NotificationShow(context, intent);
-//                break;
-//            }
-//            case 1: {
-//                if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
-//                    NotificationShow(context, intent);
-//                }
-//                break;
-//            }
-//            case 2: {
-//                if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
-//                        intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
-//                        intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
-//                    NotificationShow(context, intent);
-//                }
-//                break;
-//            }
-//        }
 
         if(intent.getIntExtra("Type", 3) == 0){
             NotificationShow(context, intent);
