@@ -18,7 +18,7 @@ import com.example.perfect_time.Activity.TimerSettings;
 import java.util.Calendar;
 
 public class AlarmService extends BroadcastReceiver {
-    NotificationCompat.Builder builder_timer, builder_beforehandList;
+    NotificationCompat.Builder builder;
 
     Calendar calendar;
 
@@ -66,10 +66,17 @@ public class AlarmService extends BroadcastReceiver {
             }
         }
 
+        if(intent.getIntExtra("Type", 3) == 3){
+            AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
+            alarmServiceManagement.All_TImerSetting();
+
+        }
+
 
     }
 
     void NotificationShow(Context context, Intent intent){
+
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -80,6 +87,7 @@ public class AlarmService extends BroadcastReceiver {
             //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
             Vibration_HeadUp.setLightColor(0xFFFF0000);
             notificationManager.createNotificationChannel(Vibration_HeadUp);
+
 
             NotificationChannel None_Vibration_HeadUp = new NotificationChannel("None_Vibration_HeadUp", "무진동 헤드업알림", NotificationManager.IMPORTANCE_HIGH);//체널 생성
             None_Vibration_HeadUp.setBypassDnd(true);
@@ -109,25 +117,25 @@ public class AlarmService extends BroadcastReceiver {
 
         if(intent.getBooleanArrayExtra("alarm")[0] == true){//진동알림 여부
             if(intent.getBooleanArrayExtra("alarm")[1] == true){
-                builder_beforehandList = new NotificationCompat.Builder(context, "Vibration_HeadUp");
+                builder = new NotificationCompat.Builder(context, "Vibration_HeadUp");
             }else{
-                builder_beforehandList = new NotificationCompat.Builder(context, "Vibration");
+                builder = new NotificationCompat.Builder(context, "Vibration");
             }
         }else if(intent.getBooleanArrayExtra("alarm")[1] == true){
-            builder_beforehandList = new NotificationCompat.Builder(context, "None_Vibration_HeadUp");
+            builder = new NotificationCompat.Builder(context, "None_Vibration_HeadUp");
         }else{
-            builder_beforehandList = new NotificationCompat.Builder(context, "None");
+            builder = new NotificationCompat.Builder(context, "None");
         }
 
-        builder_beforehandList.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
-        builder_beforehandList.setSmallIcon(R.drawable.calendar_icon);
-        builder_beforehandList.setTicker("알람 간단한 설명");
-        builder_beforehandList.setContentTitle(intent.getStringExtra("Name"));
-        builder_beforehandList.setContentText(intent.getStringExtra("Memo"));
-        builder_beforehandList.setStyle(new NotificationCompat.BigTextStyle().bigText(intent.getStringExtra("Memo")));
-        builder_beforehandList.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        builder_beforehandList.setPriority(0);
-        builder_beforehandList.setDefaults(Notification.PRIORITY_HIGH);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
+        builder.setSmallIcon(R.drawable.calendar_icon);
+        builder.setTicker("알람 간단한 설명");
+        builder.setContentTitle(intent.getStringExtra("Name"));
+        builder.setContentText(intent.getStringExtra("Memo"));
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(intent.getStringExtra("Memo")));
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        builder.setPriority(0);
+        builder.setDefaults(Notification.PRIORITY_HIGH);
         if(intent.getBooleanExtra("Important", false)){
 
             Intent busRouteIntent = new Intent(context, MainActivity.class);
@@ -137,12 +145,12 @@ public class AlarmService extends BroadcastReceiver {
             PendingIntent busRoutePendingIntent =
                     stackBuilder.getPendingIntent(1, PendingIntent.FLAG_IMMUTABLE);
 
-            builder_beforehandList.setOngoing(true);//알림 못지우기
-            builder_beforehandList.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
+            builder.setOngoing(true);//알림 못지우기
+            builder.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
         }
 
         int id=(int)System.currentTimeMillis();
 
-        notificationManager.notify(id,builder_beforehandList.build());
+        notificationManager.notify(id,builder.build());
     }
 }

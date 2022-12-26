@@ -66,6 +66,7 @@ public class AlarmServiceManagement {
 
                 intent.putExtra("alarm", alarm);
 
+
                 AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
 
             }
@@ -93,6 +94,7 @@ public class AlarmServiceManagement {
                 intent.putExtra("Important", db_week.isImportant());
 
                 intent.putExtra("alarm", alarm);
+
 
                 AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
                 Log.d("All_AddAlarm_week", "command================");
@@ -151,6 +153,7 @@ public class AlarmServiceManagement {
                     intent.putExtra("Memo", everyDay.getMemo());
                     intent.putExtra("Important", everyDay.isImportant());
                     intent.putExtra("alarm", alarm);
+
 
                     AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
                 }
@@ -214,6 +217,7 @@ public class AlarmServiceManagement {
 
                     intent.putExtra("alarm", alarm);
 
+
                     AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
                 }
             }
@@ -266,3 +270,4 @@ public class AlarmServiceManagement {
         AlarmManager_add(intent, 0, 0, 0);
     }
 }
+

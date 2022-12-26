@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity{
         IdMapping();
 
 
+        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());//알람메니저 등록
+        alarmServiceManagement.All_TImerSetting();//모든알람 서비스 등록
+
 
         bottomNavigationView = findViewById(R.id.BottomNavigationView);
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new FragHome()).commit();
