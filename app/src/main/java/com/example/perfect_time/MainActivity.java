@@ -3,11 +3,18 @@ package com.example.perfect_time;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,9 +38,11 @@ public class MainActivity extends AppCompatActivity{
 
     Calendar calendar;
 
+    private int OVERLAY_PERMISSION_PEQ_CODE = 0;
     int SceneNumber = 0;
 
     int y, m, d, w;
+
 
     private void IdMapping(){
 

@@ -10,9 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.provider.Settings;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.perfect_time.Activity.PopupView;
 import com.example.perfect_time.Activity.TimerSettings;
 
 import java.util.Calendar;
@@ -127,6 +129,22 @@ public class AlarmService extends BroadcastReceiver {
 
             builder.setOngoing(true);//알림 못지우기
             builder.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
+        }
+
+        if(intent.getBooleanArrayExtra("alarm")[2] == true){//팝업 알림
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(Settings.canDrawOverlays(context)){
+                    Intent intent1 = new Intent(context, PopupView.class);
+
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    intent1.putExtra("name", intent.getStringExtra("Name"));
+                    intent1.putExtra("memo", intent.getStringExtra("Memo"));
+                    context.startActivity(intent1);
+                }
+            }
         }
 
         int id=(int)System.currentTimeMillis();
