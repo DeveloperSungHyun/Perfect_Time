@@ -42,6 +42,7 @@ import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
+import com.example.perfect_time.SystemDataSave;
 import com.example.perfect_time.Time24_to_12Hour;
 
 import java.util.Calendar;
@@ -201,7 +202,10 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 everyDay_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm();
+                                SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
+                                if(systemDataSave.getData_AllTimerOff() == false) {
+                                    alarmServiceManagement.All_AddAlarm();
+                                }
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 everyDay_timerSettings.TimerUpData();
@@ -214,7 +218,10 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 everyDay_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm();
+                                SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
+                                if(systemDataSave.getData_AllTimerOff() == false) {
+                                    alarmServiceManagement.All_AddAlarm();
+                                }
                             }
                             break;
                         }
@@ -222,7 +229,10 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm_week();
+                                SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
+                                if(systemDataSave.getData_AllTimerOff() == false) {
+                                    alarmServiceManagement.All_AddAlarm_week();
+                                }
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 dayOfTheWeek_timerSettings.TimerUpData();
@@ -235,7 +245,10 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 dayOfTheWeek_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm_week();
+                                SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
+                                if(systemDataSave.getData_AllTimerOff() == false) {
+                                    alarmServiceManagement.All_AddAlarm_week();
+                                }
                             }
                             break;
                         }
@@ -243,7 +256,10 @@ public class TimerSettings extends Activity {
                             if(TimerSettingType == 1){//데이터 추가
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm_data();
+                                SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
+                                if(systemDataSave.getData_AllTimerOff() == false) {
+                                    alarmServiceManagement.All_AddAlarm_data();
+                                }
 
                             }else if(TimerSettingType == 2){//데이터 변경
                                 date_timerSettings.TimerUpData();
@@ -255,7 +271,10 @@ public class TimerSettings extends Activity {
                             }else if(TimerSettingType == 3){
                                 date_timerSettings.NewAddTimer();
 
-                                alarmServiceManagement.All_AddAlarm_data();
+                                SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
+                                if(systemDataSave.getData_AllTimerOff() == false) {
+                                    alarmServiceManagement.All_AddAlarm_data();
+                                }
                             }
                         }
                     }

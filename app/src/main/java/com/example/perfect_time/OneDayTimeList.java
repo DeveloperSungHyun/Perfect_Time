@@ -95,8 +95,6 @@ public class OneDayTimeList {
         if(y % 4 == 0 && m > 2) week_num += 1;
         week_num += d - 1;
 
-        Log.d("=-===-=-==-==-==-=", "num" + week_num % 7);
-
 
         for (DB_Week db_week : week_dataBase_management.getData()){
 

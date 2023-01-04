@@ -259,7 +259,7 @@ public class AlarmServiceManagement {
         alarmManager = null;
     }
 
-    public void All_TImerSetting(){
+    public void All_TimerSetting(){
         All_AddAlarm();
         All_AddAlarm_week();
         All_AddAlarm_data();
@@ -267,7 +267,26 @@ public class AlarmServiceManagement {
         intent = new Intent(context, AlarmService.class);
         intent.putExtra("Type", 3);
 
-        AlarmManager_add(intent, 0, 0, 0);
+        AlarmManager_add(intent, 0, 0, 0);//하루가 지날때마다 울림
+    }
+
+    public void All_Delete(){
+        EveryDay_DataBase_Management everyDay_dataBase_management = new EveryDay_DataBase_Management(context);
+        Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(context);
+        Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
+
+        for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()){
+            Delete_Alarm(everyDay.getUniqueID());
+        }
+
+        for (DB_Week db_week : week_dataBase_management.getData()){
+            Delete_Alarm(db_week.getUniqueID());
+        }
+
+        for (DB_Date db_date : date_dataBase_management.getData()){
+            Delete_Alarm(db_date.getUniqueID());
+        }
+
     }
 }
 

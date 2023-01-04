@@ -1,5 +1,6 @@
 package com.example.perfect_time;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.PowerManager;
 import android.provider.Settings;
 
 import androidx.core.app.NotificationCompat;
@@ -21,6 +23,8 @@ import java.util.Calendar;
 
 public class AlarmService extends BroadcastReceiver {
     NotificationCompat.Builder builder;
+
+    PowerManager.WakeLock sCpuWakeLock;
 
     Calendar calendar;
 
@@ -49,14 +53,18 @@ public class AlarmService extends BroadcastReceiver {
         }
 
         if(intent.getIntExtra("Type", 3) == 3){
-            AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
-            alarmServiceManagement.All_TImerSetting();
+            SystemDataSave systemDataSave = new SystemDataSave(context.getApplicationContext());//시스템 셋팅값
+            if(!systemDataSave.getData_AllTimerOff()) {//알림이 ON 되어있다면 모든알림 설정
+                AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
+                alarmServiceManagement.All_TimerSetting();
+            }
 
         }
 
 
     }
 
+    @SuppressLint("InvalidWakeLockTag")
     void NotificationShow(Context context, Intent intent){
 
 
@@ -98,16 +106,50 @@ public class AlarmService extends BroadcastReceiver {
         }
 
         if(intent.getBooleanArrayExtra("alarm")[0] == true){//진동알림 여부
-            if(intent.getBooleanArrayExtra("alarm")[1] == true){
+            if(intent.getBooleanArrayExtra("alarm")[1] == true && intent.getBooleanArrayExtra("alarm")[3] == false){
                 builder = new NotificationCompat.Builder(context, "Vibration_HeadUp");
             }else{
                 builder = new NotificationCompat.Builder(context, "Vibration");
             }
-        }else if(intent.getBooleanArrayExtra("alarm")[1] == true){
+        }else if(intent.getBooleanArrayExtra("alarm")[1] == true && intent.getBooleanArrayExtra("alarm")[3] == false){
             builder = new NotificationCompat.Builder(context, "None_Vibration_HeadUp");
         }else{
             builder = new NotificationCompat.Builder(context, "None");
         }
+
+        if(intent.getBooleanArrayExtra("alarm")[2] == true){//팝업 알림
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(Settings.canDrawOverlays(context)){
+                    Intent intent1 = new Intent(context, PopupView.class);
+
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    intent1.putExtra("name", intent.getStringExtra("Name"));
+                    intent1.putExtra("memo", intent.getStringExtra("Memo"));
+                    context.startActivity(intent1);
+                }
+            }
+        }
+
+        if(intent.getBooleanArrayExtra("alarm")[3] == true){//화면 켜짐
+
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            sCpuWakeLock = pm.newWakeLock(
+                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
+                            PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                            PowerManager.ON_AFTER_RELEASE, "hi");
+
+            sCpuWakeLock.acquire();
+
+            if (sCpuWakeLock != null) {
+                sCpuWakeLock.release();
+                sCpuWakeLock = null;
+            }
+
+        }
+
 
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
         builder.setSmallIcon(R.drawable.calendar_icon);
@@ -131,21 +173,6 @@ public class AlarmService extends BroadcastReceiver {
             builder.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
         }
 
-        if(intent.getBooleanArrayExtra("alarm")[2] == true){//팝업 알림
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                if(Settings.canDrawOverlays(context)){
-                    Intent intent1 = new Intent(context, PopupView.class);
-
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    intent1.putExtra("name", intent.getStringExtra("Name"));
-                    intent1.putExtra("memo", intent.getStringExtra("Memo"));
-                    context.startActivity(intent1);
-                }
-            }
-        }
 
         int id=(int)System.currentTimeMillis();
 
