@@ -46,6 +46,12 @@ public class SystemDataSave {
         editor.commit();
 
     }
+    public void setData_Time24_to_12(boolean Time24_to_12){
+
+        editor.putBoolean("Time24_to_12", Time24_to_12);
+
+        editor.commit();
+    }
 
     public boolean getData_AllTimerOff(){
         return sharedPreferences.getBoolean("AllTimerOff", false);
@@ -58,6 +64,9 @@ public class SystemDataSave {
     }
     public boolean getData_WearData(){
         return sharedPreferences.getBoolean("WearData", false);
+    }
+    public boolean getData_Time24_to_12(){
+        return sharedPreferences.getBoolean("Time24_to_12", false);
     }
 
 }

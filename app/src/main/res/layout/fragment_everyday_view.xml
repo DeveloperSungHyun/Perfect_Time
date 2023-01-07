@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/TextView_none_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="저장된 알람이 없습니다."
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,48 +17,55 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/TimerAddButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:layout_margin="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="추가"
-                android:textSize="15dp"
-                android:textColor="#FF000000"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/add_time"/>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
+            <LinearLayout
+                android:id="@+id/TimerAddButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="추가"
+                    android:textSize="15dp"
+                    android:textColor="#FF000000"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add_time"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbarFadeDuration="0"
-                android:scrollbarSize="5dp"
-                android:scrollbarThumbVertical="@android:color/darker_gray"
-                android:scrollbars="vertical"
-                android:layout_weight="1">
+                android:orientation="vertical"
+                android:gravity="center">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarFadeDuration="0"
+                    android:scrollbarSize="5dp"
+                    android:scrollbarThumbVertical="@android:color/darker_gray"
+                    android:scrollbars="vertical"
+                    android:layout_weight="1">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

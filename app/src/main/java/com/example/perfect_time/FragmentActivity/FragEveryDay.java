@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ public class FragEveryDay extends Fragment {
 
     View view;
 
+    TextView TextView_none_list;
+
     LinearLayout TimerAddButton;//알람 추가 버튼
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
@@ -47,6 +50,8 @@ public class FragEveryDay extends Fragment {
     private int ViewType = 0;                       //리사이클러뷰 뷰 타입
 
     private void IdMapping(View view){
+        TextView_none_list = view.findViewById(R.id.TextView_none_list);
+
         TimerAddButton = view.findViewById(R.id.TimerAddButton);//알람 추가 버튼
         recyclerView = view.findViewById(R.id.recyclerview);
 
@@ -79,7 +84,7 @@ public class FragEveryDay extends Fragment {
 
             recyclerView_listItem =
                     new RecyclerView_ListItem(0, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
-                            data.getTime_Minute(), data.isVibration_Activate(), data.isHeadUp_Activate(), data.isPopup_Activate(), data.isAutoDisplay_On(), null, 0xFF000000, FragmentType.fragEveryDay);
+                            data.getTime_Minute(), data.isVibration_Activate(), data.isHeadUp_Activate(), data.isPopup_Activate(), data.isAutoDisplay_On(), "매일", 0xFF000000, FragmentType.fragEveryDay);
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
             recyclerView_listItem = null;
@@ -96,6 +101,12 @@ public class FragEveryDay extends Fragment {
 
 
         everyDay_dataBase_management = new EveryDay_DataBase_Management(getContext());
+
+        if(everyDay_dataBase_management.getData().size() == 0){
+            TextView_none_list.setVisibility(View.VISIBLE);
+        }else{
+            TextView_none_list.setVisibility(View.GONE);
+        }
 
         DeviceType deviceType = new DeviceType(view.getContext());
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){

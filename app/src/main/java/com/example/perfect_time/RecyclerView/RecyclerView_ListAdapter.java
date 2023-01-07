@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.perfect_time.Activity.TimerSettings;
 import com.example.perfect_time.AlarmServiceManagement;
 import com.example.perfect_time.FragmentActivity.FragmentType;
+import com.example.perfect_time.ListView_Adapter;
+import com.example.perfect_time.List_Item;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
+import com.example.perfect_time.Time24_to_12Hour;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -122,16 +126,9 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
 
-        if(getItem.getTime_Hour() > 12){
-            Time_h_12 = getItem.getTime_Hour() - 12;
-            holder.TextView_Time_AmPm.setText("오후");
-        }else{
-            holder.TextView_Time_AmPm.setText("오전");
-        }
-        if(Time_h_12 == 0) Time_h_12 = 12;
-
-        holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
-
+        Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
+        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
+        holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
         if(getItem.isVibration_Activate()) holder.ImageView_vibration.setVisibility(View.VISIBLE);
         else holder.ImageView_vibration.setVisibility(View.GONE);
@@ -143,17 +140,25 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public boolean onLongClick(View view) {
 
-                String item[] = {"수정하기", "복사하기", "알림On/Off", "삭제하기", "취소"};
+                ListView_Adapter listView_adapter = new ListView_Adapter();
+
+                listView_adapter.addItem(new List_Item(R.drawable.edit_icon, "수정하기"));
+                listView_adapter.addItem(new List_Item(R.drawable.copy_icon, "복사하기"));
+                listView_adapter.addItem(new List_Item(R.drawable.alarm_on_icon, "알림On/Off"));
+                listView_adapter.addItem(new List_Item(R.drawable.delete_icon, "삭제하기"));
+                listView_adapter.addItem(new List_Item(R.drawable.close_icon, "취소"));
+
 
                 AlertDialog.Builder builder;
-
                 builder = new AlertDialog.Builder(view.getContext());
+                AlertDialog dialog = builder.create();
 
-                builder.setItems(item, new DialogInterface.OnClickListener() {
-                    String ToastText = null;
+                builder.setSingleChoiceItems(listView_adapter, -1, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
+                    public void onClick(DialogInterface dialog, int which) {
+                        String ToastText = null;
+
+                        switch (which){
                             case 0:{
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
@@ -329,8 +334,10 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                             }
                         }
+                        dialog.dismiss();
                     }
                 });
+
 
                 builder.show();
 
@@ -380,16 +387,9 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
 
-        if(getItem.getTime_Hour() > 12){
-            Time_h_12 = getItem.getTime_Hour() - 12;
-            holder.TextView_Time_AmPm.setText("오후");
-        }else{
-            holder.TextView_Time_AmPm.setText("오전");
-        }
-
-        if(Time_h_12 == 0) Time_h_12 = 12;
-
-        holder.TextView_Time.setText(getItem.getTime_Hour() + " : " + getItem.getTime_Minute());
+        Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
+        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
+        holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
         if(getItem.isVibration_Activate()) holder.ImageView_vibration.setVisibility(View.VISIBLE);
         else holder.ImageView_vibration.setVisibility(View.GONE);

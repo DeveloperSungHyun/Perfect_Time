@@ -130,17 +130,16 @@ public class TimerSettings extends Activity {
     }
 
     private void InterfaceSetting(){
-        Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(settingValue.getTime_Hour());
+        Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(settingValue.getTime_Hour(), getApplicationContext());
         Switch_TimerActivate.setChecked(settingValue.isTimer_Activate());
 
         EditText_Name.setText(settingValue.getName());
         EditText_Memo.setText(settingValue.getMemo());
 
-        TextView_Time_H.setText(Integer.toString(time24_to_12Hour.getTime12Hour()));
+        TextView_Time_H.setText(Integer.toString(time24_to_12Hour.getTime_Hour()));
         TextView_Time_M.setText(Integer.toString(settingValue.getTime_Minute()));
 
-        if(time24_to_12Hour.getAmPm()) TextView_AmPm.setText("오후");
-        else TextView_AmPm.setText("오전");
+        TextView_AmPm.setText(time24_to_12Hour.getAmPm());
 
         Switch_Important.setChecked(settingValue.isImportant());
 
@@ -305,6 +304,7 @@ public class TimerSettings extends Activity {
     }
 
     private void showTimeSettingsView(){
+        SystemDataSave systemDataSave = new SystemDataSave(getApplicationContext());
         TimePickerDialog timePickerDialog = new TimePickerDialog(TimerSettings.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int h, int m) {
@@ -315,7 +315,7 @@ public class TimerSettings extends Activity {
                 settingValue.setMemo(EditText_Memo.getText().toString());                                       //알람메모
                 InterfaceSetting();
             }
-        } ,settingValue.getTime_Hour(), settingValue.getTime_Minute(), false);
+        } ,settingValue.getTime_Hour(), settingValue.getTime_Minute(), systemDataSave.getData_Time24_to_12());
         timePickerDialog.show();
     }
 

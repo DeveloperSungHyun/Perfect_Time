@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 public class FragDate extends Fragment {
 
     View view;
+
+    TextView TextView_none_list;
 
     LinearLayout TimerAddButton;//알람 추가 버튼
     RecyclerView recyclerView;
@@ -63,6 +66,8 @@ public class FragDate extends Fragment {
 
 
     private void IdMapping(View view){
+        TextView_none_list = view.findViewById(R.id.TextView_none_list);
+
         TimerAddButton = view.findViewById(R.id.TimerAddButton);//알람 추가 버튼
         recyclerView = view.findViewById(R.id.recyclerview);
 
@@ -101,6 +106,12 @@ public class FragDate extends Fragment {
 
 
         date_dataBase_management = new Date_DataBase_Management(getContext());
+
+        if(date_dataBase_management.getData().size() == 0){
+            TextView_none_list.setVisibility(View.VISIBLE);
+        }else{
+            TextView_none_list.setVisibility(View.GONE);
+        }
 
         DeviceType deviceType = new DeviceType(view.getContext());
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){

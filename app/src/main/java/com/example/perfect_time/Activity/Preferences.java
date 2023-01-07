@@ -14,17 +14,23 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.perfect_time.AlarmServiceManagement;
+import com.example.perfect_time.ListView_Adapter;
+import com.example.perfect_time.List_Item;
 import com.example.perfect_time.MainActivity;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
@@ -35,12 +41,18 @@ import com.example.perfect_time.SystemDataSave;
 
 public class Preferences extends Activity {
 
+    AlertDialog.Builder builder;
+    AlertDialog delete_view, check_view;
+
     SystemDataSave systemDataSave;
 
     Switch Switch_AllTimer_Off;
     Switch Switch_AutoTableMode;
     Switch Switch_BatteryLow_Notification;
     Switch Switch_Wear;
+    RadioGroup RadioGroup_Time24_to_12;
+    RadioButton RadioButton_12, RadioButton_24;
+    TextView TextView_Time24_to_12;
 
     LinearLayout All_TimeDataDelete;
 
@@ -51,6 +63,10 @@ public class Preferences extends Activity {
         Switch_AutoTableMode = findViewById(R.id.Switch_AutoTableMode);
         Switch_BatteryLow_Notification = findViewById(R.id.Switch_BatteryLow_Notification);
         Switch_Wear = findViewById(R.id.Switch_Wear);
+        RadioGroup_Time24_to_12 = findViewById(R.id.RadioGroup_Time24_to_12);
+        RadioButton_12 = findViewById(R.id.RadioButton_12);
+        RadioButton_24 = findViewById(R.id.RadioButton_24);
+        TextView_Time24_to_12 = findViewById(R.id.TextView_Time24_to_12);
 
         All_TimeDataDelete = findViewById(R.id.All_TimeDataDelete);
 
@@ -74,16 +90,26 @@ public class Preferences extends Activity {
         boolean AutoTableMode;
         boolean BatteryLow_Notification;
         boolean Wear;
+        boolean Time24_to_12;
 
         AllTimer_Off = systemDataSave.getData_AllTimerOff();
         AutoTableMode = systemDataSave.getData_TableMode();
         BatteryLow_Notification = systemDataSave.getData_BatteryNotification();
         Wear = systemDataSave.getData_WearData();
+        Time24_to_12 = systemDataSave.getData_Time24_to_12();
+
 
         Switch_AllTimer_Off.setChecked(AllTimer_Off);
         Switch_AutoTableMode.setChecked(AutoTableMode);
         Switch_BatteryLow_Notification.setChecked(BatteryLow_Notification);
         Switch_Wear.setChecked(Wear);
+        if(Time24_to_12 == false) {//0 = 12, 1 = 24
+            RadioGroup_Time24_to_12.check(RadioButton_12.getId());
+            TextView_Time24_to_12.setText("시간을 12시 형식으로 표기합니다.");
+        }else {
+            RadioGroup_Time24_to_12.check(RadioButton_24.getId());
+            TextView_Time24_to_12.setText("시간을 24시 형식으로 표기합니다.");
+        }
 
         Switch_AllTimer_Off.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -118,20 +144,39 @@ public class Preferences extends Activity {
             }
         });
 
+        RadioGroup_Time24_to_12.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                Log.d("===============", " " + checkedId);
+
+                if(checkedId == RadioButton_12.getId()) {
+                    TextView_Time24_to_12.setText("시간을 12시 형식으로 표기합니다.");
+                    systemDataSave.setData_Time24_to_12(false);
+                }else {
+                    TextView_Time24_to_12.setText("시간을 24시 형식으로 표기합니다.");
+                    systemDataSave.setData_Time24_to_12(true);
+                }
+            }
+        });
+
         All_TimeDataDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String item[] = {"매일 알람", "요일별 알람", "날짜별 아람", "모든 알람", "취소"};
 
-                AlertDialog.Builder builder;
+                ListView_Adapter listView_adapter = new ListView_Adapter();
 
-                builder = new AlertDialog.Builder(v.getContext());
+                listView_adapter.addItem(new List_Item(R.drawable.every_icon, "매일 알림삭제"));
+                listView_adapter.addItem(new List_Item(R.drawable.week_icon, "요일별 알림 삭제"));
+                listView_adapter.addItem(new List_Item(R.drawable.calendar_icon, "날짜별 알림 삭제"));
+                listView_adapter.addItem(new List_Item(R.drawable.all_calender_delete_icon, "모든 알림 삭제"));
+                listView_adapter.addItem(new List_Item(R.drawable.close_icon, "취소"));
 
-                builder.setItems(item, new DialogInterface.OnClickListener(){
+                builder = new AlertDialog.Builder(Preferences.this);
 
+                builder.setSingleChoiceItems(listView_adapter, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         AlertDialog.Builder dlg = new AlertDialog.Builder(Preferences.this);
                         dlg.setTitle("계발에서 개발까지"); //제목
                         dlg.setMessage("안녕하세요 계발에서 개발까지 입니다."); // 메시지
@@ -186,18 +231,38 @@ public class Preferences extends Activity {
                                             date_dataBase_management.setDelete(0);
                                         }
                                         Toast.makeText(Preferences.this, "알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
                                         break;
                                     }
+                                    case 4:{
+                                        delete_view.dismiss();
+                                    }
+
                                 }
 
                             }
-                        });
-                        dlg.show();
 
+                        });
+
+                        dlg.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                check_view.dismiss();
+                            }
+                        });
+                        delete_view.dismiss();
+
+                        if(which != 4) {
+                            check_view = dlg.create();
+                            check_view.show();
+                        }
                     }
                 });
-                builder.show();
+//                builder.show();
+                delete_view = builder.create();
+                delete_view.show();
             }
+
         });
 
 

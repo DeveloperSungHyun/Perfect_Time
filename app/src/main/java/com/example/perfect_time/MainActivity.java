@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity{
         y = calendar.get(Calendar.YEAR);//24시 형식
         m = calendar.get(Calendar.MONTH) + 1;//24시 형식
         d = calendar.get((Calendar.DATE));
-        w = calendar.get((Calendar.DAY_OF_WEEK));
+        w = calendar.get((Calendar.DAY_OF_WEEK)) - 1;
 
         String DayOfWeek = null;
         switch (w){

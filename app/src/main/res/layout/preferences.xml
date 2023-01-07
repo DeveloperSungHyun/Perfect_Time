@@ -224,6 +224,72 @@
                     android:textSize="15dp" />
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_style1"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="15dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="시간 표기법"
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
+
+
+                </RelativeLayout>
+
+                <RadioGroup
+                    android:id="@+id/RadioGroup_Time24_to_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12시"
+                        android:textSize="15dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24시"
+                        android:textSize="15dp"/>
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/TextView_Time24_to_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="50dp"
+                    android:text="시간을 12시 형식으로 표기합니다."
+                    android:textColor="#838383"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+
             <LinearLayout
                 android:id="@+id/All_TimeDataDelete"
                 android:layout_width="match_parent"
