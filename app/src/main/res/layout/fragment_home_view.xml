@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/TextView_NextTimerCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0시 0분 뒤 XX 일정이 있습니다."

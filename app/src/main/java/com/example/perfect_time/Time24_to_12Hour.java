@@ -14,21 +14,22 @@ public class Time24_to_12Hour {
     }
 
     public int getTime_Hour(){
-
+        int t = Time24Hour;
         if(Time_12to24 == false) {//12시
-            if (Time24Hour > 12) {
-                Time24Hour -= 12;
+            if (t > 12) {
+                t -= 12;
             }
-            if(Time24Hour == 0) Time24Hour = 12;
+            if(t == 0) t = 12;
         }else {
-            if (Time24Hour == 0) Time24Hour = 24;
+            if (t == 0) t = 24;
         }
-        return Time24Hour;
+        return t;
     }
 
     public String getAmPm(){
         if(Time_12to24 == false) {
-            if (Time24Hour > 12 && Time24Hour < 24) {
+            if(Time24Hour == 0) Time24Hour = 12;
+            if (Time24Hour > 12) {
                 return "오후";
             } else {
                 return "오전";
