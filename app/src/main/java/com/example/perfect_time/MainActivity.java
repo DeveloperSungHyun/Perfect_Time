@@ -51,6 +51,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
+        alarmServiceManagement.All_TimerSetting();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);//디바이스 다크모드 강제 해제
 

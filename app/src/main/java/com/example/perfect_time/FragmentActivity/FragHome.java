@@ -79,6 +79,7 @@ public class FragHome extends Fragment {
 
         isThread = true;
         TextTimer_none = false;
+        handler.sendEmptyMessage(0);
         NewTimer();
 
         ListItem.clear();//아이템 초기화
@@ -147,23 +148,20 @@ public class FragHome extends Fragment {
     }
 
     void NewTimer(){
-        if(!ThreadLoop) {
-            ThreadLoop = true;
-            thread = new Thread() {
-                public void run() {
-                    while (isThread) {
-                        try {
-                            sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        handler.sendEmptyMessage(0);
+        thread = new Thread() {
+            public void run() {
+                while (isThread) {
+                    try {
+                        sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-
+                    handler.sendEmptyMessage(0);
                 }
-            };
-            thread.start();
-        }
+
+            }
+        };
+        thread.start();
     }
 
     @Override
@@ -220,7 +218,15 @@ public class FragHome extends Fragment {
             }
 
             if(next_Time != null){
-                TextView_NextTimerCount.setText("" + (next_Time.getTime_Hour() - Time_h) + "시간 " + (next_Time.getTime_Minute() - Time_m) + "분 뒤에 " + next_Time.getName() + "일정이 있습니다.");
+                int h, m;
+                h = next_Time.getTime_Hour() - Time_h;
+                if(next_Time.getTime_Minute() > Time_m){
+                    m = next_Time.getTime_Minute() - Time_m;
+                }else{
+                    h--;
+                    m = 60 - Time_m + next_Time.getTime_Minute();
+                }
+                TextView_NextTimerCount.setText("" + h + "시간 " + m + "분 뒤에 " + "\"" + next_Time.getName() + "\"" + "일정이 있습니다.");
             }else{
                 TextView_NextTimerCount.setText("이후 일정은 없습니다.");
             }

@@ -39,7 +39,7 @@
             android:id="@+id/check_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인하기"
+            android:text="열기"
             android:textSize="15dp"
             />
 
@@ -47,7 +47,7 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="제거"
+            android:text="닫기"
             android:textSize="15dp"
             android:textColor="#FFFF0000"
             android:layout_marginLeft="10dp"/>

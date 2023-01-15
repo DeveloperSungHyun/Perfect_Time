@@ -28,8 +28,8 @@ public class Time24_to_12Hour {
 
     public String getAmPm(){
         if(Time_12to24 == false) {
-            if(Time24Hour == 0) Time24Hour = 12;
-            if (Time24Hour > 12) {
+            //if(Time24Hour == 0) Time24Hour = 12;
+            if (Time24Hour >= 12) {
                 return "오후";
             } else {
                 return "오전";
