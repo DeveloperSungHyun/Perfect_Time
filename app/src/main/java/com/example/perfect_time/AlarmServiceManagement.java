@@ -32,7 +32,7 @@ public class AlarmServiceManagement {
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
 
-        calendar.set(Calendar.DATE,15);//====================================================test!!!
+        //calendar.set(Calendar.DATE,15);//====================================================test!!!
 
         if (calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DATE, 1);
