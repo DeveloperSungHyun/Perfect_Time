@@ -16,28 +16,11 @@ public class RecyclerView_ListItem {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean vibration_Activate;     //진동알림 활성화 유무
-    private boolean headUp_Activate;
+    private int century;
     private boolean popup_Activate;         //팝업알림 활성화 유무
     private boolean autoDisplay_On;
 
     private int FragmentType;//프레그먼트 타입(매일, 요일, 날짜)
-
-    public boolean isVibration_Activate() {
-        return vibration_Activate;
-    }
-
-    public void setVibration_Activate(boolean vibration_Activate) {
-        this.vibration_Activate = vibration_Activate;
-    }
-
-    public boolean isHeadUp_Activate() {
-        return headUp_Activate;
-    }
-
-    public void setHeadUp_Activate(boolean headUp_Activate) {
-        this.headUp_Activate = headUp_Activate;
-    }
 
     public boolean isPopup_Activate() {
         return popup_Activate;
@@ -55,9 +38,17 @@ public class RecyclerView_ListItem {
         this.autoDisplay_On = autoDisplay_On;
     }
 
+    public int getCentury() {
+        return century;
+    }
+
+    public void setCentury(int century) {
+        this.century = century;
+    }
+
     public RecyclerView_ListItem
             (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
-             int time_Minute, boolean Vibration_Activate, boolean HeadUp_Activate,boolean Popup_Activate, boolean AutoDisplay_On, String dayText, int dayTextColor, int fragment_Type) {
+             int time_Minute,int Century, boolean Popup_Activate, boolean AutoDisplay_On, String dayText, int dayTextColor, int fragment_Type) {
 
         ViewType = viewType;
         Timer_Activate = timer_Activate;
@@ -68,8 +59,8 @@ public class RecyclerView_ListItem {
         Memo = memo;
         Time_Hour = time_Hour;
         Time_Minute = time_Minute;
-        Vibration_Activate = vibration_Activate;
-        HeadUp_Activate = headUp_Activate;
+
+        Century = century;
         Popup_Activate = popup_Activate;
         AutoDisplay_On = autoDisplay_On;
         FragmentType = fragment_Type;

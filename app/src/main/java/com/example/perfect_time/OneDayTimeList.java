@@ -69,8 +69,7 @@ public class OneDayTimeList {
             all_time.setMemo(db_everyDay.getMemo());
             all_time.setTime_Hour(db_everyDay.getTime_Hour());
             all_time.setTime_Minute(db_everyDay.getTime_Minute());
-            all_time.setVibration_Activate(db_everyDay.isVibration_Activate());
-            all_time.setHeadUp_Activate(db_everyDay.isHeadUp_Activate());
+            all_time.setCentury(db_everyDay.getCentury());
             all_time.setPopup_Activate(db_everyDay.isPopup_Activate());
             all_time.setAutoDisplay_On(db_everyDay.isAutoDisplay_On());
 
@@ -107,8 +106,7 @@ public class OneDayTimeList {
                 all_time.setMemo(db_week.getMemo());
                 all_time.setTime_Hour(db_week.getTime_Hour());
                 all_time.setTime_Minute(db_week.getTime_Minute());
-                all_time.setVibration_Activate(db_week.isVibration_Activate());
-                all_time.setHeadUp_Activate(db_week.isHeadUp_Activate());
+                all_time.setCentury(db_week.getCentury());
                 all_time.setPopup_Activate(db_week.isPopup_Activate());
                 all_time.setAutoDisplay_On(db_week.isAutoDisplay_On());
 
@@ -139,8 +137,7 @@ public class OneDayTimeList {
                 all_time.setMemo(db_date.getMemo());
                 all_time.setTime_Hour(db_date.getTime_Hour());
                 all_time.setTime_Minute(db_date.getTime_Minute());
-                all_time.setVibration_Activate(db_date.isVibration_Activate());
-                all_time.setHeadUp_Activate(db_date.isHeadUp_Activate());
+                all_time.setCentury(db_date.getCentury());
                 all_time.setPopup_Activate(db_date.isPopup_Activate());
                 all_time.setAutoDisplay_On(db_date.isAutoDisplay_On());
 

@@ -65,8 +65,7 @@ public class Week_DataBase_Management {
         db_week.setTime_Hour(settingValue.getTime_Hour());
         db_week.setTime_Minute(settingValue.getTime_Minute());
 
-        db_week.setVibration_Activate(settingValue.isVibration_Activate());
-        db_week.setHeadUp_Activate(settingValue.isHeadUp_Activate());
+        db_week.setCentury(settingValue.getCentury());
         db_week.setPopup_Activate(settingValue.isPopup_Activate());
         db_week.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
@@ -105,8 +104,7 @@ public class Week_DataBase_Management {
         db_week.setTime_Hour(settingValue.getTime_Hour());
         db_week.setTime_Minute(settingValue.getTime_Minute());
 
-        db_week.setVibration_Activate(settingValue.isVibration_Activate());
-        db_week.setHeadUp_Activate(settingValue.isHeadUp_Activate());
+        db_week.setCentury(settingValue.getCentury());
         db_week.setPopup_Activate(settingValue.isPopup_Activate());
         db_week.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
@@ -132,8 +130,7 @@ public class Week_DataBase_Management {
         db_week.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_week.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_week.setVibration_Activate(getData().get(DataId).isVibration_Activate());
-        db_week.setHeadUp_Activate(getData().get(DataId).isHeadUp_Activate());
+        db_week.setCentury(getData().get(DataId).getCentury());
         db_week.setPopup_Activate(getData().get(DataId).isPopup_Activate());
         db_week.setAutoDisplay_On(getData().get(DataId).isAutoDisplay_On());
 

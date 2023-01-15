@@ -23,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -76,8 +77,7 @@ public class TimerSettings extends Activity {
 
     Switch Switch_Important;//중요알림표시
 
-    Switch Switch_vibration;//진동알림
-    Switch Switch_HeadUp;//소리알림
+    RadioGroup RadioGroup_century;//알림 강도
     Switch Switch_popup;//팝업설정
     Switch Switch_AutoDisplay_On;//자동화면 켜짐
 
@@ -106,8 +106,7 @@ public class TimerSettings extends Activity {
 
         Switch_Important = findViewById(R.id.Switch_Important);
 
-        Switch_vibration = findViewById(R.id.Switch_vibration);
-        Switch_HeadUp = findViewById(R.id.Switch_HeadUp);
+        RadioGroup_century = findViewById(R.id.RadioGroup_century);
         Switch_popup = findViewById(R.id.Switch_popup);
         Switch_AutoDisplay_On = findViewById(R.id.Switch_AutoDisplay_On);
 
@@ -143,8 +142,6 @@ public class TimerSettings extends Activity {
 
         Switch_Important.setChecked(settingValue.isImportant());
 
-        Switch_vibration.setChecked(settingValue.isVibration_Activate());
-        Switch_HeadUp.setChecked(settingValue.isHeadUp_Activate());
         Switch_popup.setChecked(settingValue.isPopup_Activate());
         Switch_AutoDisplay_On.setChecked(settingValue.isAutoDisplay_On());
 
@@ -334,8 +331,7 @@ public class TimerSettings extends Activity {
 
         settingValue.setImportant(false);
 
-        settingValue.setVibration_Activate(true);
-        settingValue.setHeadUp_Activate(false);
+        settingValue.setCentury(2);
         settingValue.setPopup_Activate(false);
         settingValue.setAutoDisplay_On(true);
 
@@ -344,6 +340,13 @@ public class TimerSettings extends Activity {
 
     private void ValueSetting(){
 
+        RadioGroup_century.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                settingValue.setCentury(checkedId);
+            }
+        });
+
         Switch_TimerActivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {  //알람 활성화 유무
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -351,48 +354,6 @@ public class TimerSettings extends Activity {
             }
         });
 
-
-
-        Switch_Important.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {      //중요알림
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                settingValue.setImportant(b);
-            }
-        });
-
-        Switch_vibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {      //진동알림
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                settingValue.setVibration_Activate(b);
-            }
-        });
-
-        Switch_HeadUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() { //해드업
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settingValue.setHeadUp_Activate(isChecked);
-            }
-        });
-
-        Switch_popup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {          //팝업알림
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("PopupCheck", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                if(!(sharedPreferences.getBoolean("PopupCheck", false)) && b == true){
-                    editor.putBoolean("PopupCheck", true);
-                    editor.commit();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                Uri.parse("package:" + getPackageName()));
-
-                        startActivityForResult(intent, 0);
-                    }
-                }
-
-                settingValue.setPopup_Activate(b);
-            }
-        });
 
         Switch_AutoDisplay_On.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {//화면켜짐
             @Override
@@ -493,9 +454,7 @@ class EveryDay_TimerSettings{
 
         settingValue.setImportant(db_everyDay.isImportant());
 
-
-        settingValue.setVibration_Activate(db_everyDay.isVibration_Activate());
-        settingValue.setHeadUp_Activate(db_everyDay.isHeadUp_Activate());
+        settingValue.setCentury(db_everyDay.getCentury());
         settingValue.setPopup_Activate(db_everyDay.isPopup_Activate());
         settingValue.setAutoDisplay_On(db_everyDay.isAutoDisplay_On());
 
@@ -597,8 +556,7 @@ class DayOfTheWeek_TimerSettings{
 
         settingValue.setImportant(db_week.isImportant());
 
-        settingValue.setVibration_Activate(db_week.isVibration_Activate());
-        settingValue.setHeadUp_Activate(db_week.isHeadUp_Activate());
+        settingValue.setCentury(db_week.getCentury());
         settingValue.setPopup_Activate(db_week.isPopup_Activate());
         settingValue.setAutoDisplay_On(db_week.isAutoDisplay_On());
 
@@ -684,9 +642,7 @@ class Date_TimerSettings{
 
         settingValue.setImportant(db_date.isImportant());
 
-
-        settingValue.setVibration_Activate(db_date.isVibration_Activate());
-        settingValue.setHeadUp_Activate(db_date.isHeadUp_Activate());
+        settingValue.setCentury(db_date.getCentury());
         settingValue.setPopup_Activate(db_date.isPopup_Activate());
         settingValue.setAutoDisplay_On(db_date.isAutoDisplay_On());
     }

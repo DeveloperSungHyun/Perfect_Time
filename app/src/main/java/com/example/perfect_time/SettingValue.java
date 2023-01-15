@@ -11,17 +11,17 @@ public class SettingValue {
     private static int Time_Hour;                  //시간 시
     private static int Time_Minute;                //시간 분
 
-    private static boolean HeadUp_Activate;
-    private static boolean Vibration_Activate;     //진동알림 활성화 유무
+    private static int century;//알림 강도
     private static boolean Popup_Activate;         //팝업알림 활성화 유무
     private static boolean AutoDisplay_On;
 
-    public static boolean isHeadUp_Activate() {
-        return HeadUp_Activate;
+
+    public static int getCentury() {
+        return century;
     }
 
-    public static void setHeadUp_Activate(boolean headUp_Activate) {
-        HeadUp_Activate = headUp_Activate;
+    public static void setCentury(int century) {
+        SettingValue.century = century;
     }
 
     public static boolean isAutoDisplay_On() {
@@ -79,14 +79,6 @@ public class SettingValue {
 
     public void setTime_Minute(int time_Minute) {
         Time_Minute = time_Minute;
-    }
-
-    public boolean isVibration_Activate() {
-        return Vibration_Activate;
-    }
-
-    public void setVibration_Activate(boolean vibration_Activate) {
-        Vibration_Activate = vibration_Activate;
     }
 
     public boolean isPopup_Activate() {

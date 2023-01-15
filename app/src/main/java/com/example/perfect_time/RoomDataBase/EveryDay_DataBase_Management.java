@@ -60,8 +60,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(settingValue.getTime_Hour());
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
-        db_everyDay.setVibration_Activate(settingValue.isVibration_Activate());
-        db_everyDay.setHeadUp_Activate(settingValue.isHeadUp_Activate());
+        db_everyDay.setCentury(settingValue.getCentury());
         db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
         db_everyDay.setAutoDisplay_On(settingValue.isAutoDisplay_On());
 
@@ -83,8 +82,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(settingValue.getTime_Hour());
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
-        db_everyDay.setVibration_Activate(settingValue.isVibration_Activate());
-        db_everyDay.setHeadUp_Activate(settingValue.isHeadUp_Activate());
+        db_everyDay.setCentury(settingValue.getCentury());
         db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
         db_everyDay.setAutoDisplay_On(settingValue.isAutoDisplay_On());
         everyDao.setUpdate(db_everyDay);
@@ -107,8 +105,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_everyDay.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_everyDay.setVibration_Activate(getData().get(DataId).isVibration_Activate());
-        db_everyDay.setHeadUp_Activate(getData().get(DataId).isHeadUp_Activate());
+        db_everyDay.setCentury(getData().get(DataId).getCentury());
         db_everyDay.setPopup_Activate(getData().get(DataId).isPopup_Activate());
         db_everyDay.setAutoDisplay_On(getData().get(DataId).isAutoDisplay_On());
 

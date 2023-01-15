@@ -182,6 +182,7 @@
                     android:textSize="15dp" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,62 +199,69 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="15dp"
                     android:paddingRight="5dp"
-                    android:paddingBottom="15dp"
-                    android:gravity="center">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="진동 알림"
+                        android:text="알림 강도"
                         android:textColor="#000000"
                         android:textSize="18dp" />
 
 
-                    <Switch
-                        android:id="@+id/Switch_vibration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"/>
-
                 </RelativeLayout>
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/RadioGroup_century"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#39000000"
-                    android:paddingTop="1dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="15dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="15dp">
-
-                    <TextView
+                    <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="헤드업 알림"
-                        android:textColor="#FF000000"
-                        android:textSize="18dp" />
+                        android:text="약"
+                        android:textSize="19dp"
+                        android:layout_marginRight="10dp"/>
 
-
-                    <Switch
-                        android:id="@+id/Switch_HeadUp"
+                    <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"/>
+                        android:text="중"
+                        android:textSize="19dp"
+                        android:layout_marginRight="10dp"/>
 
-                </RelativeLayout>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="강"
+                        android:textSize="19dp"
+                        android:layout_marginRight="10dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="알림 강도에 대한 설명"
+                    android:textColor="#838383"
+                    android:textSize="15dp" />
 
-                    android:background="#39000000"
-                    android:paddingTop="1dp" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_style1"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

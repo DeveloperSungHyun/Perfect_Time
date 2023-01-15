@@ -91,7 +91,7 @@ public class FragWeek extends Fragment {
             }
             recyclerView_listItem =
                     new RecyclerView_ListItem(0, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
-                            data.getTime_Minute(), data.isVibration_Activate(), data.isHeadUp_Activate(), data.isPopup_Activate(), data.isAutoDisplay_On(), WeekText[data.getDayOfTheWeek()], 0xFF000000, FragmentType.fragWeek);
+                            data.getTime_Minute(), data.getCentury(), data.isPopup_Activate(), data.isAutoDisplay_On(), WeekText[data.getDayOfTheWeek()], 0xFF000000, FragmentType.fragWeek);
 
             ListItem.add(recyclerView_listItem);//리스트 아이템 추가
 

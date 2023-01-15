@@ -20,19 +20,19 @@ public class DB_Week {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean Vibration_Activate;     //진동알림 활성화 유무
-    private boolean isHeadUp_Activate;
+    private int century;//알림 강도
+
+    public int getCentury() {
+        return century;
+    }
+
+    public void setCentury(int century) {
+        this.century = century;
+    }
+
     private boolean Popup_Activate;         //팝업알림 활성화 유무
     private boolean AutoDisplay_On;
 
-
-    public boolean isHeadUp_Activate() {
-        return isHeadUp_Activate;
-    }
-
-    public void setHeadUp_Activate(boolean headUp_Activate) {
-        isHeadUp_Activate = headUp_Activate;
-    }
 
     public boolean isAutoDisplay_On() {
         return AutoDisplay_On;
@@ -107,14 +107,6 @@ public class DB_Week {
 
     public void setTime_Minute(int time_Minute) {
         Time_Minute = time_Minute;
-    }
-
-    public boolean isVibration_Activate() {
-        return Vibration_Activate;
-    }
-
-    public void setVibration_Activate(boolean vibration_Activate) {
-        Vibration_Activate = vibration_Activate;
     }
 
     public boolean isPopup_Activate() {

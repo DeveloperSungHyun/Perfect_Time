@@ -130,8 +130,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
-        if(getItem.isVibration_Activate()) holder.ImageView_vibration.setVisibility(View.VISIBLE);
-        else holder.ImageView_vibration.setVisibility(View.GONE);
 
         if(getItem.isPopup_Activate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
         else holder.ImageView_popup.setVisibility(View.GONE);
@@ -390,9 +388,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
         holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
-
-        if(getItem.isVibration_Activate()) holder.ImageView_vibration.setVisibility(View.VISIBLE);
-        else holder.ImageView_vibration.setVisibility(View.GONE);
 
         if(getItem.isPopup_Activate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
         else holder.ImageView_popup.setVisibility(View.GONE);
