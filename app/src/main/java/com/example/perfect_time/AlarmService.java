@@ -121,7 +121,7 @@ public class AlarmService extends BroadcastReceiver {
         }
 
 
-        if(intent.getBooleanArrayExtra("alarm")[2] == true){//팝업 알림
+        if(intent.getBooleanArrayExtra("alarm")[0] == true){//팝업 알림
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(Settings.canDrawOverlays(context)){
                     Intent intent1 = new Intent(context, PopupView.class);

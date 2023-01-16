@@ -211,47 +211,92 @@
 
                 </RelativeLayout>
 
-                <RadioGroup
-                    android:id="@+id/RadioGroup_century"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton_Low"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="약"
-                        android:textSize="17dp"
-                        android:layout_marginRight="10dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton_Default"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="중"
-                        android:textSize="17dp"
-                        android:layout_marginRight="10dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton_High"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="강"
-                        android:textSize="17dp"
-                        android:layout_marginRight="10dp"/>
-
-
-                </RadioGroup>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <SeekBar
+                    android:id="@+id/SeekBar_century"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
+                    android:min="0"
+                    android:max="2"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="알림 강도에 대한 설명"
-                    android:textColor="#838383"
-                    android:textSize="15dp" />
+                    android:layout_marginBottom="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:id="@+id/ImageView_SoundIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/sound_icon"
+                            android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="알림 소리가 울립니다"
+                            android:layout_toRightOf="@+id/ImageView_SoundIcon"
+                            android:layout_centerVertical="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:id="@+id/ImageView_vibrationIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/vibration_icon"
+                            android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="진동이 울립니다"
+                            android:layout_toRightOf="@+id/ImageView_vibrationIcon"
+                            android:layout_centerVertical="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:id="@+id/ImageView_head_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/head_up"
+                            android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="해드업 알림이 울립니다."
+                            android:layout_toRightOf="@+id/ImageView_head_up"
+                            android:layout_centerVertical="true"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:layout_marginBottom="10dp"-->
+<!--                    android:text="알림 강도에 대한 설명"-->
+<!--                    android:textColor="#838383"-->
+<!--                    android:textSize="15dp" />-->
 
             </LinearLayout>
 
@@ -273,7 +318,8 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="15dp"
                     android:paddingRight="5dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -290,6 +336,7 @@
                         android:layout_alignParentRight="true" />
 
                 </RelativeLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -322,6 +369,7 @@
                         android:layout_alignParentRight="true" />
 
                 </RelativeLayout>
+
             </LinearLayout>
 
 

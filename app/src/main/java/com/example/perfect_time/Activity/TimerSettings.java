@@ -25,6 +25,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -78,8 +79,7 @@ public class TimerSettings extends Activity {
 
     Switch Switch_Important;//중요알림표시
 
-    RadioGroup RadioGroup_century;//알림 강도
-    RadioButton RadioButton_Low, RadioButton_Default, RadioButton_High;//라디오 버튼
+    SeekBar SeekBar_century;
     Switch Switch_popup;//팝업설정
     Switch Switch_AutoDisplay_On;//자동화면 켜짐
 
@@ -110,11 +110,7 @@ public class TimerSettings extends Activity {
 
         Switch_Important = findViewById(R.id.Switch_Important);
 
-        RadioGroup_century = findViewById(R.id.RadioGroup_century);
-        RadioButton_Low = findViewById(R.id.RadioButton_Low);
-        RadioButton_Default = findViewById(R.id.RadioButton_Default);
-        RadioButton_High = findViewById(R.id.RadioButton_High);
-
+        SeekBar_century = findViewById(R.id.SeekBar_century);
         Switch_popup = findViewById(R.id.Switch_popup);
         Switch_AutoDisplay_On = findViewById(R.id.Switch_AutoDisplay_On);
 
@@ -150,12 +146,7 @@ public class TimerSettings extends Activity {
 
         Switch_Important.setChecked(settingValue.isImportant());
 
-        switch (settingValue.getCentury()){
-            case 0: RadioButton_IdNumber = RadioButton_Low.getId(); break;
-            case 1: RadioButton_IdNumber = RadioButton_Default.getId(); break;
-            case 2: RadioButton_IdNumber = RadioButton_High.getId();
-        }
-        RadioGroup_century.check(RadioButton_IdNumber);
+        SeekBar_century.setProgress(settingValue.getCentury());
         Switch_popup.setChecked(settingValue.isPopup_Activate());
         Switch_AutoDisplay_On.setChecked(settingValue.isAutoDisplay_On());
 
@@ -354,17 +345,21 @@ public class TimerSettings extends Activity {
 
     private void ValueSetting(){
 
-        RadioGroup_century.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            int num;
+        SeekBar_century.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int value = 0;
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.RadioButton_Low: num = 0;break;
-                    case R.id.RadioButton_Default: num = 1;break;
-                    case R.id.RadioButton_High: num = 2;
-                }
-                settingValue.setCentury(num);
-                Log.d("RadioGroup_century", "CheckId: " + num);
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                value = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                settingValue.setCentury(value);
             }
         });
 
