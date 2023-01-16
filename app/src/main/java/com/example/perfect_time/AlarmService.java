@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -67,17 +68,29 @@ public class AlarmService extends BroadcastReceiver {
     @SuppressLint("InvalidWakeLockTag")
     void NotificationShow(Context context, Intent intent){
 
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             //알림강도 "깅"
-            NotificationChannel Vibration_HeadUp = new NotificationChannel("Vibration_HeadUp", "진동 헤드업알림", NotificationManager.IMPORTANCE_HIGH);//체널 생성
-            Vibration_HeadUp.setBypassDnd(true);
+            NotificationChannel IMPORTANCE_HIGH = new NotificationChannel("IMPORTANCE_HIGH", "중요도 상", NotificationManager.IMPORTANCE_HIGH);//체널 생성
+            IMPORTANCE_HIGH.setBypassDnd(true);
             //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
-            Vibration_HeadUp.setLightColor(0xFFFF0000);
-            notificationManager.createNotificationChannel(Vibration_HeadUp);
+            IMPORTANCE_HIGH.setVibrationPattern(new long[]{ 0, 300, 200, 700 });//진동 사용안함
+            IMPORTANCE_HIGH.setLightColor(0xFFFF0000);
+            notificationManager.createNotificationChannel(IMPORTANCE_HIGH);
+
+            NotificationChannel IMPORTANCE_DEFAULT = new NotificationChannel("IMPORTANCE_DEFAULT", "중요도 중", NotificationManager.IMPORTANCE_DEFAULT);//체널 생성
+            IMPORTANCE_DEFAULT.setBypassDnd(true);
+            //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
+            IMPORTANCE_DEFAULT.setLightColor(0xFFFF0000);
+            notificationManager.createNotificationChannel(IMPORTANCE_DEFAULT);
+
+            NotificationChannel IMPORTANCE_LOW = new NotificationChannel("IMPORTANCE_LOW", "중요도 하", NotificationManager.IMPORTANCE_LOW);//체널 생성
+            IMPORTANCE_LOW.setBypassDnd(true);
+            //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
+            IMPORTANCE_LOW.setLightColor(0xFFFF0000);
+            notificationManager.createNotificationChannel(IMPORTANCE_LOW);
 
 
 
@@ -107,51 +120,54 @@ public class AlarmService extends BroadcastReceiver {
 
         }
 
-//        if(intent.getBooleanArrayExtra("alarm")[0] == true){//진동알림 여부
-//            if(intent.getBooleanArrayExtra("alarm")[1] == true && intent.getBooleanArrayExtra("alarm")[3] == false){
-//                builder = new NotificationCompat.Builder(context, "Vibration_HeadUp");
-//            }else{
-//                builder = new NotificationCompat.Builder(context, "Vibration");
-//            }
-//        }else if(intent.getBooleanArrayExtra("alarm")[1] == true && intent.getBooleanArrayExtra("alarm")[3] == false){
-//            builder = new NotificationCompat.Builder(context, "None_Vibration_HeadUp");
-//        }else{
-//            builder = new NotificationCompat.Builder(context, "None");
-//        }
-//
-//        if(intent.getBooleanArrayExtra("alarm")[2] == true){//팝업 알림
-//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-//                if(Settings.canDrawOverlays(context)){
-//                    Intent intent1 = new Intent(context, PopupView.class);
-//
-//                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//                    intent1.putExtra("name", intent.getStringExtra("Name"));
-//                    intent1.putExtra("memo", intent.getStringExtra("Memo"));
-//                    context.startActivity(intent1);
-//                }
-//            }
-//        }
-//
-//        if(intent.getBooleanArrayExtra("alarm")[3] == true){//화면 켜짐
-//
-//            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-//            sCpuWakeLock = pm.newWakeLock(
-//                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
-//                            PowerManager.ACQUIRE_CAUSES_WAKEUP |
-//                            PowerManager.ON_AFTER_RELEASE, "hi");
-//
-//            sCpuWakeLock.acquire();
-//
-//            if (sCpuWakeLock != null) {
-//                sCpuWakeLock.release();
-//                sCpuWakeLock = null;
-//            }
-//
-//        }
-        builder = new NotificationCompat.Builder(context, "Vibration_HeadUp");
+
+        if(intent.getBooleanArrayExtra("alarm")[2] == true){//팝업 알림
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(Settings.canDrawOverlays(context)){
+                    Intent intent1 = new Intent(context, PopupView.class);
+
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    intent1.putExtra("name", intent.getStringExtra("Name"));
+                    intent1.putExtra("memo", intent.getStringExtra("Memo"));
+                    context.startActivity(intent1);
+                }
+            }
+        }
+
+        if(intent.getBooleanArrayExtra("alarm")[1] == true){//화면 켜짐
+
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            sCpuWakeLock = pm.newWakeLock(
+                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK |
+                            PowerManager.ACQUIRE_CAUSES_WAKEUP |
+                            PowerManager.ON_AFTER_RELEASE, "hi");
+
+            sCpuWakeLock.acquire();
+
+            if (sCpuWakeLock != null) {
+                sCpuWakeLock.release();
+                sCpuWakeLock = null;
+            }
+
+        }
+
+        switch (intent.getIntExtra("century", 0)){
+            case 0:{//중유도 하
+                builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
+                break;
+            }
+            case 1:{//중유도 중
+                builder = new NotificationCompat.Builder(context, "IMPORTANCE_DEFAULT");
+                break;
+            }
+            case 2:{//중유도 상
+                builder = new NotificationCompat.Builder(context, "IMPORTANCE_HIGH");
+                break;
+            }
+        }
 
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
         builder.setSmallIcon(R.drawable.calendar_icon);

@@ -218,24 +218,27 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/RadioButton_Low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="약"
-                        android:textSize="19dp"
+                        android:textSize="17dp"
                         android:layout_marginRight="10dp"/>
 
                     <RadioButton
+                        android:id="@+id/RadioButton_Default"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="중"
-                        android:textSize="19dp"
+                        android:textSize="17dp"
                         android:layout_marginRight="10dp"/>
 
                     <RadioButton
+                        android:id="@+id/RadioButton_High"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="강"
-                        android:textSize="19dp"
+                        android:textSize="17dp"
                         android:layout_marginRight="10dp"/>
 
 
