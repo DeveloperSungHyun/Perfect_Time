@@ -22,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -79,8 +80,8 @@ public class TimerSettings extends Activity {
 
     Switch Switch_Important;//중요알림표시
 
-    SeekBar SeekBar_century;
-    Switch Switch_popup;//팝업설정
+    ImageView ImageView_Notifications, ImageView_HeadUp, ImageView_PopupUp;
+    ImageView ImageView_line1, ImageView_line2;
     Switch Switch_AutoDisplay_On;//자동화면 켜짐
 
     TextView TextView_SaveButton;
@@ -110,8 +111,12 @@ public class TimerSettings extends Activity {
 
         Switch_Important = findViewById(R.id.Switch_Important);
 
-        SeekBar_century = findViewById(R.id.SeekBar_century);
-        Switch_popup = findViewById(R.id.Switch_popup);
+        ImageView_Notifications = findViewById(R.id.ImageView_Notifications);
+        ImageView_line1 = findViewById(R.id.ImageView_line1);
+        ImageView_HeadUp = findViewById(R.id.ImageView_HeadUp);
+        ImageView_line2 = findViewById(R.id.ImageView_line2);
+        ImageView_PopupUp = findViewById(R.id.ImageView_PopupUp);
+
         Switch_AutoDisplay_On = findViewById(R.id.Switch_AutoDisplay_On);
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
@@ -146,12 +151,35 @@ public class TimerSettings extends Activity {
 
         Switch_Important.setChecked(settingValue.isImportant());
 
-        SeekBar_century.setProgress(settingValue.getCentury());
-        Switch_popup.setChecked(settingValue.isPopup_Activate());
+        Century_Setting(settingValue.getCentury());
+        //SeekBar_century.setProgress(settingValue.getCentury());
         Switch_AutoDisplay_On.setChecked(settingValue.isAutoDisplay_On());
 
 
     }
+
+    void Century_Setting(int value){
+        ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2);
+        ImageView_line2.setBackgroundResource(R.drawable.background_style3);
+        ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2);
+        ImageView_line1.setBackgroundResource(R.drawable.background_style3);
+        ImageView_Notifications.setBackgroundResource(R.drawable.background_style2);
+
+        switch (value){
+            case 3:{
+                ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2_1);
+            }
+            ImageView_line2.setBackgroundResource(R.drawable.background_style3_1);
+            case 2:{
+                ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2_1);
+            }
+            ImageView_line1.setBackgroundResource(R.drawable.background_style3_1);
+            case 1:{
+                ImageView_Notifications.setBackgroundResource(R.drawable.background_style2_1);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -345,21 +373,39 @@ public class TimerSettings extends Activity {
 
     private void ValueSetting(){
 
-        SeekBar_century.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int value = 0;
+        ImageView_Notifications.setOnClickListener(new View.OnClickListener() {//1
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                value = progress;
+            public void onClick(View v) {
+                if(settingValue.getCentury() == 1){
+                    settingValue.setCentury(0);
+                }else {
+                    settingValue.setCentury(1);
+                }
+                Century_Setting(settingValue.getCentury());
             }
+        });
 
+        ImageView_HeadUp.setOnClickListener(new View.OnClickListener() {//2
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
+            public void onClick(View v) {
+                if(settingValue.getCentury() == 2){
+                    settingValue.setCentury(1);
+                }else {
+                    settingValue.setCentury(2);
+                }
+                Century_Setting(settingValue.getCentury());
             }
+        });
 
+        ImageView_PopupUp.setOnClickListener(new View.OnClickListener() {//3
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                settingValue.setCentury(value);
+            public void onClick(View v) {
+                if(settingValue.getCentury() == 3){
+                    settingValue.setCentury(2);
+                }else {
+                    settingValue.setCentury(3);
+                }
+                Century_Setting(settingValue.getCentury());
             }
         });
 
@@ -683,7 +729,6 @@ class Date_TimerSettings{
 
         datePickerDialog.show();
     }
-
 
 
 }

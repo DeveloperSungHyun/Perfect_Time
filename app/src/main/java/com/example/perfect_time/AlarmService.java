@@ -121,22 +121,6 @@ public class AlarmService extends BroadcastReceiver {
         }
 
 
-        if(intent.getBooleanArrayExtra("alarm")[0] == true){//팝업 알림
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                if(Settings.canDrawOverlays(context)){
-                    Intent intent1 = new Intent(context, PopupView.class);
-
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    intent1.putExtra("name", intent.getStringExtra("Name"));
-                    intent1.putExtra("memo", intent.getStringExtra("Memo"));
-                    context.startActivity(intent1);
-                }
-            }
-        }
-
         if(intent.getBooleanArrayExtra("alarm")[1] == true){//화면 켜짐
 
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -162,6 +146,21 @@ public class AlarmService extends BroadcastReceiver {
             case 1:{//중유도 중
                 builder = new NotificationCompat.Builder(context, "IMPORTANCE_DEFAULT");
                 break;
+            }
+            case 3:{
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(Settings.canDrawOverlays(context)){
+                        Intent intent1 = new Intent(context, PopupView.class);
+
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        intent1.putExtra("name", intent.getStringExtra("Name"));
+                        intent1.putExtra("memo", intent.getStringExtra("Memo"));
+                        context.startActivity(intent1);
+                    }
+                }
             }
             case 2:{//중유도 상
                 builder = new NotificationCompat.Builder(context, "IMPORTANCE_HIGH");

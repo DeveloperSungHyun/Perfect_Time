@@ -211,13 +211,118 @@
 
                 </RelativeLayout>
 
-                <SeekBar
-                    android:id="@+id/SeekBar_century"
-                    android:layout_width="200dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:min="0"
-                    android:max="2"
-                    />
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ImageView_line1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="19dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/background_style3"/>
+
+                        <ImageView
+                            android:id="@+id/ImageView_line2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="19dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/background_style3"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ImageView_Notifications"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/notifications_icon"
+                            android:gravity="center"
+                            android:background="@drawable/background_style2"
+                            android:padding="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="알림"
+                            android:textSize="12dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ImageView_HeadUp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/head_up"
+                            android:gravity="center"
+                            android:background="@drawable/background_style2"
+                            android:padding="7dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="헤드업 알림"
+                            android:textSize="12dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ImageView_PopupUp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/popup_icon"
+                            android:gravity="center"
+                            android:background="@drawable/background_style2"
+                            android:padding="7dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="팝업창"
+                            android:textSize="12dp"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
 
                 <LinearLayout
@@ -227,25 +332,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="20dp">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <ImageView
-                            android:id="@+id/ImageView_SoundIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/sound_icon"
-                            android:layout_marginRight="10dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="알림 소리가 울립니다"
-                            android:layout_toRightOf="@+id/ImageView_SoundIcon"
-                            android:layout_centerVertical="true"/>
-
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -256,12 +342,12 @@
                             android:id="@+id/ImageView_vibrationIcon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/vibration_icon"
+                            android:src="@drawable/notifications_icon"
                             android:layout_marginRight="10dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="진동이 울립니다"
+                            android:text="알림이 울립니다"
                             android:layout_toRightOf="@+id/ImageView_vibrationIcon"
                             android:layout_centerVertical="true"/>
 
@@ -283,6 +369,26 @@
                             android:layout_height="wrap_content"
                             android:text="해드업 알림이 울립니다."
                             android:layout_toRightOf="@+id/ImageView_head_up"
+                            android:layout_centerVertical="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:id="@+id/ImageView_SoundIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/popup_icon"
+                            android:layout_marginRight="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="팝업창이 뜹니다."
+                            android:layout_toRightOf="@+id/ImageView_SoundIcon"
                             android:layout_centerVertical="true"/>
 
                     </RelativeLayout>
@@ -311,39 +417,6 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="15dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="15dp"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="팝업창"
-                        android:textColor="#FF000000"
-                        android:textSize="18dp" />
-
-
-                    <Switch
-                        android:id="@+id/Switch_popup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true" />
-
-                </RelativeLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:background="#39000000"
-                    android:paddingTop="1dp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
