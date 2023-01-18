@@ -117,7 +117,7 @@ public class Preferences extends Activity {
                 systemDataSave.setData_AllTimerOff(b);
                 AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
                 if(b == true) {//모든 알람 off
-                    alarmServiceManagement.All_Delete();
+                    alarmServiceManagement.All_Delete(true, true, true);
                     Toast.makeText(Preferences.this, "모든 알림을 껐습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -182,6 +182,7 @@ public class Preferences extends Activity {
                         dlg.setMessage("안녕하세요 계발에서 개발까지 입니다."); // 메시지
 //                버튼 클릭시 동작
                         dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                            AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
                             public void onClick(DialogInterface dialog, int a) {
                                 //토스트 메시지
                                 Toast.makeText(Preferences.this,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
@@ -192,7 +193,7 @@ public class Preferences extends Activity {
                                         while(everyDay_dataBase_management.getData().size() > 0){
                                             everyDay_dataBase_management.setDelete(0);
                                         }
-
+                                        alarmServiceManagement.All_Delete(true, false, false);
                                         Toast.makeText(Preferences.this, "매일 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     }
@@ -201,7 +202,7 @@ public class Preferences extends Activity {
                                         while(week_dataBase_management.getData().size() > 0){
                                             week_dataBase_management.setDelete(0);
                                         }
-
+                                        alarmServiceManagement.All_Delete(false, true, false);
                                         Toast.makeText(Preferences.this, "요일별 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     }
@@ -210,7 +211,7 @@ public class Preferences extends Activity {
                                         while(date_dataBase_management.getData().size() > 0){
                                             date_dataBase_management.setDelete(0);
                                         }
-
+                                        alarmServiceManagement.All_Delete(false, false, true);
                                         Toast.makeText(Preferences.this, "날짜별 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     }
@@ -230,6 +231,7 @@ public class Preferences extends Activity {
                                         while(date_dataBase_management.getData().size() > 0){
                                             date_dataBase_management.setDelete(0);
                                         }
+                                        alarmServiceManagement.All_Delete(true, true, true);
                                         Toast.makeText(Preferences.this, "알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
                                         break;

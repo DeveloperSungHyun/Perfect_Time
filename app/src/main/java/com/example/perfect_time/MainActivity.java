@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onStart() {
         super.onStart();
 
-        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
-        alarmServiceManagement.All_TimerSetting();
+//        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
+//        alarmServiceManagement.All_TimerSetting();
 
     }
 

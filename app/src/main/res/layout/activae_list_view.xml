@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:text="매일"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:textColor="#656565"
                     android:layout_marginRight="5dp"
                     />
@@ -104,14 +104,14 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/sound_icon" />
+                        android:src="@drawable/notifications_icon" />
 
                     <ImageView
                         android:id="@+id/ImageView_vibration"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/vibration_icon" />
+                        android:src="@drawable/head_up" />
 
                     <ImageView
                         android:id="@+id/ImageView_popup"

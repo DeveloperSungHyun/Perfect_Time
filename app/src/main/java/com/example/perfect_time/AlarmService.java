@@ -14,6 +14,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -34,34 +35,37 @@ public class AlarmService extends BroadcastReceiver {
 
         calendar = Calendar.getInstance();
 
+        NotificationShow(context, intent);
+        Log.d("AlarmService", intent.getStringExtra("Name"));
+//        if(intent.getIntExtra("Type", 3) == 0){
+//            NotificationShow(context, intent);
+//        }
+//
+//        if(intent.getIntExtra("Type", 3) == 1){
+//            if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
+//                NotificationShow(context, intent);
+//            }
+//        }
+//
+//        if(intent.getIntExtra("Type", 3) == 2){
+//            if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
+//                    intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
+//                    intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
+//                NotificationShow(context, intent);
+//            }
+//        }
 
-        if(intent.getIntExtra("Type", 3) == 0){
-            NotificationShow(context, intent);
-        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
 
-        if(intent.getIntExtra("Type", 3) == 1){
-            if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
-                NotificationShow(context, intent);
-            }
-        }
-
-        if(intent.getIntExtra("Type", 3) == 2){
-            if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
-                    intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
-                    intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
-                NotificationShow(context, intent);
-            }
-        }
-
-        if(intent.getIntExtra("Type", 3) == 3){
+        if(calendar.get(Calendar.HOUR_OF_DAY) == 0 && calendar.get(Calendar.MINUTE) == 0){//하루가 지나면 알림재설정
             SystemDataSave systemDataSave = new SystemDataSave(context.getApplicationContext());//시스템 셋팅값
             if(!systemDataSave.getData_AllTimerOff()) {//알림이 ON 되어있다면 모든알림 설정
+                Log.d("All_TimerSetting", "재설정");
                 AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
                 alarmServiceManagement.All_TimerSetting();
             }
-
         }
-
 
     }
 

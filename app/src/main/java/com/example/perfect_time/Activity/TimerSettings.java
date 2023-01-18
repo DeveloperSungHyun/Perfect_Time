@@ -409,6 +409,13 @@ public class TimerSettings extends Activity {
             }
         });
 
+        Switch_Important.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                settingValue.setImportant(isChecked);
+            }
+        });
+
         Switch_TimerActivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {  //알람 활성화 유무
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

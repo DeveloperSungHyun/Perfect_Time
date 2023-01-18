@@ -20,22 +20,25 @@ public class AlarmServiceManagement {
     public static Context context;
     public static AlarmManager alarmManager;
     public static PendingIntent alarmIntent;
+    SystemDataSave systemDataSave;
 
     public AlarmServiceManagement(Context context){
         this.context = context;
+
+        systemDataSave = new SystemDataSave(context);
     }
 
-    public void AlarmManager_add(Intent intent,int UniqueID, int hour, int minute){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-
-        calendar.set(Calendar.HOUR_OF_DAY,hour);
-        calendar.set(Calendar.MINUTE,minute);
+    public void AlarmManager_add(Intent intent,int UniqueID, Calendar cal){
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//
+//        calendar.set(Calendar.HOUR_OF_DAY,hour);
+//        calendar.set(Calendar.MINUTE,minute);
 
         //calendar.set(Calendar.DATE,15);//====================================================test!!!
 
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
+        if (cal.before(Calendar.getInstance())) {
+            cal.add(Calendar.DATE, 1);
         }
 
         AlarmManager alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -43,7 +46,7 @@ public class AlarmServiceManagement {
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context.getApplicationContext(), UniqueID, intent, PendingIntent.FLAG_IMMUTABLE);
         Log.d("AlarmManager_add", intent.getStringExtra("Name") + " " + intent.getStringExtra("Memo"));
         //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-        AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), alarmIntent);
+        AlarmManager.AlarmClockInfo ac = new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), alarmIntent);
         alarmManager.setAlarmClock(ac, alarmIntent);
 
     }
@@ -59,7 +62,6 @@ public class AlarmServiceManagement {
                 alarm[1] = everyDay.isAutoDisplay_On();
 
                 intent = new Intent(context, AlarmService.class);
-                intent.putExtra("Type", 0);
                 intent.putExtra("Name", everyDay.getName());
                 intent.putExtra("Memo", everyDay.getMemo());
                 intent.putExtra("Important", everyDay.isImportant());
@@ -67,8 +69,15 @@ public class AlarmServiceManagement {
 
                 intent.putExtra("alarm", alarm);
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
 
-                AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
+                calendar.set(Calendar.HOUR_OF_DAY, everyDay.getTime_Hour());
+                calendar.set(Calendar.MINUTE, everyDay.getTime_Minute());
+
+                if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, everyDay.getUniqueID(), calendar);
+
+                Log.d("All_AddAlarm_everyDay", everyDay.getName() + " | " + everyDay.getMemo() + " | " + everyDay.getTime_Hour() + " | " + everyDay.getTime_Minute());
 
             }
         }
@@ -86,17 +95,21 @@ public class AlarmServiceManagement {
                 alarm[1] = db_week.isAutoDisplay_On();
 
                 intent = new Intent(context, AlarmService.class);
-                intent.putExtra("Type", 1);
                 intent.putExtra("Name", db_week.getName());
                 intent.putExtra("Memo", db_week.getMemo());
-                intent.putExtra("week", db_week.getDayOfTheWeek());
                 intent.putExtra("Important", db_week.isImportant());
                 intent.putExtra("century", db_week.getCentury());
 
                 intent.putExtra("alarm", alarm);
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
 
-                AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
+                calendar.set(Calendar.HOUR_OF_DAY, db_week.getTime_Hour());
+                calendar.set(Calendar.MINUTE, db_week.getTime_Minute());
+                calendar.set(Calendar.DAY_OF_WEEK, db_week.getDayOfTheWeek());
+
+                if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_week.getUniqueID(), calendar);
                 Log.d("All_AddAlarm_week", "command================");
             }
         }
@@ -114,18 +127,23 @@ public class AlarmServiceManagement {
                 alarm[1] = db_date.isAutoDisplay_On();
 
                 intent = new Intent(context, AlarmService.class);
-                intent.putExtra("Type", 2);
                 intent.putExtra("Name", db_date.getName());
                 intent.putExtra("Memo", db_date.getMemo());
-                intent.putExtra("y", db_date.getDate_Year());
-                intent.putExtra("m", db_date.getDate_Month());
-                intent.putExtra("d", db_date.getDate_Day());
                 intent.putExtra("Important", db_date.isImportant());
                 intent.putExtra("century", db_date.getCentury());
 
                 intent.putExtra("alarm", alarm);
 
-                AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+
+                calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
             }
         }
 
@@ -145,7 +163,6 @@ public class AlarmServiceManagement {
                     alarm[1] = everyDay.isAutoDisplay_On();
 
                     intent = new Intent(context, AlarmService.class);
-                    intent.putExtra("Type", 0);
                     intent.putExtra("Name", everyDay.getName());
                     intent.putExtra("Memo", everyDay.getMemo());
                     intent.putExtra("Important", everyDay.isImportant());
@@ -153,8 +170,15 @@ public class AlarmServiceManagement {
 
                     intent.putExtra("alarm", alarm);
 
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
 
-                    AlarmManager_add(intent, everyDay.getUniqueID(), everyDay.getTime_Hour(), everyDay.getTime_Minute());
+                    calendar.set(Calendar.HOUR_OF_DAY, everyDay.getTime_Hour());
+                    calendar.set(Calendar.MINUTE, everyDay.getTime_Minute());
+
+                    if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, everyDay.getUniqueID(), calendar);
+
+                    Log.d("All_AddAlarm_everyDay", everyDay.getName() + " | " + everyDay.getMemo() + " | " + everyDay.getTime_Hour() + " | " + everyDay.getTime_Minute());
                 }
             }
         }
@@ -174,16 +198,21 @@ public class AlarmServiceManagement {
                     alarm[1] = db_week.isAutoDisplay_On();
 
                     intent = new Intent(context, AlarmService.class);
-                    intent.putExtra("Type", 1);
                     intent.putExtra("Name", db_week.getName());
                     intent.putExtra("Memo", db_week.getMemo());
-                    intent.putExtra("week", db_week.getDayOfTheWeek());
                     intent.putExtra("Important", db_week.isImportant());
                     intent.putExtra("century", db_week.getCentury());
 
                     intent.putExtra("alarm", alarm);
 
-                    AlarmManager_add(intent, db_week.getUniqueID(), db_week.getTime_Hour(), db_week.getTime_Minute());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+
+                    calendar.set(Calendar.HOUR_OF_DAY, db_week.getTime_Hour());
+                    calendar.set(Calendar.MINUTE, db_week.getTime_Minute());
+                    calendar.set(Calendar.DAY_OF_WEEK, db_week.getDayOfTheWeek());
+
+                    if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_week.getUniqueID(), calendar);
                 }
             }
         }
@@ -203,19 +232,24 @@ public class AlarmServiceManagement {
                     alarm[1] = db_date.isAutoDisplay_On();
 
                     intent = new Intent(context, AlarmService.class);
-                    intent.putExtra("Type", 2);
                     intent.putExtra("Name", db_date.getName());
                     intent.putExtra("Memo", db_date.getMemo());
-                    intent.putExtra("y", db_date.getDate_Year());
-                    intent.putExtra("m", db_date.getDate_Month());
-                    intent.putExtra("d", db_date.getDate_Day());
                     intent.putExtra("Important", db_date.isImportant());
                     intent.putExtra("century", db_date.getCentury());
 
                     intent.putExtra("alarm", alarm);
 
 
-                    AlarmManager_add(intent, db_date.getUniqueID(), db_date.getTime_Hour(), db_date.getTime_Minute());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+
+                    calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                    calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                    calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                    calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                    calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                    if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
                 }
             }
         }
@@ -225,7 +259,7 @@ public class AlarmServiceManagement {
 
 
     public void Delete_Alarm(int UniqueID){
-        Log.d("Delete_Alarm", " === " + UniqueID);
+        Log.d("Delete_Alarm", " ============ " + UniqueID);
 //
 //        alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 //        intent = new Intent(context, AlarmService.class);
@@ -262,26 +296,40 @@ public class AlarmServiceManagement {
         All_AddAlarm_data();
 
         intent = new Intent(context, AlarmService.class);
-        intent.putExtra("Type", 3);
 
-        AlarmManager_add(intent, 0, 0, 0);//하루가 지날때마다 울림
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+
+        if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, 0, calendar);
+
     }
 
-    public void All_Delete(){
+    public void All_Delete(boolean everyDay_delete, boolean db_week_delete, boolean db_date_delete){
         EveryDay_DataBase_Management everyDay_dataBase_management = new EveryDay_DataBase_Management(context);
         Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(context);
         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
 
-        for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()){
-            Delete_Alarm(everyDay.getUniqueID());
+        Log.d("All_Delete", " ============ ");
+
+        if(everyDay_delete) {
+            for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()) {
+                Delete_Alarm(everyDay.getUniqueID());
+            }
         }
 
-        for (DB_Week db_week : week_dataBase_management.getData()){
-            Delete_Alarm(db_week.getUniqueID());
+        if(db_week_delete) {
+            for (DB_Week db_week : week_dataBase_management.getData()) {
+                Delete_Alarm(db_week.getUniqueID());
+            }
         }
 
-        for (DB_Date db_date : date_dataBase_management.getData()){
-            Delete_Alarm(db_date.getUniqueID());
+        if(db_date_delete) {
+            for (DB_Date db_date : date_dataBase_management.getData()) {
+                Delete_Alarm(db_date.getUniqueID());
+            }
         }
 
     }

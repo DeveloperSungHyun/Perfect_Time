@@ -130,9 +130,15 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
+        holder.ImageView_sound.setVisibility(View.GONE);
+        holder.ImageView_vibration.setVisibility(View.GONE);
+        holder.ImageView_popup.setVisibility(View.GONE);
 
-        if(getItem.isPopup_Activate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
-        else holder.ImageView_popup.setVisibility(View.GONE);
+        switch (getItem.getCentury()){
+            case 3: holder.ImageView_popup.setVisibility(View.VISIBLE);
+            case 2: holder.ImageView_vibration.setVisibility(View.VISIBLE);
+            case 1: holder.ImageView_sound.setVisibility(View.VISIBLE);
+        }
 
         holder.RelativeLayout_BackGround.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -389,8 +395,15 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
-        if(getItem.isPopup_Activate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
-        else holder.ImageView_popup.setVisibility(View.GONE);
+        holder.ImageView_sound.setVisibility(View.GONE);
+        holder.ImageView_vibration.setVisibility(View.GONE);
+        holder.ImageView_popup.setVisibility(View.GONE);
+
+        switch (getItem.getCentury()){
+            case 3: holder.ImageView_popup.setVisibility(View.VISIBLE);
+            case 2: holder.ImageView_vibration.setVisibility(View.VISIBLE);
+            case 1: holder.ImageView_sound.setVisibility(View.VISIBLE);
+        }
 
     }
 

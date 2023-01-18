@@ -22,6 +22,27 @@ public class RecyclerView_ListItem {
 
     private int FragmentType;//프레그먼트 타입(매일, 요일, 날짜)
 
+
+    public RecyclerView_ListItem
+            (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
+             int time_Minute,int Century, boolean Popup_Activate, boolean AutoDisplay_On, String dayText, int dayTextColor, int fragment_Type) {
+
+        ViewType = viewType;
+        Timer_Activate = timer_Activate;
+        Important = important;
+        DayText = dayText;
+        DayTextColor = dayTextColor;
+        Name = name;
+        Memo = memo;
+        Time_Hour = time_Hour;
+        Time_Minute = time_Minute;
+
+        century = Century;
+        popup_Activate = Popup_Activate;
+        autoDisplay_On = AutoDisplay_On;
+        FragmentType = fragment_Type;
+    }
+
     public boolean isPopup_Activate() {
         return popup_Activate;
     }
@@ -44,26 +65,6 @@ public class RecyclerView_ListItem {
 
     public void setCentury(int century) {
         this.century = century;
-    }
-
-    public RecyclerView_ListItem
-            (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
-             int time_Minute,int Century, boolean Popup_Activate, boolean AutoDisplay_On, String dayText, int dayTextColor, int fragment_Type) {
-
-        ViewType = viewType;
-        Timer_Activate = timer_Activate;
-        Important = important;
-        DayText = dayText;
-        DayTextColor = dayTextColor;
-        Name = name;
-        Memo = memo;
-        Time_Hour = time_Hour;
-        Time_Minute = time_Minute;
-
-        Century = century;
-        Popup_Activate = popup_Activate;
-        AutoDisplay_On = autoDisplay_On;
-        FragmentType = fragment_Type;
     }
 
     public int getViewType() {
