@@ -52,7 +52,6 @@ public class Preferences extends Activity {
     Switch Switch_Wear;
     RadioGroup RadioGroup_Time24_to_12;
     RadioButton RadioButton_12, RadioButton_24;
-    TextView TextView_Time24_to_12;
 
     LinearLayout All_TimeDataDelete;
 
@@ -66,7 +65,6 @@ public class Preferences extends Activity {
         RadioGroup_Time24_to_12 = findViewById(R.id.RadioGroup_Time24_to_12);
         RadioButton_12 = findViewById(R.id.RadioButton_12);
         RadioButton_24 = findViewById(R.id.RadioButton_24);
-        TextView_Time24_to_12 = findViewById(R.id.TextView_Time24_to_12);
 
         All_TimeDataDelete = findViewById(R.id.All_TimeDataDelete);
 
@@ -105,10 +103,8 @@ public class Preferences extends Activity {
         Switch_Wear.setChecked(Wear);
         if(Time24_to_12 == false) {//0 = 12, 1 = 24
             RadioGroup_Time24_to_12.check(RadioButton_12.getId());
-            TextView_Time24_to_12.setText("시간을 12시 형식으로 표기합니다.");
         }else {
             RadioGroup_Time24_to_12.check(RadioButton_24.getId());
-            TextView_Time24_to_12.setText("시간을 24시 형식으로 표기합니다.");
         }
 
         Switch_AllTimer_Off.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -154,10 +150,8 @@ public class Preferences extends Activity {
                 Log.d("===============", " " + checkedId);
 
                 if(checkedId == RadioButton_12.getId()) {
-                    TextView_Time24_to_12.setText("시간을 12시 형식으로 표기합니다.");
                     systemDataSave.setData_Time24_to_12(false);
                 }else {
-                    TextView_Time24_to_12.setText("시간을 24시 형식으로 표기합니다.");
                     systemDataSave.setData_Time24_to_12(true);
                 }
             }

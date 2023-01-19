@@ -28,7 +28,7 @@
                 <RelativeLayout
                     android:id="@+id/LinearLayout_TimeText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content" >
 
                     <LinearLayout
                         android:id="@+id/LinearLayout_Time_Setting"
@@ -46,8 +46,8 @@
                             android:layout_gravity="center"
                             android:layout_margin="3dp"
                             android:text="오전"
-                            android:textColor="#FF000000"
-                            android:textSize="30dp" />
+                            android:textColor="#686868"
+                            android:textSize="25dp" />
 
                         <TextView
                             android:id="@+id/TextView_Time_H"
@@ -95,7 +95,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right">
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="15dp">
                     <TextView
                         android:id="@+id/TextView_Date"
                         android:layout_width="wrap_content"
@@ -119,8 +120,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:background="#EFEFEF"
-                    android:hint="이름 (필수입력)"
+                    android:background="#F3F3F3"
+                    android:hint="알람이름 (필수입력)"
                     android:inputType="text"
                     android:textColor="#FF000000"
                     android:textColorHint="#BABABA"
