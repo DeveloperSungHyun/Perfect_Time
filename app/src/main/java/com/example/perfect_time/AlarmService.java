@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.PowerManager;
+import android.os.Trace;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -32,38 +33,22 @@ public class AlarmService extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
         calendar = Calendar.getInstance();
 
+        if(intent.getIntExtra("AlarmType", 0) == 1){
+            if(intent.getIntExtra("Week", 0) != calendar.get(Calendar.DAY_OF_WEEK) - 1) return;
+        }
+
         NotificationShow(context, intent);
-        Log.d("AlarmService", intent.getStringExtra("Name"));
-//        if(intent.getIntExtra("Type", 3) == 0){
-//            NotificationShow(context, intent);
-//        }
-//
-//        if(intent.getIntExtra("Type", 3) == 1){
-//            if(intent.getIntExtra("week", 7) == calendar.get(Calendar.DAY_OF_WEEK) - 1){
-//                NotificationShow(context, intent);
-//            }
-//        }
-//
-//        if(intent.getIntExtra("Type", 3) == 2){
-//            if(intent.getIntExtra("y", 0) == calendar.get(Calendar.YEAR) &&
-//                    intent.getIntExtra("m", 0) == calendar.get(Calendar.MONDAY) + 1 &&
-//                    intent.getIntExtra("d", 0) == calendar.get(Calendar.DATE)){
-//                NotificationShow(context, intent);
-//            }
-//        }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-
-        if(calendar.get(Calendar.HOUR_OF_DAY) == 0 && calendar.get(Calendar.MINUTE) == 0){//하루가 지나면 알림재설정
-            SystemDataSave systemDataSave = new SystemDataSave(context.getApplicationContext());//시스템 셋팅값
-            if(!systemDataSave.getData_AllTimerOff()) {//알림이 ON 되어있다면 모든알림 설정
-                Log.d("All_TimerSetting", "재설정");
-                AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
-                alarmServiceManagement.All_TimerSetting();
+        if(intent.getBooleanExtra("Resetting", true) == true){//알림이 울리면 모든 알림을 다시 설정(안전을 위해)
+            if(intent.getIntExtra("AlarmType", 0) == 0){
+                Log.d("Every============", "Resetting");
+                alarmServiceManagement.All_TimerSetting(true, false, false);
+            }else if(intent.getIntExtra("AlarmType", 1) == 1){
+                Log.d("Week============", "Resetting");
+                alarmServiceManagement.All_TimerSetting(false, true, false);
             }
         }
 

@@ -78,6 +78,12 @@ public class FragDate extends Fragment {
     public void onStart() {
         super.onStart();
 
+        if(date_dataBase_management.getData().size() == 0){
+            TextView_none_list.setVisibility(View.VISIBLE);
+        }else{
+            TextView_none_list.setVisibility(View.GONE);
+        }
+
         ListItem.clear();//아이템 초기화
 
         for(DB_Date data : date_dataBase_management.getData()){
@@ -106,12 +112,6 @@ public class FragDate extends Fragment {
 
 
         date_dataBase_management = new Date_DataBase_Management(getContext());
-
-        if(date_dataBase_management.getData().size() == 0){
-            TextView_none_list.setVisibility(View.VISIBLE);
-        }else{
-            TextView_none_list.setVisibility(View.GONE);
-        }
 
         DeviceType deviceType = new DeviceType(view.getContext());
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){

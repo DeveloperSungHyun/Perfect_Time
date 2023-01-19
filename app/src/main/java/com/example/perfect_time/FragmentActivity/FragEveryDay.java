@@ -75,6 +75,12 @@ public class FragEveryDay extends Fragment {
     public void onStart() {
         super.onStart();
 
+        if(everyDay_dataBase_management.getData().size() == 0){
+            TextView_none_list.setVisibility(View.VISIBLE);
+        }else{
+            TextView_none_list.setVisibility(View.GONE);
+        }
+
         ListItem.clear();//아이템 초기화
 
         for(DB_EveryDay data : everyDay_dataBase_management.getData()){
@@ -101,12 +107,6 @@ public class FragEveryDay extends Fragment {
 
 
         everyDay_dataBase_management = new EveryDay_DataBase_Management(getContext());
-
-        if(everyDay_dataBase_management.getData().size() == 0){
-            TextView_none_list.setVisibility(View.VISIBLE);
-        }else{
-            TextView_none_list.setVisibility(View.GONE);
-        }
 
         DeviceType deviceType = new DeviceType(view.getContext());
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){

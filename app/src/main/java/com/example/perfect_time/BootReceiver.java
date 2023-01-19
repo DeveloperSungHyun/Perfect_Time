@@ -10,7 +10,7 @@ public class BootReceiver extends BroadcastReceiver {
         SystemDataSave systemDataSave = new SystemDataSave(context.getApplicationContext());//시스템 셋팅값
         if(!systemDataSave.getData_AllTimerOff()) {//알림이 ON 되어있다면 모든알림 설정
             AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
-            alarmServiceManagement.All_TimerSetting();
+            alarmServiceManagement.All_TimerSetting(true, true, true);
         }
     }
 }

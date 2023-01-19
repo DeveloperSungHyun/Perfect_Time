@@ -75,6 +75,12 @@ public class FragWeek extends Fragment {
     public void onStart() {
         super.onStart();
 
+        if(week_dataBase_management.getData().size() == 0){
+            TextView_none_list.setVisibility(View.VISIBLE);
+        }else{
+            TextView_none_list.setVisibility(View.GONE);
+        }
+
         ListItem.clear();//아이템 초기화
 
         for(DB_Week data : week_dataBase_management.getData()){
@@ -109,12 +115,6 @@ public class FragWeek extends Fragment {
 
 
         week_dataBase_management = new Week_DataBase_Management(getContext());
-
-        if(week_dataBase_management.getData().size() == 0){
-            TextView_none_list.setVisibility(View.VISIBLE);
-        }else{
-            TextView_none_list.setVisibility(View.GONE);
-        }
 
         DeviceType deviceType = new DeviceType(view.getContext());
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){
