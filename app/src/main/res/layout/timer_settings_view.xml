@@ -110,7 +110,6 @@
                         android:id="@+id/GridView_WeekSelectView"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
                         android:numColumns="7" />
                 </RelativeLayout>
@@ -121,16 +120,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:background="#F3F3F3"
-                    android:hint="알람이름 (필수입력)"
+                    android:hint="알람이름 (필수)"
                     android:inputType="text"
                     android:textColor="#FF000000"
                     android:textColorHint="#BABABA"
-                    android:textSize="23dp" />
+                    android:textSize="22dp" />
 
                 <EditText
                     android:id="@+id/EditText_Memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
                     android:hint="메모"
                     android:textColor="#FF000000"
                     android:textColorHint="#BABABA"

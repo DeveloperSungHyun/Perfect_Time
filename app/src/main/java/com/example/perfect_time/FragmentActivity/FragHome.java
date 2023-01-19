@@ -226,7 +226,7 @@ public class FragHome extends Fragment {
                     h--;
                     m = 60 - Time_m + next_Time.getTime_Minute();
                 }
-                TextView_NextTimerCount.setText("" + h + "시간 " + m + "분 뒤에 " + "\"" + next_Time.getName() + "\"" + "일정이 있습니다.");
+                TextView_NextTimerCount.setText("" + h + "시간 " + m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.");
             }else{
                 TextView_NextTimerCount.setText("이후 일정은 없습니다.");
             }
