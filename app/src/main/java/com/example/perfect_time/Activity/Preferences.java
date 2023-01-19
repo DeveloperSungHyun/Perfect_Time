@@ -119,6 +119,9 @@ public class Preferences extends Activity {
                 if(b == true) {//모든 알람 off
                     alarmServiceManagement.All_Delete(true, true, true);
                     Toast.makeText(Preferences.this, "모든 알림을 껐습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    alarmServiceManagement.All_TimerSetting();
+                    Toast.makeText(Preferences.this, "모든 알림을 켰습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -190,28 +193,28 @@ public class Preferences extends Activity {
                                 switch (which){
                                     case 0:{
                                         EveryDay_DataBase_Management everyDay_dataBase_management = new EveryDay_DataBase_Management(getApplicationContext());
+                                        alarmServiceManagement.All_Delete(true, false, false);
                                         while(everyDay_dataBase_management.getData().size() > 0){
                                             everyDay_dataBase_management.setDelete(0);
                                         }
-                                        alarmServiceManagement.All_Delete(true, false, false);
                                         Toast.makeText(Preferences.this, "매일 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     }
                                     case 1:{
                                         Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(getApplicationContext());
+                                        alarmServiceManagement.All_Delete(false, true, false);
                                         while(week_dataBase_management.getData().size() > 0){
                                             week_dataBase_management.setDelete(0);
                                         }
-                                        alarmServiceManagement.All_Delete(false, true, false);
                                         Toast.makeText(Preferences.this, "요일별 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     }
                                     case 2:{
                                         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(getApplicationContext());
+                                        alarmServiceManagement.All_Delete(false, false, true);
                                         while(date_dataBase_management.getData().size() > 0){
                                             date_dataBase_management.setDelete(0);
                                         }
-                                        alarmServiceManagement.All_Delete(false, false, true);
                                         Toast.makeText(Preferences.this, "날짜별 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                         break;
                                     }
@@ -220,6 +223,8 @@ public class Preferences extends Activity {
                                         Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(getApplicationContext());
                                         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(getApplicationContext());
 
+                                        alarmServiceManagement.All_Delete(true, true, true);
+
                                         while(everyDay_dataBase_management.getData().size() > 0){
                                             everyDay_dataBase_management.setDelete(0);
                                         }
@@ -231,7 +236,6 @@ public class Preferences extends Activity {
                                         while(date_dataBase_management.getData().size() > 0){
                                             date_dataBase_management.setDelete(0);
                                         }
-                                        alarmServiceManagement.All_Delete(true, true, true);
                                         Toast.makeText(Preferences.this, "알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
                                         break;
