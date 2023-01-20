@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="0시 0분 뒤 XX 일정이 있습니다."
         android:textColor="#FF000000"
-        android:textSize="22dp"
+        android:textSize="20dp"
         android:gravity="center_horizontal"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"

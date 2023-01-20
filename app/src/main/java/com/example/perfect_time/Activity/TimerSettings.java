@@ -17,16 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -53,6 +49,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class TimerSettings extends Activity {
+    SharedPreferences sharedPreferences;
     Calendar calendar;
 
     Dialog TimeSetting_Dialog;
@@ -92,8 +89,6 @@ public class TimerSettings extends Activity {
     private int TimerViewType;
 
     int nowTime_H, nowTime_M;
-
-    int RadioButton_IdNumber = 0;
 
     private void IdMapping(){
         GridView_WeekSelectView = findViewById(R.id.GridView_WeekSelectView);
@@ -321,6 +316,13 @@ public class TimerSettings extends Activity {
             }
         });
 
+        TextView_No_SaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         ValueSetting();
 
 
@@ -397,16 +399,65 @@ public class TimerSettings extends Activity {
             }
         });
 
+
         ImageView_PopupUp.setOnClickListener(new View.OnClickListener() {//3
             @Override
             public void onClick(View v) {
-                if(settingValue.getCentury() == 3){
-                    settingValue.setCentury(2);
-                }else {
-                    settingValue.setCentury(3);
+                sharedPreferences = getApplicationContext().getSharedPreferences("PopupCheck", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(sharedPreferences.getBoolean("PopupCheck", false) == false){
+
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(TimerSettings.this);
+                    dlg.setTitle("다른앱 위에 표시(권한)"); //제목
+                    dlg.setMessage("권한을 승인하셔야 팝업 알림을 받을 수 있습니다."); // 메시지
+
+//                버튼 클릭시 동작
+                    dlg.setPositiveButton("허용",new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which) {
+                            //토스트 메시지
+
+                            editor.putBoolean("PopupCheck", true);
+                            editor.commit();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                        Uri.parse("package:" + getPackageName()));
+
+                                startActivityForResult(intent, 0);
+                            }
+
+                            if(sharedPreferences.getBoolean("PopupCheck", false) == true){
+                                if(settingValue.getCentury() == 3){
+                                    settingValue.setCentury(2);
+                                }else {
+                                    settingValue.setCentury(3);
+                                }
+                                Century_Setting(settingValue.getCentury());
+                            }
+
+                        }
+                    });
+
+                    dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(TimerSettings.this, "권한을 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    dlg.show();
+
                 }
-                Century_Setting(settingValue.getCentury());
+
+                if(sharedPreferences.getBoolean("PopupCheck", false) == true){
+                    if(settingValue.getCentury() == 3){
+                        settingValue.setCentury(2);
+                    }else {
+                        settingValue.setCentury(3);
+                    }
+                    Century_Setting(settingValue.getCentury());
+                }
             }
+
         });
 
         Switch_Important.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -427,6 +478,7 @@ public class TimerSettings extends Activity {
         Switch_AutoDisplay_On.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {//화면켜짐
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 settingValue.setAutoDisplay_On(isChecked);
             }
         });
