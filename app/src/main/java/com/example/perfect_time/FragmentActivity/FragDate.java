@@ -84,6 +84,8 @@ public class FragDate extends Fragment {
             TextView_none_list.setVisibility(View.GONE);
         }
 
+        ListLayout_View();
+
         ListItem.clear();//아이템 초기화
 
         for(DB_Date data : date_dataBase_management.getData()){
@@ -113,6 +115,28 @@ public class FragDate extends Fragment {
 
         date_dataBase_management = new Date_DataBase_Management(getContext());
 
+
+        ListItem = new ArrayList<>();
+        recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
+
+        recyclerView.setAdapter(recyclerView_listAdapter);
+
+        TimerAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
+                intent.putExtra("TimerViewType", FragmentType.fragDate);
+                startActivity(intent);
+            }
+        });
+
+
+        ListLayout_View();
+        return view;
+    }
+
+    void ListLayout_View(){
         DeviceType deviceType = new DeviceType(view.getContext());
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){
             if(deviceType.IsPhone()){
@@ -131,17 +155,5 @@ public class FragDate extends Fragment {
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
 
         recyclerView.setAdapter(recyclerView_listAdapter);
-
-        TimerAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                intent.putExtra("TimerSettingType", 1);//1 새로운 데이터 추가
-                intent.putExtra("TimerViewType", FragmentType.fragDate);
-                startActivity(intent);
-            }
-        });
-
-        return view;
     }
 }

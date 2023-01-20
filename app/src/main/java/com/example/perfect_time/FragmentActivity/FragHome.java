@@ -84,6 +84,8 @@ public class FragHome extends Fragment {
 
         ListItem.clear();//아이템 초기화
 
+        ListLayout_View();
+
         recyclerView_ListShow();
 
     }
@@ -105,6 +107,13 @@ public class FragHome extends Fragment {
 
         all_times = oneDayTimeList.getTimeList();
 
+        ListLayout_View();
+
+
+        return view;
+    }
+
+    void ListLayout_View(){
         DeviceType deviceType = new DeviceType(view.getContext());
 
         if(new SystemDataSave(this.getContext()).getData_TableMode() == true){
@@ -125,8 +134,6 @@ public class FragHome extends Fragment {
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
 
         recyclerView.setAdapter(recyclerView_listAdapter);
-
-        return view;
     }
 
     private void recyclerView_ListShow(){

@@ -81,6 +81,8 @@ public class FragWeek extends Fragment {
             TextView_none_list.setVisibility(View.GONE);
         }
 
+        ListLayout_View();
+
         ListItem.clear();//아이템 초기화
 
         for(DB_Week data : week_dataBase_management.getData()){
@@ -145,6 +147,30 @@ public class FragWeek extends Fragment {
             }
         });
 
+        ListLayout_View();
+
+
         return view;
+    }
+
+    void ListLayout_View(){
+        DeviceType deviceType = new DeviceType(view.getContext());
+        if(new SystemDataSave(this.getContext()).getData_TableMode() == true){
+            if(deviceType.IsPhone()){
+                linearLayoutManager = new LinearLayoutManager(this.getContext());
+                recyclerView.setLayoutManager(linearLayoutManager);
+            }else if(deviceType.IsTablet()){
+                gridLayoutManager = new GridLayoutManager(this.getContext(),2);
+                recyclerView.setLayoutManager(gridLayoutManager);
+            }
+        }else{
+            linearLayoutManager = new LinearLayoutManager(this.getContext());
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
+
+        ListItem = new ArrayList<>();
+        recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
+
+        recyclerView.setAdapter(recyclerView_listAdapter);
     }
 }

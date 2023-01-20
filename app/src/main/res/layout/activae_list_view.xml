@@ -78,19 +78,19 @@
                     android:layout_height="wrap_content"
                     android:text="Text"
                     android:textColor="#FF000000"
-                    android:textSize="21dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/TextView_Memo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="3dp"
                     android:maxWidth="250dp"
                     android:text="text"
                     android:textColor="#1B1B1B"
-                    android:textSize="16dp" />
+                    android:textSize="15dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

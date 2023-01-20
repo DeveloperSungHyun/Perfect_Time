@@ -45,11 +45,16 @@ public class AlarmService extends BroadcastReceiver {
         if(intent.getBooleanExtra("Resetting", true) == true){//알림이 울리면 모든 알림을 다시 설정(안전을 위해)
             if(intent.getIntExtra("AlarmType", 0) == 0){
                 Log.d("Every============", "Resetting");
-                alarmServiceManagement.All_TimerSetting(true, false, false);
+                alarmServiceManagement.SetUp_Alarm();
             }else if(intent.getIntExtra("AlarmType", 1) == 1){
                 Log.d("Week============", "Resetting");
-                alarmServiceManagement.All_TimerSetting(false, true, false);
+                alarmServiceManagement.SetUp_Alarm();
             }
+        }
+
+        if(intent.getIntExtra("AlarmType", 0) == 3){
+            alarmServiceManagement.All_TimerSetting(true, false, false);
+            alarmServiceManagement.All_TimerSetting(false, true, false);
         }
 
     }

@@ -129,37 +129,48 @@ public class AlarmServiceManagement {
         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
 
         for (DB_Date db_date : date_dataBase_management.getData()){
-            if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
 
-                boolean alarm[] = new boolean[2];
-                alarm[0] = db_date.isPopup_Activate();
-                alarm[1] = db_date.isAutoDisplay_On();
+            if(db_date.getDate_Year() >= NowTime.get(Calendar.YEAR)) {
+                if (db_date.getDate_Month() >= NowTime.get(Calendar.MONDAY)) {
+                    if (db_date.getDate_Day() >= NowTime.get(Calendar.DATE)) {
 
-                intent = new Intent(context, AlarmService.class);
-                intent.putExtra("AlarmType", 2);
-                intent.putExtra("Name", db_date.getName());
-                intent.putExtra("Memo", db_date.getMemo());
-                intent.putExtra("Important", db_date.isImportant());
-                intent.putExtra("century", db_date.getCentury());
+                        if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
+                            Log.d("미래", db_date.getName());
 
-                intent.putExtra("alarm", alarm);
+                            boolean alarm[] = new boolean[2];
+                            alarm[0] = db_date.isPopup_Activate();
+                            alarm[1] = db_date.isAutoDisplay_On();
 
-                intent.putExtra("Resetting", false);
+                            intent = new Intent(context, AlarmService.class);
+                            intent.putExtra("AlarmType", 2);
+                            intent.putExtra("Name", db_date.getName());
+                            intent.putExtra("Memo", db_date.getMemo());
+                            intent.putExtra("Important", db_date.isImportant());
+                            intent.putExtra("century", db_date.getCentury());
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(System.currentTimeMillis());
+                            intent.putExtra("alarm", alarm);
 
-                calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
-                calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
-                calendar.set(Calendar.SECOND, 1);
-                calendar.set(Calendar.MILLISECOND, 1000);
+                            intent.putExtra("Resetting", false);
 
-                calendar.set(Calendar.YEAR, db_date.getDate_Year());
-                calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
-                calendar.set(Calendar.DATE, db_date.getDate_Day());
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(System.currentTimeMillis());
 
-                if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+                            calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                            calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                            calendar.set(Calendar.SECOND, 1);
+                            calendar.set(Calendar.MILLISECOND, 1000);
+
+                            calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                            calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                            calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                            if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+                        }
+
+                    }
+                }
             }
+
         }
 
     }
@@ -198,7 +209,8 @@ public class AlarmServiceManagement {
 
                     if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, everyDay.getUniqueID(), calendar);
 
-                    Log.d("All_AddAlarm_everyDay", everyDay.getName() + " | " + everyDay.getMemo() + " | " + everyDay.getTime_Hour() + " | " + everyDay.getTime_Minute());
+
+                    break;
                 }
             }
         }
@@ -241,6 +253,8 @@ public class AlarmServiceManagement {
                     calendar.set(Calendar.DAY_OF_WEEK, db_week.getDayOfTheWeek());
 
                     if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_week.getUniqueID(), calendar);
+
+                    break;
                 }
             }
         }
@@ -254,43 +268,70 @@ public class AlarmServiceManagement {
         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
 
         for (DB_Date db_date : date_dataBase_management.getData()){
-            if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
-                if(db_date.getUniqueID() == UniqueID){
-                    boolean alarm[] = new boolean[2];
-                    alarm[0] = db_date.isPopup_Activate();
-                    alarm[1] = db_date.isAutoDisplay_On();
+            if(db_date.getDate_Year() >= NowTime.get(Calendar.YEAR)){
+                if(db_date.getDate_Month() >= NowTime.get(Calendar.MONDAY)){
+                    if(db_date.getDate_Day() >= NowTime.get(Calendar.DATE)){
 
-                    intent = new Intent(context, AlarmService.class);
-                    intent.putExtra("AlarmType", 2);
-                    intent.putExtra("Name", db_date.getName());
-                    intent.putExtra("Memo", db_date.getMemo());
-                    intent.putExtra("Important", db_date.isImportant());
-                    intent.putExtra("century", db_date.getCentury());
+                        if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
 
-                    intent.putExtra("alarm", alarm);
+                            if(db_date.getUniqueID() == UniqueID){
+                                Log.d("미래", db_date.getName());
 
-                    intent.putExtra("Resetting", true);
+                                boolean alarm[] = new boolean[2];
+                                alarm[0] = db_date.isPopup_Activate();
+                                alarm[1] = db_date.isAutoDisplay_On();
 
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(System.currentTimeMillis());
+                                intent = new Intent(context, AlarmService.class);
+                                intent.putExtra("AlarmType", 2);
+                                intent.putExtra("Name", db_date.getName());
+                                intent.putExtra("Memo", db_date.getMemo());
+                                intent.putExtra("Important", db_date.isImportant());
+                                intent.putExtra("century", db_date.getCentury());
 
-                    calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
-                    calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
-                    calendar.set(Calendar.SECOND, 1);
-                    calendar.set(Calendar.MILLISECOND, 1000);
+                                intent.putExtra("alarm", alarm);
 
-                    calendar.set(Calendar.YEAR, db_date.getDate_Year());
-                    calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
-                    calendar.set(Calendar.DATE, db_date.getDate_Day());
+                                intent.putExtra("Resetting", true);
 
-                    if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.setTimeInMillis(System.currentTimeMillis());
+
+                                calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                                calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                                calendar.set(Calendar.SECOND, 1);
+                                calendar.set(Calendar.MILLISECOND, 1000);
+
+                                calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                                calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                                calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                                if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+
+                                break;
+                            }
+                        }
+
+                    }
                 }
             }
+
         }
 
     }
 
 
+    public void SetUp_Alarm(){
+        intent = new Intent(context, AlarmService.class);
+        intent.putExtra("AlarmType", 3);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 1);
+        calendar.set(Calendar.MILLISECOND, 1000);
+
+        AlarmManager_add(intent, 0, calendar);
+    }
 
     public void Delete_Alarm(int UniqueID){
 
