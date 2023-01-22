@@ -140,6 +140,40 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         if(getItem.isPopupActivate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
         else holder.ImageView_popup.setVisibility(View.GONE);
 
+        holder.RelativeLayout_BackGround.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                    intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
+
+                    intent.putExtra("ItemID", holder.getAdapterPosition());
+                    Log.d("인텐트 데이터 출력", "ItemID " + holder.getAdapterPosition());
+
+                    view.getContext().startActivity(intent);
+                }
+                if(getItem.getFragmentType() == FragmentType.fragWeek){
+                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                    intent.putExtra("TimerViewType", FragmentType.fragWeek);
+
+                    intent.putExtra("ItemID", holder.getAdapterPosition());
+
+                    view.getContext().startActivity(intent);
+                }
+                if(getItem.getFragmentType() == FragmentType.fragDate){
+                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
+                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                    intent.putExtra("TimerViewType", FragmentType.fragDate);
+
+                    intent.putExtra("ItemID", holder.getAdapterPosition());
+
+                    view.getContext().startActivity(intent);
+                }
+            }
+        });
+
         holder.RelativeLayout_BackGround.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -148,7 +182,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                 ListView_Adapter listView_adapter = new ListView_Adapter();
 
-                listView_adapter.addItem(new List_Item(R.drawable.edit_icon, "수정하기"));
                 listView_adapter.addItem(new List_Item(R.drawable.copy_icon, "복사하기"));
                 listView_adapter.addItem(new List_Item(R.drawable.alarm_on_icon, "알림On/Off"));
                 listView_adapter.addItem(new List_Item(R.drawable.delete_icon, "삭제하기"));
@@ -169,7 +202,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
                                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
                                     intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
 
                                     intent.putExtra("ItemID", holder.getAdapterPosition());
@@ -179,7 +212,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 }
                                 if(getItem.getFragmentType() == FragmentType.fragWeek){
                                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
                                     intent.putExtra("TimerViewType", FragmentType.fragWeek);
 
                                     intent.putExtra("ItemID", holder.getAdapterPosition());
@@ -188,7 +221,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 }
                                 if(getItem.getFragmentType() == FragmentType.fragDate){
                                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                                    intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
+                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
                                     intent.putExtra("TimerViewType", FragmentType.fragDate);
 
                                     intent.putExtra("ItemID", holder.getAdapterPosition());
@@ -199,39 +232,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 break;
                             }
                             case 1:{
-
-                                if(getItem.getFragmentType() == FragmentType.fragEveryDay){
-                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
-                                    intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
-
-                                    intent.putExtra("ItemID", holder.getAdapterPosition());
-                                    Log.d("인텐트 데이터 출력", "ItemID " + holder.getAdapterPosition());
-
-                                    view.getContext().startActivity(intent);
-                                }
-                                if(getItem.getFragmentType() == FragmentType.fragWeek){
-                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
-                                    intent.putExtra("TimerViewType", FragmentType.fragWeek);
-
-                                    intent.putExtra("ItemID", holder.getAdapterPosition());
-
-                                    view.getContext().startActivity(intent);
-                                }
-                                if(getItem.getFragmentType() == FragmentType.fragDate){
-                                    Intent intent = new Intent(view.getContext(), TimerSettings.class);
-                                    intent.putExtra("TimerSettingType", 3);//3 데이터 복사
-                                    intent.putExtra("TimerViewType", FragmentType.fragDate);
-
-                                    intent.putExtra("ItemID", holder.getAdapterPosition());
-
-                                    view.getContext().startActivity(intent);
-                                }
-
-                                break;
-                            }
-                            case 2:{
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
                                     EveryDay_DataBase_Management everyDay_dataBase_management =
@@ -301,7 +301,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 Log.d("다이얼 로그", "알림끄기");
                                 break;
                             }
-                            case 3:{
+                            case 2:{
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
                                     EveryDay_DataBase_Management everyDay_dataBase_management =
