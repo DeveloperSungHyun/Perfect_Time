@@ -70,9 +70,7 @@ public class Date_DataBase_Management {
         db_date.setTime_Hour(settingValue.getTime_Hour());
         db_date.setTime_Minute(settingValue.getTime_Minute());
 
-        db_date.setSoundVibration(settingValue.isSoundVibration());
-        db_date.setHeadUp(settingValue.isHeadUp());
-        db_date.setPopup_Activate(settingValue.isPopup_Activate());
+        db_date.setAlarm_Method(settingValue.getAlarm_Method());
 
         dateDao.setInsert(db_date);
     }
@@ -100,9 +98,7 @@ public class Date_DataBase_Management {
         db_date.setTime_Hour(settingValue.getTime_Hour());
         db_date.setTime_Minute(settingValue.getTime_Minute());
 
-        db_date.setSoundVibration(settingValue.isSoundVibration());
-        db_date.setHeadUp(settingValue.isHeadUp());
-        db_date.setPopup_Activate(settingValue.isPopup_Activate());
+        db_date.setAlarm_Method(settingValue.getAlarm_Method());
 
         dateDao.setUpdate(db_date);
     }
@@ -128,9 +124,7 @@ public class Date_DataBase_Management {
         db_date.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_date.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_date.setSoundVibration(getData().get(DataId).isSoundVibration());
-        db_date.setHeadUp(getData().get(DataId).isHeadUp());
-        db_date.setPopup_Activate(getData().get(DataId).isPopup_Activate());
+        db_date.setAlarm_Method(getData().get(DataId).getAlarm_Method());
 
         dateDao.setUpdate(db_date);
     }

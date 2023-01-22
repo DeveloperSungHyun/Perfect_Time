@@ -16,16 +16,14 @@ public class RecyclerView_ListItem {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean SoundVibration;         //알림
-    private boolean HeadUp;                 //노티피케이션
-    private boolean PopupActivate;         //팝업알림 활성화 유무
+    private int Alarm_Method;                //알림 방식
 
     private int FragmentType;//프레그먼트 타입(매일, 요일, 날짜)
 
 
     public RecyclerView_ListItem
             (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
-             int time_Minute,boolean sound_vibration, boolean head_up, boolean popup_activate, String dayText, int dayTextColor, int fragment_Type) {
+             int time_Minute, int alarm_Method, String dayText, int dayTextColor, int fragment_Type) {
 
         ViewType = viewType;
         Timer_Activate = timer_Activate;
@@ -37,34 +35,17 @@ public class RecyclerView_ListItem {
         Time_Hour = time_Hour;
         Time_Minute = time_Minute;
 
-        SoundVibration = sound_vibration;
-        HeadUp = head_up;
-        PopupActivate = popup_activate;
+        Alarm_Method = alarm_Method;
+
         FragmentType = fragment_Type;
     }
 
-    public boolean isSoundVibration() {
-        return SoundVibration;
+    public int getAlarm_Method() {
+        return Alarm_Method;
     }
 
-    public void setSoundVibration(boolean soundVibration) {
-        SoundVibration = soundVibration;
-    }
-
-    public boolean isHeadUp() {
-        return HeadUp;
-    }
-
-    public void setHeadUp(boolean headUp) {
-        HeadUp = headUp;
-    }
-
-    public boolean isPopupActivate() {
-        return PopupActivate;
-    }
-
-    public void setPopupActivate(boolean popupActivate) {
-        PopupActivate = popupActivate;
+    public void setAlarm_Method(int alarm_Method) {
+        Alarm_Method = alarm_Method;
     }
 
     public int getViewType() {

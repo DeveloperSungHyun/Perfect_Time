@@ -69,9 +69,8 @@ public class OneDayTimeList {
             all_time.setMemo(db_everyDay.getMemo());
             all_time.setTime_Hour(db_everyDay.getTime_Hour());
             all_time.setTime_Minute(db_everyDay.getTime_Minute());
-            all_time.setSoundVibration(db_everyDay.isPopup_Activate());
-            all_time.setHeadUp(db_everyDay.isHeadUp());
-            all_time.setPopup_Activate(db_everyDay.isPopup_Activate());
+            all_time.setAlarm_Method(db_everyDay.getAlarm_Method());
+
 
             all_times.add(all_time);
 
@@ -105,9 +104,7 @@ public class OneDayTimeList {
                 all_time.setMemo(db_week.getMemo());
                 all_time.setTime_Hour(db_week.getTime_Hour());
                 all_time.setTime_Minute(db_week.getTime_Minute());
-                all_time.setSoundVibration(db_week.isPopup_Activate());
-                all_time.setHeadUp(db_week.isHeadUp());
-                all_time.setPopup_Activate(db_week.isPopup_Activate());
+                all_time.setAlarm_Method(db_week.getAlarm_Method());
 
                 all_times.add(all_time);
             }
@@ -136,9 +133,7 @@ public class OneDayTimeList {
                 all_time.setMemo(db_date.getMemo());
                 all_time.setTime_Hour(db_date.getTime_Hour());
                 all_time.setTime_Minute(db_date.getTime_Minute());
-                all_time.setSoundVibration(db_date.isPopup_Activate());
-                all_time.setHeadUp(db_date.isHeadUp());
-                all_time.setPopup_Activate(db_date.isPopup_Activate());
+                all_time.setAlarm_Method(db_date.getAlarm_Method());
 
                 all_times.add(all_time);
             }

@@ -19,29 +19,19 @@ public class DB_Date {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean SoundVibration;         //알림
-    private boolean HeadUp;                 //노티피케이션
-    private boolean Popup_Activate;         //팝업알림 활성화 유무
-
-    public boolean isSoundVibration() {
-        return SoundVibration;
-    }
-
-    public void setSoundVibration(boolean soundVibration) {
-        SoundVibration = soundVibration;
-    }
-
-    public boolean isHeadUp() {
-        return HeadUp;
-    }
-
-    public void setHeadUp(boolean headUp) {
-        HeadUp = headUp;
-    }
+    private int Alarm_Method;                //알림 방식
 
     private int Date_Year;
     private int Date_Month;
     private int Date_Day;
+
+    public int getAlarm_Method() {
+        return Alarm_Method;
+    }
+
+    public void setAlarm_Method(int alarm_Method) {
+        Alarm_Method = alarm_Method;
+    }
 
     public int getId() {
         return id;
@@ -105,14 +95,6 @@ public class DB_Date {
 
     public void setTime_Minute(int time_Minute) {
         Time_Minute = time_Minute;
-    }
-
-    public boolean isPopup_Activate() {
-        return Popup_Activate;
-    }
-
-    public void setPopup_Activate(boolean popup_Activate) {
-        Popup_Activate = popup_Activate;
     }
 
     public int getDate_Year() {

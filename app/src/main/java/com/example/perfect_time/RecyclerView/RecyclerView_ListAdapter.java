@@ -46,6 +46,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
     private ArrayList<RecyclerView_ListItem> listItems;
 
 
+    int icon_img;
+
     public RecyclerView_ListAdapter(ArrayList<RecyclerView_ListItem>listItems){
         this.listItems = listItems;
     }
@@ -101,7 +103,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    int Time_h_12;
     @RequiresApi(api = Build.VERSION_CODES.P)
     private void ActivateView(ActivateListView holder, int position){
         RecyclerView_ListItem getItem = listItems.get(position);
@@ -131,14 +132,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
-        if(getItem.isSoundVibration()) holder.ImageView_SoundVibration.setVisibility(View.VISIBLE);
-        else holder.ImageView_SoundVibration.setVisibility(View.GONE);
-
-        if(getItem.isHeadUp()) holder.ImageView_HeadUp.setVisibility(View.VISIBLE);
-        else holder.ImageView_HeadUp.setVisibility(View.GONE);
-
-        if(getItem.isPopupActivate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
-        else holder.ImageView_popup.setVisibility(View.GONE);
+        switch (getItem.getAlarm_Method()){
+            case 0: icon_img = R.drawable.alarm_none; break;
+            case 1: icon_img = R.drawable.notifications_icon; break;
+            case 2: icon_img = R.drawable.head_up; break;
+            case 3: icon_img = R.drawable.alarm_icon;
+        }
+        holder.ImageView_icon.setImageResource(icon_img);
 
         holder.RelativeLayout_BackGround.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -354,8 +354,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
     Calendar calendar;
     int h, m;
-//    int Day_y, Day_m, Day_d;
-
     private void DisabledView(DisabledListView holder, int position){
 
         calendar = Calendar.getInstance();
@@ -397,15 +395,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
-        if(getItem.isSoundVibration()) holder.ImageView_SoundVibration.setVisibility(View.VISIBLE);
-        else holder.ImageView_SoundVibration.setVisibility(View.GONE);
-
-        if(getItem.isHeadUp()) holder.ImageView_HeadUp.setVisibility(View.VISIBLE);
-        else holder.ImageView_HeadUp.setVisibility(View.GONE);
-
-        if(getItem.isPopupActivate()) holder.ImageView_popup.setVisibility(View.VISIBLE);
-        else holder.ImageView_popup.setVisibility(View.GONE);
-
+        switch (getItem.getAlarm_Method()){
+            case 0: icon_img = R.drawable.alarm_none; break;
+            case 1: icon_img = R.drawable.notifications_icon; break;
+            case 2: icon_img = R.drawable.head_up; break;
+            case 3: icon_img = R.drawable.alarm_icon;
+        }
+        holder.ImageView_icon.setImageResource(icon_img);
 
     }
 
@@ -423,9 +419,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView TextView_Time;//시간 시 : 분
         TextView TextView_Time_AmPm;// (오전, 오후) 구분
 
-        ImageView ImageView_SoundVibration;//소리알림 아이콘
-        ImageView ImageView_HeadUp;//진동알림 아이콘
-        ImageView ImageView_popup;//팝업창 알림 아이콘
+        ImageView ImageView_icon;//알림방식 아이콘
+
 
         public ActivateListView(@NonNull View itemView) {
             super(itemView);
@@ -444,9 +439,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             TextView_Time = itemView.findViewById(R.id.TextView_Time);
             TextView_Time_AmPm = itemView.findViewById(R.id.TextView_Time_AmPm);
 
-            ImageView_SoundVibration = itemView.findViewById(R.id.ImageView_sound);
-            ImageView_HeadUp = itemView.findViewById(R.id.ImageView_vibration);
-            ImageView_popup = itemView.findViewById(R.id.ImageView_popup);
+            ImageView_icon = itemView.findViewById(R.id.ImageView_icon);
 
         }
     }
@@ -464,9 +457,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView TextView_Time;//시간 시 : 분
         TextView TextView_Time_AmPm;// (오전, 오후) 구분
 
-        ImageView ImageView_SoundVibration;//소리알림 아이콘
-        ImageView ImageView_HeadUp;//진동알림 아이콘
-        ImageView ImageView_popup;//팝업창 알림 아이콘
+        ImageView ImageView_icon;//알림방식 아이콘
 
         public DisabledListView(@NonNull View itemView) {
             super(itemView);
@@ -483,9 +474,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             TextView_Time = itemView.findViewById(R.id.TextView_Time);
             TextView_Time_AmPm = itemView.findViewById(R.id.TextView_Time_AmPm);
 
-            ImageView_SoundVibration = itemView.findViewById(R.id.ImageView_sound);
-            ImageView_HeadUp = itemView.findViewById(R.id.ImageView_vibration);
-            ImageView_popup = itemView.findViewById(R.id.ImageView_popup);
+            ImageView_icon = itemView.findViewById(R.id.ImageView_icon);
+
 
         }
     }

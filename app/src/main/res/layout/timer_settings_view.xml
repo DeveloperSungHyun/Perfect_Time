@@ -214,38 +214,14 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="25dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp" />
-
-                        <ImageView
-                            android:id="@+id/ImageView_line1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/background_style3"/>
-                    </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -253,7 +229,35 @@
                         android:orientation="vertical"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/ImageView_None"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/alarm_none"
+                            android:gravity="center"
+                            android:background="@drawable/background_style2"
+                            android:padding="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="무음"
+                            android:textSize="12dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
                             android:id="@+id/ImageView_Notifications"
@@ -268,7 +272,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="알림"
+                            android:text="간단알림"
                             android:textSize="12dp"/>
 
                     </LinearLayout>
@@ -277,24 +281,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/ImageView_HeadUp"
+                            android:id="@+id/ImageView_Notifications_HeadUp"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:src="@drawable/head_up"
                             android:gravity="center"
                             android:background="@drawable/background_style2"
-                            android:padding="7dp"/>
+                            android:padding="5dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="헤드업 알림"
+                            android:text="헤드업알림"
                             android:textSize="12dp"/>
 
                     </LinearLayout>
@@ -303,29 +308,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:layout_weight="1">
 
                         <ImageView
-                            android:id="@+id/ImageView_PopupUp"
+                            android:id="@+id/ImageView_Alarm"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/popup_icon"
+                            android:src="@drawable/alarm_icon"
                             android:gravity="center"
                             android:background="@drawable/background_style2"
-                            android:padding="7dp"/>
+                            android:padding="5dp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="팝업창"
+                            android:text="알람"
                             android:textSize="12dp"/>
 
                     </LinearLayout>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -11,35 +11,15 @@ public class SettingValue {
     private static int Time_Hour;                  //시간 시
     private static int Time_Minute;                //시간 분
 
-    private static boolean SoundVibration;         //알림
-    private static boolean HeadUp;                 //노티피케이션
-    private static boolean Popup_Activate;         //팝업알림 활성화 유무
-    private static boolean AutoDisplay_On;
+    private static int Alarm_Method;                //알림 방식
 
-    public static boolean isSoundVibration() {
-        return SoundVibration;
+    public static int getAlarm_Method() {
+        return Alarm_Method;
     }
 
-    public static void setSoundVibration(boolean soundVibration) {
-        SoundVibration = soundVibration;
+    public static void setAlarm_Method(int alarm_Method) {
+        Alarm_Method = alarm_Method;
     }
-
-    public static boolean isHeadUp() {
-        return HeadUp;
-    }
-
-    public static void setHeadUp(boolean headUp) {
-        HeadUp = headUp;
-    }
-
-    public static boolean isAutoDisplay_On() {
-        return AutoDisplay_On;
-    }
-
-    public static void setAutoDisplay_On(boolean autoDisplay_On) {
-        AutoDisplay_On = autoDisplay_On;
-    }
-
 
     public boolean isTimer_Activate() {
         return Timer_Activate;
@@ -89,12 +69,5 @@ public class SettingValue {
         Time_Minute = time_Minute;
     }
 
-    public boolean isPopup_Activate() {
-        return Popup_Activate;
-    }
-
-    public void setPopup_Activate(boolean popup_Activate) {
-        Popup_Activate = popup_Activate;
-    }
 
 }

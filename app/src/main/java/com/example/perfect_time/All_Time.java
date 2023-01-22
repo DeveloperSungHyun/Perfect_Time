@@ -11,25 +11,14 @@ public class All_Time {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private boolean SoundVibration;         //알림
-    private boolean HeadUp;                 //노티피케이션
-    private boolean Popup_Activate;         //팝업알림 활성화 유무
-    private boolean AutoDisplay_On;
+    private int Alarm_Method;                //알림 방식
 
-    public boolean isSoundVibration() {
-        return SoundVibration;
+    public int getAlarm_Method() {
+        return Alarm_Method;
     }
 
-    public void setSoundVibration(boolean soundVibration) {
-        SoundVibration = soundVibration;
-    }
-
-    public boolean isHeadUp() {
-        return HeadUp;
-    }
-
-    public void setHeadUp(boolean headUp) {
-        HeadUp = headUp;
+    public void setAlarm_Method(int alarm_Method) {
+        Alarm_Method = alarm_Method;
     }
 
     public void setTime_Hour(int time_Hour) {
@@ -42,14 +31,6 @@ public class All_Time {
 
     public void setTime_Minute(int time_Minute) {
         Time_Minute = time_Minute;
-    }
-
-    public boolean isAutoDisplay_On() {
-        return AutoDisplay_On;
-    }
-
-    public void setAutoDisplay_On(boolean autoDisplay_On) {
-        AutoDisplay_On = autoDisplay_On;
     }
 
     public boolean isTimer_Activate() {
@@ -88,12 +69,5 @@ public class All_Time {
         return Time_Hour;
     }
 
-    public boolean isPopup_Activate() {
-        return Popup_Activate;
-    }
-
-    public void setPopup_Activate(boolean popup_Activate) {
-        Popup_Activate = popup_Activate;
-    }
 
 }

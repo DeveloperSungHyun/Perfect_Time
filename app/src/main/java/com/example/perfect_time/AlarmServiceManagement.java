@@ -59,9 +59,6 @@ public class AlarmServiceManagement {
                 intent.putExtra("Memo", everyDay.getMemo());
                 intent.putExtra("Important", everyDay.isImportant());
 
-                intent.putExtra("SoundVibration", everyDay.isSoundVibration());
-                intent.putExtra("HeadUp", everyDay.isHeadUp());
-                intent.putExtra("Popup_Activate", everyDay.isPopup_Activate());
 
                 intent.putExtra("Resetting", true);
 
@@ -98,10 +95,6 @@ public class AlarmServiceManagement {
                 intent.putExtra("Important", db_week.isImportant());
                 intent.putExtra("Week", db_week.getDayOfTheWeek());
 
-                intent.putExtra("SoundVibration", db_week.isSoundVibration());
-                intent.putExtra("HeadUp", db_week.isHeadUp());
-                intent.putExtra("Popup_Activate", db_week.isPopup_Activate());
-
                 intent.putExtra("Resetting", true);
 
                 Calendar calendar = Calendar.getInstance();
@@ -137,10 +130,6 @@ public class AlarmServiceManagement {
                             intent.putExtra("Name", db_date.getName());
                             intent.putExtra("Memo", db_date.getMemo());
                             intent.putExtra("Important", db_date.isImportant());
-
-                            intent.putExtra("SoundVibration", db_date.isSoundVibration());
-                            intent.putExtra("HeadUp", db_date.isHeadUp());
-                            intent.putExtra("Popup_Activate", db_date.isPopup_Activate());
 
                             intent.putExtra("Resetting", false);
 
@@ -183,10 +172,6 @@ public class AlarmServiceManagement {
                     intent.putExtra("Memo", everyDay.getMemo());
                     intent.putExtra("Important", everyDay.isImportant());
 
-                    intent.putExtra("SoundVibration", everyDay.isSoundVibration());
-                    intent.putExtra("HeadUp", everyDay.isHeadUp());
-                    intent.putExtra("Popup_Activate", everyDay.isPopup_Activate());
-
                     intent.putExtra("Resetting", true);
 
                     Calendar calendar = Calendar.getInstance();
@@ -223,10 +208,6 @@ public class AlarmServiceManagement {
                     intent.putExtra("Memo", db_week.getMemo());
                     intent.putExtra("Important", db_week.isImportant());
                     intent.putExtra("Week", db_week.getDayOfTheWeek());
-
-                    intent.putExtra("SoundVibration", db_week.isSoundVibration());
-                    intent.putExtra("HeadUp", db_week.isHeadUp());
-                    intent.putExtra("Popup_Activate", db_week.isPopup_Activate());
 
                     intent.putExtra("Resetting", true);
 
@@ -270,11 +251,6 @@ public class AlarmServiceManagement {
                                 intent.putExtra("Name", db_date.getName());
                                 intent.putExtra("Memo", db_date.getMemo());
                                 intent.putExtra("Important", db_date.isImportant());
-
-                                intent.putExtra("SoundVibration", db_date.isSoundVibration());
-                                intent.putExtra("HeadUp", db_date.isHeadUp());
-                                intent.putExtra("Popup_Activate", db_date.isPopup_Activate());
-
 
                                 intent.putExtra("Resetting", true);
 

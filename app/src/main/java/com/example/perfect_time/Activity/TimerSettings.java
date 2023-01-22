@@ -77,8 +77,7 @@ public class TimerSettings extends Activity {
 
     Switch Switch_Important;//중요알림표시
 
-    ImageView ImageView_Notifications, ImageView_HeadUp, ImageView_PopupUp;
-    ImageView ImageView_line1;
+    ImageView ImageView_None, ImageView_Notifications, ImageView_Notifications_HeadUp, ImageView_Alarm;
 
     TextView TextView_SaveButton;
     TextView TextView_No_SaveButton;
@@ -105,10 +104,10 @@ public class TimerSettings extends Activity {
 
         Switch_Important = findViewById(R.id.Switch_Important);
 
+        ImageView_None = findViewById(R.id.ImageView_None);
         ImageView_Notifications = findViewById(R.id.ImageView_Notifications);
-        ImageView_line1 = findViewById(R.id.ImageView_line1);
-        ImageView_HeadUp = findViewById(R.id.ImageView_HeadUp);
-        ImageView_PopupUp = findViewById(R.id.ImageView_PopupUp);
+        ImageView_Notifications_HeadUp = findViewById(R.id.ImageView_Notifications_HeadUp);
+        ImageView_Alarm = findViewById(R.id.ImageView_Alarm);
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
         TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
@@ -148,14 +147,29 @@ public class TimerSettings extends Activity {
     }
 
     void AlarmCh(){
-        if(settingValue.isSoundVibration()) ImageView_Notifications.setBackgroundResource(R.drawable.background_style2_1);
-        else ImageView_Notifications.setBackgroundResource(R.drawable.background_style2);
+        ImageView_None.setBackgroundResource(R.drawable.background_style2);
+        ImageView_Notifications.setBackgroundResource(R.drawable.background_style2);
+        ImageView_Notifications_HeadUp.setBackgroundResource(R.drawable.background_style2);
+        ImageView_Alarm.setBackgroundResource(R.drawable.background_style2);
+        switch (settingValue.getAlarm_Method()){
+            case 0:{
+                ImageView_None.setBackgroundResource(R.drawable.background_style2_1);
+                break;
+            }
+            case 1:{
+                ImageView_Notifications.setBackgroundResource(R.drawable.background_style2_1);
+                break;
+            }
+            case 2:{
+                ImageView_Notifications_HeadUp.setBackgroundResource(R.drawable.background_style2_1);
+                break;
+            }
+            case 3:{
+                ImageView_Alarm.setBackgroundResource(R.drawable.background_style2_1);
+                break;
+            }
+        }
 
-        if(settingValue.isHeadUp()) ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2_1);
-        else ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2);
-
-        if(settingValue.isPopup_Activate()) ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2_1);
-        else ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2);
     }
 
 
@@ -350,39 +364,38 @@ public class TimerSettings extends Activity {
 
         settingValue.setImportant(false);
 
-        settingValue.setSoundVibration(true);
-        settingValue.setHeadUp(true);
-        settingValue.setPopup_Activate(false);
-        settingValue.setAutoDisplay_On(true);
+        settingValue.setAlarm_Method(1);
 
         InterfaceSetting();
     }
 
     private void ValueSetting(){
 
-        ImageView_Notifications.setOnClickListener(new View.OnClickListener() {//1
+        ImageView_None.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingValue.setSoundVibration(!settingValue.isSoundVibration());
+                settingValue.setAlarm_Method(0);
                 AlarmCh();
             }
         });
-
-        ImageView_HeadUp.setOnClickListener(new View.OnClickListener() {//2
+        ImageView_Notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingValue.setHeadUp(!settingValue.isHeadUp());
-                if(settingValue.isHeadUp()){
-                    settingValue.setPopup_Activate(false);
-                }
+                settingValue.setAlarm_Method(1);
                 AlarmCh();
             }
         });
-
-
-        ImageView_PopupUp.setOnClickListener(new View.OnClickListener() {//3
+        ImageView_Notifications_HeadUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                settingValue.setAlarm_Method(2);
+                AlarmCh();
+            }
+        });
+        ImageView_Alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
                 sharedPreferences = getApplicationContext().getSharedPreferences("PopupCheck", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 if(sharedPreferences.getBoolean("PopupCheck", false) == false){
@@ -422,15 +435,14 @@ public class TimerSettings extends Activity {
                 }
 
                 if(sharedPreferences.getBoolean("PopupCheck", false) == true){
-                    settingValue.setPopup_Activate(!settingValue.isPopup_Activate());
-                    if(settingValue.isPopup_Activate()){
-                        settingValue.setHeadUp(false);
-                    }
+                    settingValue.setAlarm_Method(3);
                     AlarmCh();
                 }
-            }
 
+            }
         });
+
+
 
         Switch_Important.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -539,9 +551,7 @@ class EveryDay_TimerSettings{
 
         settingValue.setImportant(db_everyDay.isImportant());
 
-        settingValue.setSoundVibration(db_everyDay.isSoundVibration());
-        settingValue.setHeadUp(db_everyDay.isHeadUp());
-        settingValue.setPopup_Activate(db_everyDay.isPopup_Activate());
+        settingValue.setAlarm_Method(db_everyDay.getAlarm_Method());
 
     }
 
@@ -641,9 +651,7 @@ class DayOfTheWeek_TimerSettings{
 
         settingValue.setImportant(db_week.isImportant());
 
-        settingValue.setSoundVibration(db_week.isPopup_Activate());
-        settingValue.setHeadUp(db_week.isPopup_Activate());
-        settingValue.setPopup_Activate(db_week.isPopup_Activate());
+        settingValue.setAlarm_Method(db_week.getAlarm_Method());
 
     }
 
@@ -727,9 +735,7 @@ class Date_TimerSettings{
 
         settingValue.setImportant(db_date.isImportant());
 
-        settingValue.setSoundVibration(db_date.isPopup_Activate());
-        settingValue.setHeadUp(db_date.isPopup_Activate());
-        settingValue.setPopup_Activate(db_date.isPopup_Activate());
+        settingValue.setAlarm_Method(db_date.getAlarm_Method());
     }
 
     protected void TimerUpData(){

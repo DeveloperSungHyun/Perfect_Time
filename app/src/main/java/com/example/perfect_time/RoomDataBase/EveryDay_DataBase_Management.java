@@ -60,9 +60,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(settingValue.getTime_Hour());
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
-        db_everyDay.setSoundVibration(settingValue.isSoundVibration());
-        db_everyDay.setHeadUp(settingValue.isHeadUp());
-        db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
+        db_everyDay.setAlarm_Method(settingValue.getAlarm_Method());
 
         everyDao.setInsert(db_everyDay);
     }
@@ -82,9 +80,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(settingValue.getTime_Hour());
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
-        db_everyDay.setSoundVibration(settingValue.isSoundVibration());
-        db_everyDay.setHeadUp(settingValue.isHeadUp());
-        db_everyDay.setPopup_Activate(settingValue.isPopup_Activate());
+        db_everyDay.setAlarm_Method(settingValue.getAlarm_Method());
         everyDao.setUpdate(db_everyDay);
     }
 
@@ -105,10 +101,7 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Hour(getData().get(DataId).getTime_Hour());
         db_everyDay.setTime_Minute(getData().get(DataId).getTime_Minute());
 
-        db_everyDay.setSoundVibration(getData().get(DataId).isSoundVibration());
-        db_everyDay.setHeadUp(getData().get(DataId).isHeadUp());
-        db_everyDay.setPopup_Activate(getData().get(DataId).isPopup_Activate());
-        db_everyDay.setPopup_Activate(getData().get(DataId).isPopup_Activate());
+        db_everyDay.setAlarm_Method(getData().get(DataId).getAlarm_Method());
 
         everyDao.setUpdate(db_everyDay);
     }
