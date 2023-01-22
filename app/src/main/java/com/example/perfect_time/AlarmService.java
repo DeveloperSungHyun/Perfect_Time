@@ -86,36 +86,19 @@ public class AlarmService extends BroadcastReceiver {
             IMPORTANCE_LOW.setLightColor(0xFFFF0000);
             notificationManager.createNotificationChannel(IMPORTANCE_LOW);
 
+        }
+        builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
 
-
-//            NotificationChannel None_Vibration_HeadUp = new NotificationChannel("None_Vibration_HeadUp", "무진동 헤드업알림", NotificationManager.IMPORTANCE_HIGH);//체널 생성
-//            None_Vibration_HeadUp.setBypassDnd(true);
-//            None_Vibration_HeadUp.enableVibration(false);//진동 사용안함
-//            None_Vibration_HeadUp.setVibrationPattern(new long[]{ 100, 0, 0 });//진동 사용안함
-//            //timer.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
-//            None_Vibration_HeadUp.setLightColor(0xFFFF0000);
-//            notificationManager.createNotificationChannel(None_Vibration_HeadUp);
-//
-//            NotificationChannel Vibration = new NotificationChannel("Vibration", "진동알림", NotificationManager.IMPORTANCE_DEFAULT);//체널 생성
-//            Vibration.setBypassDnd(true);
-//            Vibration.setShowBadge(true);
-//            Vibration.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
-//            Vibration.setLightColor(0xFFFFFFFF);
-//            //timer.setLockscreenVisibility();
-//            notificationManager.createNotificationChannel(Vibration);
-//
-//            NotificationChannel None = new NotificationChannel("None", "무음알림", NotificationManager.IMPORTANCE_LOW);//체널 생성
-//            None.setBypassDnd(true);
-//            None.setShowBadge(true);
-//            None.setDescription("설정한 알람이 시간이 되면 알림을 울립니다.");
-//            None.setLightColor(0xFFFFFFFF);
-//            //timer.setLockscreenVisibility();
-//            notificationManager.createNotificationChannel(None);
-
+        if(intent.getBooleanExtra("SoundVibration", true)){
+            builder = new NotificationCompat.Builder(context, "IMPORTANCE_DEFAULT");
         }
 
+        if(intent.getBooleanExtra("HeadUp", true)){
+            builder = new NotificationCompat.Builder(context, "IMPORTANCE_HIGH");
+        }
 
-        if(intent.getBooleanArrayExtra("alarm")[1] == true){//화면 켜짐
+        if(intent.getBooleanExtra("Popup_Activate", true)){
+            builder = new NotificationCompat.Builder(context, "IMPORTANCE_DEFAULT");
 
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             sCpuWakeLock = pm.newWakeLock(
@@ -128,37 +111,6 @@ public class AlarmService extends BroadcastReceiver {
             if (sCpuWakeLock != null) {
                 sCpuWakeLock.release();
                 sCpuWakeLock = null;
-            }
-
-        }
-
-        switch (intent.getIntExtra("century", 0)){
-            case 0:{//중유도 하
-                builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
-                break;
-            }
-            case 1:{//중유도 중
-                builder = new NotificationCompat.Builder(context, "IMPORTANCE_DEFAULT");
-                break;
-            }
-            case 3:{
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(Settings.canDrawOverlays(context)){
-                        Intent intent1 = new Intent(context, PopupView.class);
-
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        intent1.putExtra("name", intent.getStringExtra("Name"));
-                        intent1.putExtra("memo", intent.getStringExtra("Memo"));
-                        context.startActivity(intent1);
-                    }
-                }
-            }
-            case 2:{//중유도 상
-                builder = new NotificationCompat.Builder(context, "IMPORTANCE_HIGH");
-                break;
             }
         }
 
@@ -188,5 +140,6 @@ public class AlarmService extends BroadcastReceiver {
         int id=(int)System.currentTimeMillis();
 
         notificationManager.notify(id,builder.build());
+
     }
 }

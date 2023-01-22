@@ -16,16 +16,16 @@ public class RecyclerView_ListItem {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private int century;
-    private boolean popup_Activate;         //팝업알림 활성화 유무
-    private boolean autoDisplay_On;
+    private boolean SoundVibration;         //알림
+    private boolean HeadUp;                 //노티피케이션
+    private boolean PopupActivate;         //팝업알림 활성화 유무
 
     private int FragmentType;//프레그먼트 타입(매일, 요일, 날짜)
 
 
     public RecyclerView_ListItem
             (int viewType, boolean timer_Activate, boolean important, String name, String memo, int time_Hour,
-             int time_Minute,int Century, boolean Popup_Activate, boolean AutoDisplay_On, String dayText, int dayTextColor, int fragment_Type) {
+             int time_Minute,boolean sound_vibration, boolean head_up, boolean popup_activate, String dayText, int dayTextColor, int fragment_Type) {
 
         ViewType = viewType;
         Timer_Activate = timer_Activate;
@@ -37,34 +37,34 @@ public class RecyclerView_ListItem {
         Time_Hour = time_Hour;
         Time_Minute = time_Minute;
 
-        century = Century;
-        popup_Activate = Popup_Activate;
-        autoDisplay_On = AutoDisplay_On;
+        SoundVibration = sound_vibration;
+        HeadUp = head_up;
+        PopupActivate = popup_activate;
         FragmentType = fragment_Type;
     }
 
-    public boolean isPopup_Activate() {
-        return popup_Activate;
+    public boolean isSoundVibration() {
+        return SoundVibration;
     }
 
-    public void setPopup_Activate(boolean popup_Activate) {
-        this.popup_Activate = popup_Activate;
+    public void setSoundVibration(boolean soundVibration) {
+        SoundVibration = soundVibration;
     }
 
-    public boolean isAutoDisplay_On() {
-        return autoDisplay_On;
+    public boolean isHeadUp() {
+        return HeadUp;
     }
 
-    public void setAutoDisplay_On(boolean autoDisplay_On) {
-        this.autoDisplay_On = autoDisplay_On;
+    public void setHeadUp(boolean headUp) {
+        HeadUp = headUp;
     }
 
-    public int getCentury() {
-        return century;
+    public boolean isPopupActivate() {
+        return PopupActivate;
     }
 
-    public void setCentury(int century) {
-        this.century = century;
+    public void setPopupActivate(boolean popupActivate) {
+        PopupActivate = popupActivate;
     }
 
     public int getViewType() {

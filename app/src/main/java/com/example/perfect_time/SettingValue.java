@@ -11,17 +11,25 @@ public class SettingValue {
     private static int Time_Hour;                  //시간 시
     private static int Time_Minute;                //시간 분
 
-    private static int century;//알림 강도
+    private static boolean SoundVibration;         //알림
+    private static boolean HeadUp;                 //노티피케이션
     private static boolean Popup_Activate;         //팝업알림 활성화 유무
     private static boolean AutoDisplay_On;
 
-
-    public static int getCentury() {
-        return century;
+    public static boolean isSoundVibration() {
+        return SoundVibration;
     }
 
-    public static void setCentury(int century) {
-        SettingValue.century = century;
+    public static void setSoundVibration(boolean soundVibration) {
+        SoundVibration = soundVibration;
+    }
+
+    public static boolean isHeadUp() {
+        return HeadUp;
+    }
+
+    public static void setHeadUp(boolean headUp) {
+        HeadUp = headUp;
     }
 
     public static boolean isAutoDisplay_On() {

@@ -78,8 +78,7 @@ public class TimerSettings extends Activity {
     Switch Switch_Important;//중요알림표시
 
     ImageView ImageView_Notifications, ImageView_HeadUp, ImageView_PopupUp;
-    ImageView ImageView_line1, ImageView_line2;
-    Switch Switch_AutoDisplay_On;//자동화면 켜짐
+    ImageView ImageView_line1;
 
     TextView TextView_SaveButton;
     TextView TextView_No_SaveButton;
@@ -109,10 +108,7 @@ public class TimerSettings extends Activity {
         ImageView_Notifications = findViewById(R.id.ImageView_Notifications);
         ImageView_line1 = findViewById(R.id.ImageView_line1);
         ImageView_HeadUp = findViewById(R.id.ImageView_HeadUp);
-        ImageView_line2 = findViewById(R.id.ImageView_line2);
         ImageView_PopupUp = findViewById(R.id.ImageView_PopupUp);
-
-        Switch_AutoDisplay_On = findViewById(R.id.Switch_AutoDisplay_On);
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
         TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
@@ -146,34 +142,22 @@ public class TimerSettings extends Activity {
 
         Switch_Important.setChecked(settingValue.isImportant());
 
-        Century_Setting(settingValue.getCentury());
-        //SeekBar_century.setProgress(settingValue.getCentury());
-        Switch_AutoDisplay_On.setChecked(settingValue.isAutoDisplay_On());
+        AlarmCh();
 
 
     }
 
-    void Century_Setting(int value){
-        ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2);
-        ImageView_line2.setBackgroundResource(R.drawable.background_style3);
-        ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2);
-        ImageView_line1.setBackgroundResource(R.drawable.background_style3);
-        ImageView_Notifications.setBackgroundResource(R.drawable.background_style2);
+    void AlarmCh(){
+        if(settingValue.isSoundVibration()) ImageView_Notifications.setBackgroundResource(R.drawable.background_style2_1);
+        else ImageView_Notifications.setBackgroundResource(R.drawable.background_style2);
 
-        switch (value){
-            case 3:{
-                ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2_1);
-            }
-            ImageView_line2.setBackgroundResource(R.drawable.background_style3_1);
-            case 2:{
-                ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2_1);
-            }
-            ImageView_line1.setBackgroundResource(R.drawable.background_style3_1);
-            case 1:{
-                ImageView_Notifications.setBackgroundResource(R.drawable.background_style2_1);
-            }
-        }
+        if(settingValue.isHeadUp()) ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2_1);
+        else ImageView_HeadUp.setBackgroundResource(R.drawable.background_style2);
+
+        if(settingValue.isPopup_Activate()) ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2_1);
+        else ImageView_PopupUp.setBackgroundResource(R.drawable.background_style2);
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -366,7 +350,8 @@ public class TimerSettings extends Activity {
 
         settingValue.setImportant(false);
 
-        settingValue.setCentury(2);
+        settingValue.setSoundVibration(true);
+        settingValue.setHeadUp(true);
         settingValue.setPopup_Activate(false);
         settingValue.setAutoDisplay_On(true);
 
@@ -378,24 +363,19 @@ public class TimerSettings extends Activity {
         ImageView_Notifications.setOnClickListener(new View.OnClickListener() {//1
             @Override
             public void onClick(View v) {
-                if(settingValue.getCentury() == 1){
-                    settingValue.setCentury(0);
-                }else {
-                    settingValue.setCentury(1);
-                }
-                Century_Setting(settingValue.getCentury());
+                settingValue.setSoundVibration(!settingValue.isSoundVibration());
+                AlarmCh();
             }
         });
 
         ImageView_HeadUp.setOnClickListener(new View.OnClickListener() {//2
             @Override
             public void onClick(View v) {
-                if(settingValue.getCentury() == 2){
-                    settingValue.setCentury(1);
-                }else {
-                    settingValue.setCentury(2);
+                settingValue.setHeadUp(!settingValue.isHeadUp());
+                if(settingValue.isHeadUp()){
+                    settingValue.setPopup_Activate(false);
                 }
-                Century_Setting(settingValue.getCentury());
+                AlarmCh();
             }
         });
 
@@ -425,14 +405,7 @@ public class TimerSettings extends Activity {
                                 startActivityForResult(intent, 0);
                             }
 
-                            if(sharedPreferences.getBoolean("PopupCheck", false) == true){
-                                if(settingValue.getCentury() == 3){
-                                    settingValue.setCentury(2);
-                                }else {
-                                    settingValue.setCentury(3);
-                                }
-                                Century_Setting(settingValue.getCentury());
-                            }
+
 
                         }
                     });
@@ -449,12 +422,11 @@ public class TimerSettings extends Activity {
                 }
 
                 if(sharedPreferences.getBoolean("PopupCheck", false) == true){
-                    if(settingValue.getCentury() == 3){
-                        settingValue.setCentury(2);
-                    }else {
-                        settingValue.setCentury(3);
+                    settingValue.setPopup_Activate(!settingValue.isPopup_Activate());
+                    if(settingValue.isPopup_Activate()){
+                        settingValue.setHeadUp(false);
                     }
-                    Century_Setting(settingValue.getCentury());
+                    AlarmCh();
                 }
             }
 
@@ -474,14 +446,6 @@ public class TimerSettings extends Activity {
             }
         });
 
-
-        Switch_AutoDisplay_On.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {//화면켜짐
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                settingValue.setAutoDisplay_On(isChecked);
-            }
-        });
 
     }
 
@@ -575,9 +539,9 @@ class EveryDay_TimerSettings{
 
         settingValue.setImportant(db_everyDay.isImportant());
 
-        settingValue.setCentury(db_everyDay.getCentury());
+        settingValue.setSoundVibration(db_everyDay.isSoundVibration());
+        settingValue.setHeadUp(db_everyDay.isHeadUp());
         settingValue.setPopup_Activate(db_everyDay.isPopup_Activate());
-        settingValue.setAutoDisplay_On(db_everyDay.isAutoDisplay_On());
 
     }
 
@@ -677,9 +641,9 @@ class DayOfTheWeek_TimerSettings{
 
         settingValue.setImportant(db_week.isImportant());
 
-        settingValue.setCentury(db_week.getCentury());
+        settingValue.setSoundVibration(db_week.isPopup_Activate());
+        settingValue.setHeadUp(db_week.isPopup_Activate());
         settingValue.setPopup_Activate(db_week.isPopup_Activate());
-        settingValue.setAutoDisplay_On(db_week.isAutoDisplay_On());
 
     }
 
@@ -763,9 +727,9 @@ class Date_TimerSettings{
 
         settingValue.setImportant(db_date.isImportant());
 
-        settingValue.setCentury(db_date.getCentury());
+        settingValue.setSoundVibration(db_date.isPopup_Activate());
+        settingValue.setHeadUp(db_date.isPopup_Activate());
         settingValue.setPopup_Activate(db_date.isPopup_Activate());
-        settingValue.setAutoDisplay_On(db_date.isAutoDisplay_On());
     }
 
     protected void TimerUpData(){

@@ -19,24 +19,24 @@ public class DB_Date {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private int century;//알림 강도
+    private boolean SoundVibration;         //알림
+    private boolean HeadUp;                 //노티피케이션
     private boolean Popup_Activate;         //팝업알림 활성화 유무
-    private boolean AutoDisplay_On;
 
-    public int getCentury() {
-        return century;
+    public boolean isSoundVibration() {
+        return SoundVibration;
     }
 
-    public void setCentury(int century) {
-        this.century = century;
+    public void setSoundVibration(boolean soundVibration) {
+        SoundVibration = soundVibration;
     }
 
-    public boolean isAutoDisplay_On() {
-        return AutoDisplay_On;
+    public boolean isHeadUp() {
+        return HeadUp;
     }
 
-    public void setAutoDisplay_On(boolean autoDisplay_On) {
-        AutoDisplay_On = autoDisplay_On;
+    public void setHeadUp(boolean headUp) {
+        HeadUp = headUp;
     }
 
     private int Date_Year;

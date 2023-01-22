@@ -53,18 +53,15 @@ public class AlarmServiceManagement {
         for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()){
             if(everyDay.isTimer_Activate() && !(everyDay.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && everyDay.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
 
-                boolean alarm[] = new boolean[2];
-                alarm[0] = everyDay.isPopup_Activate();
-                alarm[1] = everyDay.isAutoDisplay_On();
-
                 intent = new Intent(context, AlarmService.class);
                 intent.putExtra("AlarmType", 0);
                 intent.putExtra("Name", everyDay.getName());
                 intent.putExtra("Memo", everyDay.getMemo());
                 intent.putExtra("Important", everyDay.isImportant());
-                intent.putExtra("century", everyDay.getCentury());
 
-                intent.putExtra("alarm", alarm);
+                intent.putExtra("SoundVibration", everyDay.isSoundVibration());
+                intent.putExtra("HeadUp", everyDay.isHeadUp());
+                intent.putExtra("Popup_Activate", everyDay.isPopup_Activate());
 
                 intent.putExtra("Resetting", true);
 
@@ -93,19 +90,17 @@ public class AlarmServiceManagement {
         for (DB_Week db_week : week_dataBase_management.getData()){
             if(db_week.isTimer_Activate() && !(db_week.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_week.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
 
-                boolean alarm[] = new boolean[2];
-                alarm[0] = db_week.isPopup_Activate();
-                alarm[1] = db_week.isAutoDisplay_On();
 
                 intent = new Intent(context, AlarmService.class);
                 intent.putExtra("AlarmType", 1);
                 intent.putExtra("Name", db_week.getName());
                 intent.putExtra("Memo", db_week.getMemo());
                 intent.putExtra("Important", db_week.isImportant());
-                intent.putExtra("century", db_week.getCentury());
                 intent.putExtra("Week", db_week.getDayOfTheWeek());
 
-                intent.putExtra("alarm", alarm);
+                intent.putExtra("SoundVibration", db_week.isSoundVibration());
+                intent.putExtra("HeadUp", db_week.isHeadUp());
+                intent.putExtra("Popup_Activate", db_week.isPopup_Activate());
 
                 intent.putExtra("Resetting", true);
 
@@ -137,18 +132,15 @@ public class AlarmServiceManagement {
                         if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
                             Log.d("미래", db_date.getName());
 
-                            boolean alarm[] = new boolean[2];
-                            alarm[0] = db_date.isPopup_Activate();
-                            alarm[1] = db_date.isAutoDisplay_On();
-
                             intent = new Intent(context, AlarmService.class);
                             intent.putExtra("AlarmType", 2);
                             intent.putExtra("Name", db_date.getName());
                             intent.putExtra("Memo", db_date.getMemo());
                             intent.putExtra("Important", db_date.isImportant());
-                            intent.putExtra("century", db_date.getCentury());
 
-                            intent.putExtra("alarm", alarm);
+                            intent.putExtra("SoundVibration", db_date.isSoundVibration());
+                            intent.putExtra("HeadUp", db_date.isHeadUp());
+                            intent.putExtra("Popup_Activate", db_date.isPopup_Activate());
 
                             intent.putExtra("Resetting", false);
 
@@ -184,18 +176,16 @@ public class AlarmServiceManagement {
         for (DB_EveryDay everyDay : everyDay_dataBase_management.getData()){
             if(everyDay.isTimer_Activate() && !(everyDay.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && everyDay.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
                 if(everyDay.getUniqueID() == UniqueID){
-                    boolean alarm[] = new boolean[2];
-                    alarm[0] = everyDay.isPopup_Activate();
-                    alarm[1] = everyDay.isAutoDisplay_On();
 
                     intent = new Intent(context, AlarmService.class);
                     intent.putExtra("AlarmType", 0);
                     intent.putExtra("Name", everyDay.getName());
                     intent.putExtra("Memo", everyDay.getMemo());
                     intent.putExtra("Important", everyDay.isImportant());
-                    intent.putExtra("century", everyDay.getCentury());
 
-                    intent.putExtra("alarm", alarm);
+                    intent.putExtra("SoundVibration", everyDay.isSoundVibration());
+                    intent.putExtra("HeadUp", everyDay.isHeadUp());
+                    intent.putExtra("Popup_Activate", everyDay.isPopup_Activate());
 
                     intent.putExtra("Resetting", true);
 
@@ -226,19 +216,17 @@ public class AlarmServiceManagement {
         for (DB_Week db_week : week_dataBase_management.getData()){
             if(db_week.isTimer_Activate() && !(db_week.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_week.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
                 if(db_week.getUniqueID() == UniqueID){
-                    boolean alarm[] = new boolean[2];
-                    alarm[0] = db_week.isPopup_Activate();
-                    alarm[1] = db_week.isAutoDisplay_On();
 
                     intent = new Intent(context, AlarmService.class);
                     intent.putExtra("AlarmType", 1);
                     intent.putExtra("Name", db_week.getName());
                     intent.putExtra("Memo", db_week.getMemo());
                     intent.putExtra("Important", db_week.isImportant());
-                    intent.putExtra("century", db_week.getCentury());
                     intent.putExtra("Week", db_week.getDayOfTheWeek());
 
-                    intent.putExtra("alarm", alarm);
+                    intent.putExtra("SoundVibration", db_week.isSoundVibration());
+                    intent.putExtra("HeadUp", db_week.isHeadUp());
+                    intent.putExtra("Popup_Activate", db_week.isPopup_Activate());
 
                     intent.putExtra("Resetting", true);
 
@@ -277,18 +265,16 @@ public class AlarmServiceManagement {
                             if(db_date.getUniqueID() == UniqueID){
                                 Log.d("미래", db_date.getName());
 
-                                boolean alarm[] = new boolean[2];
-                                alarm[0] = db_date.isPopup_Activate();
-                                alarm[1] = db_date.isAutoDisplay_On();
-
                                 intent = new Intent(context, AlarmService.class);
                                 intent.putExtra("AlarmType", 2);
                                 intent.putExtra("Name", db_date.getName());
                                 intent.putExtra("Memo", db_date.getMemo());
                                 intent.putExtra("Important", db_date.isImportant());
-                                intent.putExtra("century", db_date.getCentury());
 
-                                intent.putExtra("alarm", alarm);
+                                intent.putExtra("SoundVibration", db_date.isSoundVibration());
+                                intent.putExtra("HeadUp", db_date.isHeadUp());
+                                intent.putExtra("Popup_Activate", db_date.isPopup_Activate());
+
 
                                 intent.putExtra("Resetting", true);
 

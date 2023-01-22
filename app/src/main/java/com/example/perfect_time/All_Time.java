@@ -11,9 +11,26 @@ public class All_Time {
     private int Time_Hour;                  //시간 시
     private int Time_Minute;                //시간 분
 
-    private int century;
+    private boolean SoundVibration;         //알림
+    private boolean HeadUp;                 //노티피케이션
     private boolean Popup_Activate;         //팝업알림 활성화 유무
     private boolean AutoDisplay_On;
+
+    public boolean isSoundVibration() {
+        return SoundVibration;
+    }
+
+    public void setSoundVibration(boolean soundVibration) {
+        SoundVibration = soundVibration;
+    }
+
+    public boolean isHeadUp() {
+        return HeadUp;
+    }
+
+    public void setHeadUp(boolean headUp) {
+        HeadUp = headUp;
+    }
 
     public void setTime_Hour(int time_Hour) {
         Time_Hour = time_Hour;
@@ -69,14 +86,6 @@ public class All_Time {
 
     public int getTime_Hour() {
         return Time_Hour;
-    }
-
-    public int getCentury() {
-        return century;
-    }
-
-    public void setCentury(int century) {
-        this.century = century;
     }
 
     public boolean isPopup_Activate() {
