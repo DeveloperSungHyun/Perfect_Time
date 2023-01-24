@@ -20,9 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Perfect_Time">
         <service
-            android:name=".ForegroundService"
+            android:name=".ForeGround_Service"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".ForegroundService"
+            android:enabled="true"
+            android:exported="true" />
         <service
             android:name=".ForgroundService"
             android:enabled="true"
@@ -58,7 +62,7 @@
             android:screenOrientation="fullSensor"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.Alert" />
 
-        <receiver android:name=".AlarmService" />
+        <receiver android:name=".Service.AlarmService" />
         <receiver
             android:name=".BootReceiver"
             android:enabled="true"

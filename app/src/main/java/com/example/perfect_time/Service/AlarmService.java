@@ -1,6 +1,4 @@
-package com.example.perfect_time;
-
-import static androidx.core.content.ContextCompat.getSystemService;
+package com.example.perfect_time.Service;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -12,17 +10,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.PowerManager;
-import android.os.Trace;
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.perfect_time.Activity.PopupView;
-import com.example.perfect_time.Activity.TimerSettings;
+import com.example.perfect_time.MainActivity;
+import com.example.perfect_time.R;
 
 import java.util.Calendar;
 
@@ -43,21 +38,30 @@ public class AlarmService extends BroadcastReceiver {
             if(intent.getIntExtra("Week", 0) != calendar.get(Calendar.DAY_OF_WEEK) - 1) return;
         }
 
-        NotificationShow(context, intent);
 
-        if(intent.getBooleanExtra("Resetting", true) == true){//알림이 울리면 모든 알림을 다시 설정(안전을 위해)
-            if(intent.getIntExtra("AlarmType", 0) == 0){
-                Log.d("Every============", "Resetting");
-                alarmServiceManagement.SetUp_Alarm();
-            }else if(intent.getIntExtra("AlarmType", 1) == 1){
-                Log.d("Week============", "Resetting");
-                alarmServiceManagement.SetUp_Alarm();
-            }
+        if(intent.getIntExtra("AlarmType", 0) == 0){
+            Log.d("Every============", "Resetting");
+            NotificationShow(context, intent);
+
+            alarmServiceManagement.SetUp_Alarm();//알림 재 설정
+        }else if(intent.getIntExtra("AlarmType", 1) == 1){
+            Log.d("Week============", "Resetting");
+            NotificationShow(context, intent);
+
+            alarmServiceManagement.SetUp_Alarm();//알림 재 설정
+        }else if(intent.getIntExtra("AlarmType", 2) == 2){
+
         }
 
+//        Intent foreground_intent = new Intent(context, ForeGround_Service.class);
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+//            context.startForegroundService(foreground_intent);
+//        }else{
+//            context.startService(foreground_intent);
+//        }
+
         if(intent.getIntExtra("AlarmType", 0) == 3){
-            alarmServiceManagement.All_TimerSetting(true, false, false);
-            alarmServiceManagement.All_TimerSetting(false, true, false);
+            alarmServiceManagement.All_TimerSetting(true, true, true);
         }
 
     }

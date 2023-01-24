@@ -2,17 +2,7 @@ package com.example.perfect_time.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,20 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
-import com.example.perfect_time.AlarmServiceManagement;
+import com.example.perfect_time.Service.AlarmServiceManagement;
 import com.example.perfect_time.ListView_Adapter;
 import com.example.perfect_time.List_Item;
-import com.example.perfect_time.MainActivity;
 import com.example.perfect_time.R;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
-import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SystemDataSave;
 

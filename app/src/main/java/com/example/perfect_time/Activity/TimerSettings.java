@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.perfect_time.AlarmServiceManagement;
+import com.example.perfect_time.Service.AlarmServiceManagement;
 import com.example.perfect_time.DayOfTheWeek_Adapter;
 import com.example.perfect_time.DayOfTheWeek_Item;
 import com.example.perfect_time.FragmentActivity.FragmentType;

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +22,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.perfect_time.Activity.TimerSettings;
-import com.example.perfect_time.AlarmServiceManagement;
+import com.example.perfect_time.Service.AlarmServiceManagement;
 import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.ListView_Adapter;
 import com.example.perfect_time.List_Item;
@@ -31,7 +30,6 @@ import com.example.perfect_time.R;
 import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
-import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.Time24_to_12Hour;
 
 import java.util.ArrayList;

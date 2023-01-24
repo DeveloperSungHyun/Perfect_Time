@@ -1,4 +1,4 @@
-package com.example.perfect_time;
+package com.example.perfect_time.Service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -12,6 +12,8 @@ import com.example.perfect_time.RoomDataBase.DayOfTheWeek.DB_Week;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Everyday.DB_EveryDay;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
+import com.example.perfect_time.Service.AlarmService;
+import com.example.perfect_time.SystemDataSave;
 
 import java.util.Calendar;
 
