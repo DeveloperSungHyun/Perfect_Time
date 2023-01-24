@@ -1,5 +1,7 @@
 package com.example.perfect_time;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -33,6 +35,7 @@ public class AlarmService extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
         calendar = Calendar.getInstance();
 
@@ -61,6 +64,7 @@ public class AlarmService extends BroadcastReceiver {
 
     @SuppressLint("InvalidWakeLockTag")
     void NotificationShow(Context context, Intent intent){
+
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
