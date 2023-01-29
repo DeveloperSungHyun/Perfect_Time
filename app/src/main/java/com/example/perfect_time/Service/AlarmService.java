@@ -170,13 +170,6 @@ public class AlarmService extends BroadcastReceiver {
         int id=(int)System.currentTimeMillis();
 
         notificationManager.notify(id,builder.build());
-
-
-
-        Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-        MediaPlayer mPlayer = new MediaPlayer();         // 객체생성
-        mPlayer.start();
-
     }
 
 
