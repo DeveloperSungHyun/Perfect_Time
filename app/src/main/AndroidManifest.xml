@@ -57,6 +57,7 @@
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.Alert" />
 
         <receiver android:name=".Service.AlarmService" />
+        <receiver android:name=".Service.NotificationActionButton_1" />
         <receiver
             android:name=".BootReceiver"
             android:enabled="true"
