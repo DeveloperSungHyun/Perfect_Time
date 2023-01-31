@@ -333,110 +333,118 @@
 
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/LinearLayout_AlarmSettingView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="#D3D3D3"
+                            android:paddingTop="1dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/LinearLayout_AutoOffTimer_SettingsViewShow"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="15dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="자동꺼짐 시간"
+                                    android:textColor="#676767"
+                                    android:textSize="18dp" />
+
+                                <TextView
+                                    android:id="@+id/TextView_AutoOffTimer_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="1분"
+                                    android:textColor="#FF0000FF"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#D3D3D3"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="1dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="15dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/sound_icon"/>
+
+                                    <SeekBar
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:max="100"
+                                        android:min="1" />
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="15dp"
                     android:text="디바이스가 무음상태일때는 알림이 울리지 않습니다."
                     android:textSize="12dp"
-                    android:textColor="#FF4545"/>
+                    android:textColor="#FF4545"
+                    android:visibility="gone"/>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:layout_marginLeft="15dp"-->
-<!--                    android:layout_marginBottom="20dp">-->
-
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/ImageView_vibrationIcon"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:src="@drawable/notifications_icon"-->
-<!--                            android:layout_marginRight="10dp"/>-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="알림이 울립니다"-->
-<!--                            android:layout_toRightOf="@+id/ImageView_vibrationIcon"-->
-<!--                            android:layout_centerVertical="true"/>-->
-
-<!--                    </RelativeLayout>-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/ImageView_head_up"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:src="@drawable/head_up"-->
-<!--                            android:layout_marginRight="10dp"/>-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="해드업 알림이 울립니다."-->
-<!--                            android:layout_toRightOf="@+id/ImageView_head_up"-->
-<!--                            android:layout_centerVertical="true"/>-->
-
-<!--                    </RelativeLayout>-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="5dp">-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/ImageView_SoundIcon"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:src="@drawable/popup_icon"-->
-<!--                            android:layout_marginRight="10dp"/>-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="팝업창이 뜹니다."-->
-<!--                            android:layout_toRightOf="@+id/ImageView_SoundIcon"-->
-<!--                            android:layout_centerVertical="true"/>-->
-
-<!--                    </RelativeLayout>-->
-
-<!--                </LinearLayout>-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="15dp"-->
-<!--                    android:layout_marginBottom="10dp"-->
-<!--                    android:text="알림 강도에 대한 설명"-->
-<!--                    android:textColor="#838383"-->
-<!--                    android:textSize="15dp" />-->
 
             </LinearLayout>
-
-
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:background="@drawable/background_style1"-->
-<!--                android:orientation="vertical"-->
-<!--                android:paddingLeft="10dp"-->
-<!--                android:paddingRight="10dp">-->
-
-
-<!--            </LinearLayout>-->
-
 
         </LinearLayout>
 

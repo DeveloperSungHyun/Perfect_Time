@@ -53,6 +53,11 @@ public class ForeGround_Service extends Service {
         Log.d("서비스", "실행중...");
 
 
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
         Intent snoozeIntent = new Intent(this, NotificationActionButton_1.class);
 //        snoozeIntent.setAction(ACTION_SNOOZE);
 //        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
@@ -75,8 +80,8 @@ public class ForeGround_Service extends Service {
             builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
             builder.setSmallIcon(R.drawable.calendar_icon);
             builder.setTicker("알람 간단한 설명");
-            builder.setContentTitle("test");
-            builder.setContentText("Content");
+            builder.setContentTitle(intent.getStringExtra("Name"));
+            builder.setContentText(intent.getStringExtra("Memo"));
             builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             builder.setPriority(0);
             builder.setDefaults(Notification.DEFAULT_VIBRATE);
@@ -84,10 +89,8 @@ public class ForeGround_Service extends Service {
 
             startForeground(1, builder.build());
         }
-    }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+
         try {
             Uri myUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM); // initialize Uri here
             this.mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);//STREAM_ALARM

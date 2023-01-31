@@ -65,6 +65,8 @@ public class TimerSettings extends Activity {
     GridView GridView_WeekSelectView;
     TextView TextView_Date;
 
+    LinearLayout LinearLayout_AlarmSettingView;
+
     LinearLayout LinearLayout_Time_Setting;
     TextView TextView_Time_H;
     TextView TextView_Time_M;
@@ -78,6 +80,9 @@ public class TimerSettings extends Activity {
     Switch Switch_Important;//중요알림표시
 
     ImageView ImageView_None, ImageView_Notifications, ImageView_Notifications_HeadUp, ImageView_Alarm;
+
+    LinearLayout LinearLayout_AutoOffTimer_SettingsViewShow;
+    TextView TextView_AutoOffTimer_num;
 
     TextView TextView_SaveButton;
     TextView TextView_No_SaveButton;
@@ -108,6 +113,11 @@ public class TimerSettings extends Activity {
         ImageView_Notifications = findViewById(R.id.ImageView_Notifications);
         ImageView_Notifications_HeadUp = findViewById(R.id.ImageView_Notifications_HeadUp);
         ImageView_Alarm = findViewById(R.id.ImageView_Alarm);
+
+        LinearLayout_AlarmSettingView = findViewById(R.id.LinearLayout_AlarmSettingView);
+
+        LinearLayout_AutoOffTimer_SettingsViewShow = findViewById(R.id.LinearLayout_AutoOffTimer_SettingsViewShow);
+        TextView_AutoOffTimer_num = findViewById(R.id.TextView_AutoOffTimer_num);
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
         TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
@@ -151,6 +161,7 @@ public class TimerSettings extends Activity {
         ImageView_Notifications.setBackgroundResource(R.drawable.background_style2);
         ImageView_Notifications_HeadUp.setBackgroundResource(R.drawable.background_style2);
         ImageView_Alarm.setBackgroundResource(R.drawable.background_style2);
+        LinearLayout_AlarmSettingView.setVisibility(View.GONE);
         switch (settingValue.getAlarm_Method()){
             case 0:{
                 ImageView_None.setBackgroundResource(R.drawable.background_style2_1);
@@ -166,6 +177,7 @@ public class TimerSettings extends Activity {
             }
             case 3:{
                 ImageView_Alarm.setBackgroundResource(R.drawable.background_style2_1);
+                LinearLayout_AlarmSettingView.setVisibility(View.VISIBLE);
                 break;
             }
         }
@@ -313,6 +325,40 @@ public class TimerSettings extends Activity {
 
             }
         });
+
+
+        LinearLayout_AutoOffTimer_SettingsViewShow.setOnClickListener(new View.OnClickListener() {//자동꺼짐시간 설정창 Show
+            @Override
+            public void onClick(View v) {
+                String timer_number[] = {"30초", "1분", "2분", "3분", "5분"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(TimerSettings.this);
+
+                builder.setSingleChoiceItems(timer_number, 1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
 
         TextView_No_SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
