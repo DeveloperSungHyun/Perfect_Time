@@ -58,6 +58,8 @@ public class ForeGround_Service extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        AudioManager mAudioManager = (AudioManager)getSystemService(AUDIO_SERVICE);//선언 후
+
         Intent snoozeIntent = new Intent(this, NotificationActionButton_1.class);
 //        snoozeIntent.setAction(ACTION_SNOOZE);
 //        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
@@ -90,6 +92,9 @@ public class ForeGround_Service extends Service {
             startForeground(1, builder.build());
         }
 
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                (int)(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * intent.getIntExtra("SoundValue", 70) / 100),
+                AudioManager.FLAG_PLAY_SOUND);
 
         try {
             Uri myUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM); // initialize Uri here
@@ -102,8 +107,8 @@ public class ForeGround_Service extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        thread = new Thread("timer"){
+        int timer_number[] = {30, 60, 120, 180, 300};
+        thread = new Thread("timer"){//RunTime_Second SoundValue
             @Override
             public void run() {
                 super.run();
@@ -117,7 +122,7 @@ public class ForeGround_Service extends Service {
                     Log.d("thread", "run ============");
 
                     timer_count++;
-                    if(timer_count >= 30){//설정한 시간이 지나면 서비스 종료
+                    if(timer_count >= timer_number[intent.getIntExtra("RunTime_Second", 2)]){//설정한 시간이 지나면 서비스 종료
                         alarm_play = false;
                         stopForeground(true);
                         stopService(intent);

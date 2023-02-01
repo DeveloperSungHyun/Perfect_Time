@@ -61,6 +61,8 @@ public class AlarmServiceManagement {
                 intent.putExtra("Memo", everyDay.getMemo());
                 intent.putExtra("Important", everyDay.isImportant());
                 intent.putExtra("AlarmMethod", everyDay.getAlarm_Method());
+                intent.putExtra("AutoTimerOff", everyDay.getAutoTimerOff());
+                intent.putExtra("SoundValue", everyDay.getSound_value());
 
                 intent.putExtra("Resetting", true);
 
@@ -97,6 +99,8 @@ public class AlarmServiceManagement {
                 intent.putExtra("Important", db_week.isImportant());
                 intent.putExtra("Week", db_week.getDayOfTheWeek());
                 intent.putExtra("AlarmMethod", db_week.getAlarm_Method());
+                intent.putExtra("AutoTimerOff", db_week.getAutoTimerOff());
+                intent.putExtra("SoundValue", db_week.getSound_value());
 
                 intent.putExtra("Resetting", true);
 
@@ -134,6 +138,8 @@ public class AlarmServiceManagement {
                             intent.putExtra("Memo", db_date.getMemo());
                             intent.putExtra("Important", db_date.isImportant());
                             intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
+                            intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
+                            intent.putExtra("SoundValue", db_date.getSound_value());
 
                             intent.putExtra("Resetting", false);
 
@@ -176,6 +182,8 @@ public class AlarmServiceManagement {
                     intent.putExtra("Memo", everyDay.getMemo());
                     intent.putExtra("Important", everyDay.isImportant());
                     intent.putExtra("AlarmMethod", everyDay.getAlarm_Method());
+                    intent.putExtra("AutoTimerOff", everyDay.getAutoTimerOff());
+                    intent.putExtra("SoundValue", everyDay.getSound_value());
 
                     intent.putExtra("Resetting", true);
 
@@ -214,6 +222,8 @@ public class AlarmServiceManagement {
                     intent.putExtra("Important", db_week.isImportant());
                     intent.putExtra("Week", db_week.getDayOfTheWeek());
                     intent.putExtra("AlarmMethod", db_week.getAlarm_Method());
+                    intent.putExtra("AutoTimerOff", db_week.getAutoTimerOff());
+                    intent.putExtra("SoundValue", db_week.getSound_value());
 
                     intent.putExtra("Resetting", true);
 
@@ -258,6 +268,8 @@ public class AlarmServiceManagement {
                                 intent.putExtra("Memo", db_date.getMemo());
                                 intent.putExtra("Important", db_date.isImportant());
                                 intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
+                                intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
+                                intent.putExtra("SoundValue", db_date.getSound_value());
 
                                 intent.putExtra("Resetting", true);
 

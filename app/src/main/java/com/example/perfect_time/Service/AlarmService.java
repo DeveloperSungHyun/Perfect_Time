@@ -44,7 +44,7 @@ public class AlarmService extends BroadcastReceiver {
             case 0:{//매일 울리믄 알림
 
                 if(intent.getIntExtra("AlarmMethod", 0) == 3){//포그라운드 알람으로 설정되어 있다면
-                    ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), 10, true, true, 70);
+                    ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), intent.getIntExtra("AutoTimerOff", 2), intent.getIntExtra("SoundValue", 70));
                 }else{
                     NotificationShow(context, intent);
                 }
@@ -56,7 +56,7 @@ public class AlarmService extends BroadcastReceiver {
 
                 if(intent.getIntExtra("Week", 0) == calendar.get(Calendar.DAY_OF_WEEK) - 1) {//오늘 요일과 동일하다면
                     if(intent.getIntExtra("AlarmMethod", 0) == 3){//포그라운드 알람으로 설정되어 있다면
-                        ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), 10, true, true, 70);
+                        ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), intent.getIntExtra("AutoTimerOff", 2), intent.getIntExtra("SoundValue", 70));
                     }else{
                         NotificationShow(context, intent);
                     }
@@ -67,7 +67,7 @@ public class AlarmService extends BroadcastReceiver {
             }
             case 2:{//특정 날짜에만 울리는 알림
                 if(intent.getIntExtra("AlarmMethod", 0) == 3){//포그라운드 알람으로 설정되어 있다면
-                    ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), 10, true, true, 70);
+                    ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), intent.getIntExtra("AutoTimerOff", 2), intent.getIntExtra("SoundValue", 70));
                 }else{
                     NotificationShow(context, intent);
                 }
@@ -173,14 +173,12 @@ public class AlarmService extends BroadcastReceiver {
     }
 
 
-    private void ForGroundStart(Context context, String Name, String Memo, int RunTime_Second, boolean Sound, boolean Vibration, int SoundValue){
+    private void ForGroundStart(Context context, String Name, String Memo, int RunTime_Second, int SoundValue){
         Log.d("===================", "======================");
         Intent foreground_intent = new Intent(context, ForeGround_Service.class);
         foreground_intent.putExtra("Name", Name);
         foreground_intent.putExtra("Memo", Memo);
         foreground_intent.putExtra("RunTime_Second", RunTime_Second);
-        foreground_intent.putExtra("Sound", Sound);
-        foreground_intent.putExtra("Vibration", Vibration);
         foreground_intent.putExtra("SoundValue", SoundValue);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){

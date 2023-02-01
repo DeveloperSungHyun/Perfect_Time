@@ -156,6 +156,9 @@ public class TimerSettings extends Activity {
 
         Switch_Important.setChecked(settingValue.isImportant());
 
+        TextView_AutoOffTimer_num.setText(timer_number[settingValue.getAutoTimerOff()]);
+        SeekBar_SoundValue.setProgress(settingValue.getSound_value());
+
         AlarmCh();
 
 
@@ -626,6 +629,9 @@ class EveryDay_TimerSettings{
 
         settingValue.setAlarm_Method(db_everyDay.getAlarm_Method());
 
+        settingValue.setAutoTimerOff(db_everyDay.getAutoTimerOff());
+        settingValue.setSound_value(db_everyDay.getSound_value());
+
     }
 
     protected void TimerUpData(){
@@ -726,6 +732,9 @@ class DayOfTheWeek_TimerSettings{
 
         settingValue.setAlarm_Method(db_week.getAlarm_Method());
 
+        settingValue.setAutoTimerOff(db_week.getAutoTimerOff());
+        settingValue.setSound_value(db_week.getSound_value());
+
     }
 
     protected void TimerUpData(){
@@ -809,6 +818,9 @@ class Date_TimerSettings{
         settingValue.setImportant(db_date.isImportant());
 
         settingValue.setAlarm_Method(db_date.getAlarm_Method());
+
+        settingValue.setAutoTimerOff(db_date.getAutoTimerOff());
+        settingValue.setSound_value(db_date.getSound_value());
     }
 
     protected void TimerUpData(){
