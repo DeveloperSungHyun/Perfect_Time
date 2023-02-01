@@ -62,6 +62,9 @@ public class EveryDay_DataBase_Management {
 
         db_everyDay.setAlarm_Method(settingValue.getAlarm_Method());
 
+        db_everyDay.setAutoTimerOff(settingValue.getAutoTimerOff());
+        db_everyDay.setSound_value(settingValue.getSound_value());
+
         everyDao.setInsert(db_everyDay);
     }
 
@@ -81,6 +84,11 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Minute(settingValue.getTime_Minute());
 
         db_everyDay.setAlarm_Method(settingValue.getAlarm_Method());
+
+        db_everyDay.setAutoTimerOff(settingValue.getAutoTimerOff());
+        db_everyDay.setSound_value(settingValue.getSound_value());
+
+
         everyDao.setUpdate(db_everyDay);
     }
 
@@ -102,6 +110,9 @@ public class EveryDay_DataBase_Management {
         db_everyDay.setTime_Minute(getData().get(DataId).getTime_Minute());
 
         db_everyDay.setAlarm_Method(getData().get(DataId).getAlarm_Method());
+
+        db_everyDay.setAutoTimerOff(getData().get(DataId).getAutoTimerOff());
+        db_everyDay.setSound_value(getData().get(DataId).getSound_value());
 
         everyDao.setUpdate(db_everyDay);
     }

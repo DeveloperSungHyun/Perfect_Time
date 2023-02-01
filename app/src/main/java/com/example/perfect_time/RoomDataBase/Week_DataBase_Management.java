@@ -67,6 +67,9 @@ public class Week_DataBase_Management {
 
         db_week.setAlarm_Method(settingValue.getAlarm_Method());
 
+        db_week.setAutoTimerOff(settingValue.getAutoTimerOff());
+        db_week.setSound_value(settingValue.getSound_value());
+
         weekDao.setInsert(db_week);
     }
 
@@ -104,6 +107,9 @@ public class Week_DataBase_Management {
 
         db_week.setAlarm_Method(settingValue.getAlarm_Method());
 
+        db_week.setAutoTimerOff(settingValue.getAutoTimerOff());
+        db_week.setSound_value(settingValue.getSound_value());
+
         weekDao.setUpdate(db_week);
     }
 
@@ -127,6 +133,9 @@ public class Week_DataBase_Management {
         db_week.setTime_Minute(getData().get(DataId).getTime_Minute());
 
         db_week.setAlarm_Method(getData().get(DataId).getAlarm_Method());
+
+        db_week.setAutoTimerOff(getData().get(DataId).getAutoTimerOff());
+        db_week.setSound_value(getData().get(DataId).getSound_value());
 
         weekDao.setUpdate(db_week);
     }

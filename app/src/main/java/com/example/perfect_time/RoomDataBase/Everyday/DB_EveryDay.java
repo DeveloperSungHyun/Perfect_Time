@@ -29,6 +29,25 @@ public class DB_EveryDay {
 
     private int Alarm_Method;               //알림 방식
 
+    private int AutoTimerOff;               //자동 꺼짐시간
+    private int Sound_value;                //볼륨
+
+    public int getAutoTimerOff() {
+        return AutoTimerOff;
+    }
+
+    public void setAutoTimerOff(int autoTimerOff) {
+        AutoTimerOff = autoTimerOff;
+    }
+
+    public int getSound_value() {
+        return Sound_value;
+    }
+
+    public void setSound_value(int sound_value) {
+        Sound_value = sound_value;
+    }
+
     public int getAlarm_Method() {
         return Alarm_Method;
     }

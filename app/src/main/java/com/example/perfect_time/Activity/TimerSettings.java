@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -83,10 +84,12 @@ public class TimerSettings extends Activity {
 
     LinearLayout LinearLayout_AutoOffTimer_SettingsViewShow;
     TextView TextView_AutoOffTimer_num;
+    SeekBar SeekBar_SoundValue;
 
     TextView TextView_SaveButton;
     TextView TextView_No_SaveButton;
 
+    String timer_number[] = {"30초", "1분", "2분", "3분", "5분"};
 
     private int TimerSettingType;
     private int TimerViewType;
@@ -118,6 +121,8 @@ public class TimerSettings extends Activity {
 
         LinearLayout_AutoOffTimer_SettingsViewShow = findViewById(R.id.LinearLayout_AutoOffTimer_SettingsViewShow);
         TextView_AutoOffTimer_num = findViewById(R.id.TextView_AutoOffTimer_num);
+
+        SeekBar_SoundValue = findViewById(R.id.SeekBar_SoundValue);
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
         TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
@@ -326,18 +331,18 @@ public class TimerSettings extends Activity {
             }
         });
 
-
+        TextView_AutoOffTimer_num.setText(timer_number[settingValue.getAutoTimerOff()]);
         LinearLayout_AutoOffTimer_SettingsViewShow.setOnClickListener(new View.OnClickListener() {//자동꺼짐시간 설정창 Show
             @Override
             public void onClick(View v) {
-                String timer_number[] = {"30초", "1분", "2분", "3분", "5분"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(TimerSettings.this);
 
-                builder.setSingleChoiceItems(timer_number, 1, new DialogInterface.OnClickListener() {
+                builder.setSingleChoiceItems(timer_number, settingValue.getAutoTimerOff(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        settingValue.setAutoTimerOff(which);
+                        TextView_AutoOffTimer_num.setText(timer_number[which]);
                     }
                 });
 
@@ -356,6 +361,25 @@ public class TimerSettings extends Activity {
                 });
 
                 builder.show();
+            }
+        });
+
+
+        SeekBar_SoundValue.setProgress(settingValue.getSound_value());
+        SeekBar_SoundValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                settingValue.setSound_value(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
@@ -411,6 +435,9 @@ public class TimerSettings extends Activity {
         settingValue.setImportant(false);
 
         settingValue.setAlarm_Method(1);
+
+        settingValue.setAutoTimerOff(1);
+        settingValue.setSound_value(70);
 
         InterfaceSetting();
     }

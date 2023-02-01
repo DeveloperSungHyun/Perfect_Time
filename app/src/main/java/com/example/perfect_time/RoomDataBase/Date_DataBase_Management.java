@@ -72,6 +72,9 @@ public class Date_DataBase_Management {
 
         db_date.setAlarm_Method(settingValue.getAlarm_Method());
 
+        db_date.setAutoTimerOff(settingValue.getAutoTimerOff());
+        db_date.setSound_value(settingValue.getSound_value());
+
         dateDao.setInsert(db_date);
     }
 
@@ -100,6 +103,9 @@ public class Date_DataBase_Management {
 
         db_date.setAlarm_Method(settingValue.getAlarm_Method());
 
+        db_date.setAutoTimerOff(settingValue.getAutoTimerOff());
+        db_date.setSound_value(settingValue.getSound_value());
+
         dateDao.setUpdate(db_date);
     }
 
@@ -125,6 +131,9 @@ public class Date_DataBase_Management {
         db_date.setTime_Minute(getData().get(DataId).getTime_Minute());
 
         db_date.setAlarm_Method(getData().get(DataId).getAlarm_Method());
+
+        db_date.setAutoTimerOff(getData().get(DataId).getAutoTimerOff());
+        db_date.setSound_value(getData().get(DataId).getSound_value());
 
         dateDao.setUpdate(db_date);
     }
