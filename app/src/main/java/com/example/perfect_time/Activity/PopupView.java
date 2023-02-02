@@ -15,12 +15,13 @@ import androidx.annotation.Nullable;
 
 import com.example.perfect_time.MainActivity;
 import com.example.perfect_time.R;
+import com.example.perfect_time.Service.ForeGround_Service;
 
 public class PopupView extends Activity {
 
     Intent intent;
 
-    TextView TextView_Name, TextView_Memo;
+    TextView TextView_Name_popup, TextView_Memo_popup;
     TextView check_ok, delete;
 
     @Override
@@ -37,36 +38,62 @@ public class PopupView extends Activity {
 
         setContentView(R.layout.popup_view);
 
-        TextView_Name = findViewById(R.id.TextView_Name);
-        TextView_Memo = findViewById(R.id.TextView_Memo);
+        TextView_Name_popup = findViewById(R.id.TextView_Name_popup);
+        TextView_Memo_popup = findViewById(R.id.TextView_Memo_popup);
 
         check_ok = findViewById(R.id.check_ok);
         delete = findViewById(R.id.delete);
 
         intent = getIntent();
 
-        TextView_Name.setText(intent.getStringExtra("name"));
-        TextView_Memo.setText(intent.getStringExtra("memo"));
+        TextView_Name_popup.setText(intent.getStringExtra("name"));
+        TextView_Memo_popup.setText(intent.getStringExtra("memo"));
 
         check_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                ForeGroundService_Off();
 
-                finish();
             }
         });
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.cancelAll();
-
+                ForeGroundService_Off();
                 finish();
             }
         });
 
+
+        getWindow().addFlags(
+
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+
+        //WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+
+    }
+
+    void ForeGroundService_Off(){
+        Intent foreground_intent = new Intent(getApplicationContext(), ForeGround_Service.class);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+//            context.startForegroundService(foreground_intent);
+            getApplicationContext().stopService(foreground_intent);
+        }else{
+//            context.startService(foreground_intent);
+            getApplicationContext().stopService(foreground_intent);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        ForeGroundService_Off();
+
+        Log.d("popup", "==================");
     }
 }

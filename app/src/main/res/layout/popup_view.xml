@@ -14,15 +14,15 @@
         android:background="#FFFFFFFF">
 
         <TextView
-            android:id="@+id/TextView_Name"
-            android:layout_width="wrap_content"
+            android:id="@+id/TextView_Name_popup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="알람이름"
             android:textSize="20dp"
             android:textColor="#FF000000" />
 
         <TextView
-            android:id="@+id/TextView_Memo"
+            android:id="@+id/TextView_Memo_popup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="알람 내용"/>
@@ -33,24 +33,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="right" >
+        android:layout_marginTop="15dp">
 
         <TextView
             android:id="@+id/check_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="열기"
-            android:textSize="15dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="알람끄기"
+            android:textSize="16dp"
+            android:textColor="#FF000000"
             />
 
         <TextView
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="닫기"
-            android:textSize="15dp"
-            android:textColor="#FFFF0000"
-            android:layout_marginLeft="10dp"/>
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="창 닫기"
+            android:textSize="16dp"
+            android:textColor="#FFFF0000" />
 
     </LinearLayout>
 
