@@ -150,7 +150,14 @@ public class TimerSettings extends Activity {
         EditText_Memo.setText(settingValue.getMemo());
 
         TextView_Time_H.setText(Integer.toString(time24_to_12Hour.getTime_Hour()));
-        TextView_Time_M.setText(Integer.toString(settingValue.getTime_Minute()));
+
+        String Time_M_str = null;
+        if(settingValue.getTime_Minute() < 10){
+            Time_M_str = "0" + Integer.toString(settingValue.getTime_Minute());
+        }else{
+            Time_M_str = Integer.toString(settingValue.getTime_Minute());
+        }
+        TextView_Time_M.setText(Time_M_str);
 
         TextView_AmPm.setText(time24_to_12Hour.getAmPm());
 

@@ -127,7 +127,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Memo.setText(getItem.getMemo());
 
         Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
-        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
+        String time_M_str = null;
+        if(getItem.getTime_Minute() < 10){
+            time_M_str = "0" + getItem.getTime_Minute();
+        }else{
+            time_M_str = "" + getItem.getTime_Minute();
+        }
+        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + time_M_str);
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
         switch (getItem.getAlarm_Method()){
@@ -390,7 +396,13 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Memo.setText(getItem.getMemo());
 
         Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
-        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + getItem.getTime_Minute());
+        String time_M_str = null;
+        if(getItem.getTime_Minute() < 10){
+            time_M_str = "0" + getItem.getTime_Minute();
+        }else{
+            time_M_str = "" + getItem.getTime_Minute();
+        }
+        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + time_M_str);
         holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
 
         switch (getItem.getAlarm_Method()){

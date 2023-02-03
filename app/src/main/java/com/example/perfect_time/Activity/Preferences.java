@@ -161,14 +161,21 @@ public class Preferences extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AlertDialog.Builder dlg = new AlertDialog.Builder(Preferences.this);
-                        dlg.setTitle("계발에서 개발까지"); //제목
-                        dlg.setMessage("안녕하세요 계발에서 개발까지 입니다."); // 메시지
+
+                        String text = null;
+                        switch (which){
+                            case 0: text = "매일 "; break;
+                            case 1: text = "요일별 "; break;
+                            case 2: text = "날짜별 "; break;
+                            case 3: text = "";
+                        }
+                        dlg.setTitle(text + "알람을 모두 삭제합니다."); //제목
+                        dlg.setMessage("삭제하신 알람은 복구가 불가능합니다"); // 메시지
 //                버튼 클릭시 동작
-                        dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                        dlg.setPositiveButton("삭제",new DialogInterface.OnClickListener(){
                             AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
                             public void onClick(DialogInterface dialog, int a) {
                                 //토스트 메시지
-                                Toast.makeText(Preferences.this,"확인을 눌르셨습니다.",Toast.LENGTH_SHORT).show();
 
                                 switch (which){
                                     case 0:{
