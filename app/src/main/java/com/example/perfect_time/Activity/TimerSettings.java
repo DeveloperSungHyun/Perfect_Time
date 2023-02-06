@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -89,12 +90,16 @@ public class TimerSettings extends Activity {
     TextView TextView_SaveButton;
     TextView TextView_No_SaveButton;
 
+    LinearLayout LinearLayout_SelectorSw;//선택 버튼 날짜, 매달
+    TextView TextView_AllDate_Day, TextView_Date_Day;//
+
     String timer_number[] = {"30초", "1분", "2분", "3분", "5분"};
 
     private int TimerSettingType;
     private int TimerViewType;
 
     int nowTime_H, nowTime_M;
+
 
     private void IdMapping(){
         GridView_WeekSelectView = findViewById(R.id.GridView_WeekSelectView);
@@ -126,6 +131,10 @@ public class TimerSettings extends Activity {
 
         TextView_SaveButton = findViewById(R.id.TextView_SaveButton);
         TextView_No_SaveButton = findViewById(R.id.TextView_No_SaveButton);
+
+        LinearLayout_SelectorSw = findViewById(R.id.LinearLayout_SelectorSw);
+        TextView_AllDate_Day = findViewById(R.id.TextView_AllDate_Day);
+        TextView_Date_Day = findViewById(R.id.TextView_Date_Day);
     }
 
     @Override
@@ -751,6 +760,7 @@ class DayOfTheWeek_TimerSettings{
 
 class Date_TimerSettings{
     Context context;
+    DayView_Adapter dayView_adapter;
     TimerSettings ActivityView;
 
     SettingValue settingValue;
@@ -760,6 +770,8 @@ class Date_TimerSettings{
     int TimerSettingType;
 
     int y, m, d;//날짜
+    boolean SelectorSw = false;// f = 낭짜, t = 매달
+    int day;
     public Date_TimerSettings(Context context, int TimerSettingType){
         this.context = context;
         this.TimerSettingType = TimerSettingType;
@@ -772,12 +784,18 @@ class Date_TimerSettings{
 
         settingValue = new SettingValue();
 
+        dayView_adapter = new DayView_Adapter();
+
+
         date_dataBase_management = new Date_DataBase_Management(context);
+
+        day = ActivityView.calendar.get(Calendar.DATE);
 
         y = ActivityView.calendar.get(Calendar.YEAR);
         m = ActivityView.calendar.get(Calendar.MONDAY) + 1;
         d = ActivityView.calendar.get(Calendar.DATE);
 
+        Selector_Logic();
         ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
 
 //        if(TimerSettingType == 1){
@@ -786,10 +804,22 @@ class Date_TimerSettings{
 //            EditTimer();
 //        }
 
+        ActivityView.LinearLayout_SelectorSw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectorSw = !SelectorSw;
+                Selector_Logic();
+            }
+        });
+
         ActivityView.TextView_Date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDate();
+                if(SelectorSw == false) {
+                    showDate();
+                }else{
+                    showDay();
+                }
                 Log.d("===================", "test");
             }
         });
@@ -798,7 +828,7 @@ class Date_TimerSettings{
 
     protected void NewAddTimer(){
 
-        date_dataBase_management.setInsert(settingValue, y, m, d);
+        date_dataBase_management.setInsert(settingValue, y, m, d, SelectorSw, day);
     }
 
     protected void getTimer(){
@@ -814,10 +844,18 @@ class Date_TimerSettings{
         settingValue.setTime_Hour(db_date.getTime_Hour());
         settingValue.setTime_Minute(db_date.getTime_Minute());
 
-        y = db_date.getDate_Year();
-        m = db_date.getDate_Month();
-        d = db_date.getDate_Day();
-        ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
+        SelectorSw = db_date.isSelector();
+        day = db_date.getDay();
+        Selector_Logic();
+
+        if(SelectorSw == false) {
+            y = db_date.getDate_Year();
+            m = db_date.getDate_Month();
+            d = db_date.getDate_Day();
+            ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
+        }else{
+            ActivityView.TextView_Date.setText("매달 " + day + "일");
+        }
 
         settingValue.setName(db_date.getName());
         settingValue.setMemo(db_date.getMemo());
@@ -831,7 +869,7 @@ class Date_TimerSettings{
     }
 
     protected void TimerUpData(){
-        date_dataBase_management.setUpData(ActivityView.getIntent().getIntExtra("ItemID", 0), settingValue, y, m, d);
+        date_dataBase_management.setUpData(ActivityView.getIntent().getIntExtra("ItemID", 0), settingValue, y, m, d, SelectorSw, day);
     }
 
 
@@ -849,6 +887,58 @@ class Date_TimerSettings{
 
 
         datePickerDialog.show();
+    }
+
+    protected void showDay(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, androidx.appcompat.R.style.Base_Theme_AppCompat_Dialog_Alert);
+
+        View view = LayoutInflater.from(context).inflate(R.layout.day_dialog, (LinearLayout)ActivityView.findViewById(R.id.layoutDialog));
+
+        builder.setView(view);
+        GridView GridView_Day = view.findViewById(R.id.GridView_Day);
+        TextView TextView_last = view.findViewById(R.id.TextView_last);
+
+        for (int i = 1; i <= 31; i++) {
+            dayView_adapter.addItem(i);
+        }
+        GridView_Day.setAdapter(dayView_adapter);
+
+        GridView_Day.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                day = position + 1;
+                ActivityView.TextView_Date.setText("매달 " + day + "일");
+            }
+        });
+
+        TextView_last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                day = 0;
+                ActivityView.TextView_Date.setText("매달 " + day + "일");
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        if(alertDialog.getWindow() != null){
+            alertDialog.dismiss();
+        }
+
+        alertDialog.show();
+
+    }
+
+    protected void Selector_Logic(){
+        if(SelectorSw){
+            ActivityView.TextView_AllDate_Day.setTextColor(0xFF000000);
+            ActivityView.TextView_Date_Day.setTextColor(0x4D000000);
+            ActivityView.TextView_Date.setText("매달 " + day + "일");
+
+        }else{
+            ActivityView.TextView_AllDate_Day.setTextColor(0x4D000000);
+            ActivityView.TextView_Date_Day.setTextColor(0xFF000000);
+            ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
+        }
     }
 
 

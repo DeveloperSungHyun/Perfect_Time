@@ -24,6 +24,26 @@ public class DB_Date {
     private int AutoTimerOff;               //자동 꺼짐시간
     private int Sound_value;                //볼륨
 
+    private boolean Selector;
+
+    private int day;
+
+    public boolean isSelector() {
+        return Selector;
+    }
+
+    public void setSelector(boolean selector) {
+        Selector = selector;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
     public int getAutoTimerOff() {
         return AutoTimerOff;
     }

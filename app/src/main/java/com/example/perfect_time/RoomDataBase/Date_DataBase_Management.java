@@ -41,7 +41,7 @@ public class Date_DataBase_Management {
 
     }
 
-    public void setInsert(SettingValue settingValue, int y, int m, int d){
+    public void setInsert(SettingValue settingValue, int y, int m, int d, boolean SelectorSw, int day){
 
         int ID_Number = 12;
 
@@ -60,6 +60,10 @@ public class Date_DataBase_Management {
         db_date.setTimer_Activate(settingValue.isTimer_Activate());
         db_date.setImportant(settingValue.isImportant());
 
+        db_date.setDay(day);
+
+        db_date.setSelector(SelectorSw);
+
         db_date.setDate_Year(y);
         db_date.setDate_Month(m);
         db_date.setDate_Day(d);
@@ -75,6 +79,8 @@ public class Date_DataBase_Management {
         db_date.setAutoTimerOff(settingValue.getAutoTimerOff());
         db_date.setSound_value(settingValue.getSound_value());
 
+
+
         dateDao.setInsert(db_date);
     }
 
@@ -83,11 +89,15 @@ public class Date_DataBase_Management {
         dateDao.setDelete(db_date);
     }
 
-    public void setUpData(int UpDataItem_ID, SettingValue settingValue, int y, int m, int d){
+    public void setUpData(int UpDataItem_ID, SettingValue settingValue, int y, int m, int d, boolean SelectorSw, int day){
         db_date.setId(dateDao.getDate().get(UpDataItem_ID).getId());
 
         db_date.setTimer_Activate(settingValue.isTimer_Activate());
         db_date.setImportant(settingValue.isImportant());
+
+        db_date.setDay(day);
+
+        db_date.setSelector(SelectorSw);
 
         db_date.setDate_Year(y);
         db_date.setDate_Month(m);
@@ -117,6 +127,10 @@ public class Date_DataBase_Management {
         db_date.setTimer_Activate(Activate);
 
         db_date.setImportant(getData().get(DataId).isImportant());
+
+        db_date.setDay(getData().get(DataId).getDay());
+
+        db_date.setSelector(getData().get(DataId).isSelector());
 
         db_date.setDate_Year(getData().get(DataId).getDate_Year());
         db_date.setDate_Month(getData().get(DataId).getDate_Month());

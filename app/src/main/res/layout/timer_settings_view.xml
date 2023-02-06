@@ -96,22 +96,75 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="15dp">
-                    <TextView
-                        android:id="@+id/TextView_Date"
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="날짜"
-                        android:textColor="#FF000000"
-                        android:textSize="20dp"
-                        android:visibility="gone"/>
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout_SelectorSw"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="#BCEFFF"
+                            android:padding="4dp">
+
+                            <TextView
+                                android:id="@+id/TextView_AllDate_Day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="매달"
+                                android:textColor="#FF000000"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp"/>
+                            <TextView
+                                android:id="@+id/TextView_Date_Day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="날짜"
+                                android:textColor="#4D000000"/>
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_gravity="right|center"
+                            android:layout_marginTop="7dp">
+
+                            <TextView
+                                android:id="@+id/TextView_Date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="날짜"
+                                android:textColor="#FF000000"
+                                android:textSize="20dp"
+                                android:visibility="visible"/>
+
+                            <Spinner
+                                android:id="@+id/Spinner_Date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                     <GridView
                         android:id="@+id/GridView_WeekSelectView"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:numColumns="7" />
+                        android:numColumns="7"
+                        android:visibility="gone"/>
                 </RelativeLayout>
 
                 <EditText
