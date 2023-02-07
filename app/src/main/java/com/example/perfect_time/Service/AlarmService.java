@@ -1,5 +1,7 @@
 package com.example.perfect_time.Service;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -155,6 +157,14 @@ public class AlarmService extends BroadcastReceiver {
         builder.setDefaults(Notification.PRIORITY_HIGH);
         if(intent.getBooleanExtra("Important", false)){
 
+            Intent snoozeIntent = new Intent(context, NotificationActionButton_1.class);
+            snoozeIntent.putExtra("Action", "delete");
+
+//        snoozeIntent.setAction(ACTION_SNOOZE);
+//        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+            PendingIntent ActionButton_Pending =
+                    PendingIntent.getBroadcast(context, 0, snoozeIntent, FLAG_IMMUTABLE);
+
             Intent busRouteIntent = new Intent(context, MainActivity.class);
 
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -164,6 +174,7 @@ public class AlarmService extends BroadcastReceiver {
 
             builder.setOngoing(true);//알림 못지우기
             builder.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
+            builder.addAction(R.drawable.calendar_icon, "제거", ActionButton_Pending);
         }
 
 

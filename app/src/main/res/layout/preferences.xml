@@ -139,7 +139,8 @@
                 android:background="@drawable/background_style1"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -185,7 +186,8 @@
                 android:background="@drawable/background_style1"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

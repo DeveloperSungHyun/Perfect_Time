@@ -25,6 +25,8 @@ public class DB_Week {
     private int AutoTimerOff;               //자동 꺼짐시간
     private int Sound_value;                //볼륨
 
+    private int dayOfTheWeek;               //요일
+
     public int getAutoTimerOff() {
         return AutoTimerOff;
     }
@@ -40,8 +42,6 @@ public class DB_Week {
     public void setSound_value(int sound_value) {
         Sound_value = sound_value;
     }
-
-    private int dayOfTheWeek;               //요일
 
 
     public int getAlarm_Method() {

@@ -62,7 +62,7 @@
             android:name=".Activity.PopupView"
             android:launchMode="singleInstance"
             android:screenOrientation="fullSensor"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.Alert" /> <!-- Theme.DeviceDefault.Light.Dialog.Alert -->
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.Alert" /> <!-- Theme.DeviceDefault.Light.Dialog.Alert, Base_Theme_AppCompat_Dialog_Alert -->
         <receiver android:name=".Service.AlarmService" />
         <receiver android:name=".Service.NotificationActionButton_1" />
         <receiver

@@ -64,6 +64,7 @@ public class ForeGround_Service extends Service {
         mAudioManager = (AudioManager)getSystemService(AUDIO_SERVICE);//선언 후
 
         Intent snoozeIntent = new Intent(this, NotificationActionButton_1.class);
+        snoozeIntent.putExtra("Action", "Service_stop");
 //        snoozeIntent.setAction(ACTION_SNOOZE);
 //        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
         PendingIntent ActionButton_Pending =
