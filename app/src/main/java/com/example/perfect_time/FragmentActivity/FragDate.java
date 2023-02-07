@@ -93,7 +93,15 @@ public class FragDate extends Fragment {
             if(data.isTimer_Activate()) ViewType = 0;
             else ViewType = 1;
 
-            DayText = data.getDate_Year() + " / " + data.getDate_Month() + " / " + data.getDate_Day();
+            if(data.isSelector() == false) {
+                DayText = data.getDate_Year() + " / " + data.getDate_Month() + " / " + data.getDate_Day();
+            }else{
+                if(data.getDay() != 0) {
+                    DayText = "매달 " + data.getDay() + "일";
+                }else{
+                    DayText = "매달 마지막 날";
+                }
+            }
 
             recyclerView_listItem =
                     new RecyclerView_ListItem(0, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),

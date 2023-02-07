@@ -125,39 +125,75 @@ public class AlarmServiceManagement {
 
         for (DB_Date db_date : date_dataBase_management.getData()){
 
-            if(db_date.getDate_Year() >= NowTime.get(Calendar.YEAR)) {
-                if (db_date.getDate_Month() >= NowTime.get(Calendar.MONDAY)) {
-                    if (db_date.getDate_Day() >= NowTime.get(Calendar.DATE)) {
+            if(db_date.isSelector()) {
 
-                        if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
-                            Log.d("미래", db_date.getName());
+                if (db_date.getDate_Year() >= NowTime.get(Calendar.YEAR)) {
+                    if (db_date.getDate_Month() >= NowTime.get(Calendar.MONDAY)) {
+                        if (db_date.getDate_Day() >= NowTime.get(Calendar.DATE)) {
 
-                            intent = new Intent(context, AlarmService.class);
-                            intent.putExtra("AlarmType", 2);
-                            intent.putExtra("Name", db_date.getName());
-                            intent.putExtra("Memo", db_date.getMemo());
-                            intent.putExtra("Important", db_date.isImportant());
-                            intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
-                            intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
-                            intent.putExtra("SoundValue", db_date.getSound_value());
+                            if (db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))) {
+                                Log.d("미래", db_date.getName());
 
-                            intent.putExtra("Resetting", false);
+                                intent = new Intent(context, AlarmService.class);
+                                intent.putExtra("AlarmType", 2);
+                                intent.putExtra("Name", db_date.getName());
+                                intent.putExtra("Memo", db_date.getMemo());
+                                intent.putExtra("Important", db_date.isImportant());
+                                intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
+                                intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
+                                intent.putExtra("SoundValue", db_date.getSound_value());
 
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTimeInMillis(System.currentTimeMillis());
+                                intent.putExtra("Resetting", false);
 
-                            calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
-                            calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
-                            calendar.set(Calendar.SECOND, 1);
-                            calendar.set(Calendar.MILLISECOND, 1000);
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.setTimeInMillis(System.currentTimeMillis());
 
-                            calendar.set(Calendar.YEAR, db_date.getDate_Year());
-                            calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
-                            calendar.set(Calendar.DATE, db_date.getDate_Day());
+                                calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                                calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                                calendar.set(Calendar.SECOND, 1);
+                                calendar.set(Calendar.MILLISECOND, 1000);
 
-                            if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+                                calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                                calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                                calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                                if (systemDataSave.getData_AllTimerOff() == false)
+                                    AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+                            }
+
                         }
+                    }
+                }
+            }else{
+                if(db_date.getDay() >= NowTime.get(Calendar.DATE)){
+                    if (db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))) {
+                        Log.d("미래", db_date.getName());
 
+                        intent = new Intent(context, AlarmService.class);
+                        intent.putExtra("AlarmType", 2);
+                        intent.putExtra("Name", db_date.getName());
+                        intent.putExtra("Memo", db_date.getMemo());
+                        intent.putExtra("Important", db_date.isImportant());
+                        intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
+                        intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
+                        intent.putExtra("SoundValue", db_date.getSound_value());
+
+                        intent.putExtra("Resetting", false);
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(System.currentTimeMillis());
+
+                        calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                        calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                        calendar.set(Calendar.SECOND, 1);
+                        calendar.set(Calendar.MILLISECOND, 1000);
+
+                        calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                        calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                        calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                        if (systemDataSave.getData_AllTimerOff() == false)
+                            AlarmManager_add(intent, db_date.getUniqueID(), calendar);
                     }
                 }
             }
@@ -253,45 +289,88 @@ public class AlarmServiceManagement {
         Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(context);
 
         for (DB_Date db_date : date_dataBase_management.getData()){
-            if(db_date.getDate_Year() >= NowTime.get(Calendar.YEAR)){
-                if(db_date.getDate_Month() >= NowTime.get(Calendar.MONDAY)){
-                    if(db_date.getDate_Day() >= NowTime.get(Calendar.DATE)){
 
-                        if(db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))){
+            if(db_date.isSelector()) {
+                if (db_date.getDate_Year() >= NowTime.get(Calendar.YEAR)) {
+                    if (db_date.getDate_Month() >= NowTime.get(Calendar.MONDAY)) {
+                        if (db_date.getDate_Day() >= NowTime.get(Calendar.DATE)) {
 
-                            if(db_date.getUniqueID() == UniqueID){
-                                Log.d("미래", db_date.getName());
+                            if (db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))) {
 
-                                intent = new Intent(context, AlarmService.class);
-                                intent.putExtra("AlarmType", 2);
-                                intent.putExtra("Name", db_date.getName());
-                                intent.putExtra("Memo", db_date.getMemo());
-                                intent.putExtra("Important", db_date.isImportant());
-                                intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
-                                intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
-                                intent.putExtra("SoundValue", db_date.getSound_value());
+                                if (db_date.getUniqueID() == UniqueID) {
+                                    Log.d("미래", db_date.getName());
 
-                                intent.putExtra("Resetting", true);
+                                    intent = new Intent(context, AlarmService.class);
+                                    intent.putExtra("AlarmType", 2);
+                                    intent.putExtra("Name", db_date.getName());
+                                    intent.putExtra("Memo", db_date.getMemo());
+                                    intent.putExtra("Important", db_date.isImportant());
+                                    intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
+                                    intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
+                                    intent.putExtra("SoundValue", db_date.getSound_value());
 
-                                Calendar calendar = Calendar.getInstance();
-                                calendar.setTimeInMillis(System.currentTimeMillis());
+                                    intent.putExtra("Resetting", true);
 
-                                calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
-                                calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
-                                calendar.set(Calendar.SECOND, 1);
-                                calendar.set(Calendar.MILLISECOND, 1000);
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTimeInMillis(System.currentTimeMillis());
 
-                                calendar.set(Calendar.YEAR, db_date.getDate_Year());
-                                calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
-                                calendar.set(Calendar.DATE, db_date.getDate_Day());
+                                    calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                                    calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                                    calendar.set(Calendar.SECOND, 1);
+                                    calendar.set(Calendar.MILLISECOND, 1000);
 
-                                if(systemDataSave.getData_AllTimerOff() == false) AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+                                    calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                                    calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                                    calendar.set(Calendar.DATE, db_date.getDate_Day());
 
-                                break;
+                                    if (systemDataSave.getData_AllTimerOff() == false)
+                                        AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+
+                                    break;
+                                }
                             }
-                        }
 
+                        }
                     }
+                }
+            }else{
+                if (db_date.getDay() >= NowTime.get(Calendar.DATE)) {
+
+                    if (db_date.isTimer_Activate() && !(db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() == NowTime.get(Calendar.MINUTE))) {
+
+                        if (db_date.getUniqueID() == UniqueID) {
+                            Log.d("미래", db_date.getName());
+
+                            intent = new Intent(context, AlarmService.class);
+                            intent.putExtra("AlarmType", 2);
+                            intent.putExtra("Name", db_date.getName());
+                            intent.putExtra("Memo", db_date.getMemo());
+                            intent.putExtra("Important", db_date.isImportant());
+                            intent.putExtra("AlarmMethod", db_date.getAlarm_Method());
+                            intent.putExtra("AutoTimerOff", db_date.getAutoTimerOff());
+                            intent.putExtra("SoundValue", db_date.getSound_value());
+
+                            intent.putExtra("Resetting", true);
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(System.currentTimeMillis());
+
+                            calendar.set(Calendar.HOUR_OF_DAY, db_date.getTime_Hour());
+                            calendar.set(Calendar.MINUTE, db_date.getTime_Minute());
+                            calendar.set(Calendar.SECOND, 1);
+                            calendar.set(Calendar.MILLISECOND, 1000);
+
+                            calendar.set(Calendar.YEAR, db_date.getDate_Year());
+                            calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
+                            calendar.set(Calendar.DATE, db_date.getDate_Day());
+
+                            if (systemDataSave.getData_AllTimerOff() == false)
+                                AlarmManager_add(intent, db_date.getUniqueID(), calendar);
+
+                            break;
+                        }
+                    }
+
                 }
             }
 

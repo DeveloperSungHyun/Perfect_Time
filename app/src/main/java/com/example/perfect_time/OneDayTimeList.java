@@ -124,19 +124,36 @@ public class OneDayTimeList {
 
         for (DB_Date db_date : date_dataBase_management.getData()){
 
-            if(db_date.getDate_Year() == y && db_date.getDate_Month() == m && db_date.getDate_Day() == d){
-                all_time = new All_Time();
+            if(db_date.isSelector()){//매일
+                if(db_date.getDay() == d){
+                    all_time = new All_Time();
 
-                all_time.setTimer_Activate(db_date.isTimer_Activate());
-                all_time.setImportant(db_date.isImportant());
-                all_time.setName(db_date.getName());
-                all_time.setMemo(db_date.getMemo());
-                all_time.setTime_Hour(db_date.getTime_Hour());
-                all_time.setTime_Minute(db_date.getTime_Minute());
-                all_time.setAlarm_Method(db_date.getAlarm_Method());
+                    all_time.setTimer_Activate(db_date.isTimer_Activate());
+                    all_time.setImportant(db_date.isImportant());
+                    all_time.setName(db_date.getName());
+                    all_time.setMemo(db_date.getMemo());
+                    all_time.setTime_Hour(db_date.getTime_Hour());
+                    all_time.setTime_Minute(db_date.getTime_Minute());
+                    all_time.setAlarm_Method(db_date.getAlarm_Method());
 
-                all_times.add(all_time);
+                    all_times.add(all_time);
+                }
+            }else{
+                if(db_date.getDate_Year() == y && db_date.getDate_Month() == m && db_date.getDate_Day() == d){
+                    all_time = new All_Time();
+
+                    all_time.setTimer_Activate(db_date.isTimer_Activate());
+                    all_time.setImportant(db_date.isImportant());
+                    all_time.setName(db_date.getName());
+                    all_time.setMemo(db_date.getMemo());
+                    all_time.setTime_Hour(db_date.getTime_Hour());
+                    all_time.setTime_Minute(db_date.getTime_Minute());
+                    all_time.setAlarm_Method(db_date.getAlarm_Method());
+
+                    all_times.add(all_time);
+                }
             }
+
 
         }
 

@@ -22,6 +22,6 @@ public interface DateDao {
     @Delete
     void setDelete(DB_Date db_date);
 
-    @Query("SELECT * FROM DB_Date ORDER BY Date_Year, Date_Month, Date_Day, Time_Hour, Time_Minute, Name")
+    @Query("SELECT * FROM DB_Date ORDER BY Selector, Date_Year, Date_Month, Date_Day, Time_Hour, Time_Minute, Name")
     List<DB_Date> getDate();
 }

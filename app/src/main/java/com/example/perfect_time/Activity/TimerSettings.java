@@ -142,6 +142,7 @@ public class TimerSettings extends Activity {
         super.onStart();
 
         InterfaceSetting();
+
     }
 
     @Override
@@ -174,6 +175,12 @@ public class TimerSettings extends Activity {
 
         TextView_AutoOffTimer_num.setText(timer_number[settingValue.getAutoTimerOff()]);
         SeekBar_SoundValue.setProgress(settingValue.getSound_value());
+
+        if(TimerViewType == FragmentType.fragDate){
+            LinearLayout_SelectorSw.setVisibility(View.VISIBLE);
+        }else{
+            LinearLayout_SelectorSw.setVisibility(View.GONE);
+        }
 
         AlarmCh();
 
@@ -781,6 +788,7 @@ class Date_TimerSettings{
 
     private void CommonLogic(){
         ActivityView = ((TimerSettings) context);
+        ActivityView.LinearLayout_SelectorSw.setVisibility(View.VISIBLE);
 
         settingValue = new SettingValue();
 
@@ -796,7 +804,6 @@ class Date_TimerSettings{
         d = ActivityView.calendar.get(Calendar.DATE);
 
         Selector_Logic();
-        ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
 
 //        if(TimerSettingType == 1){
 //            NewAddTimer();
@@ -854,7 +861,12 @@ class Date_TimerSettings{
             d = db_date.getDate_Day();
             ActivityView.TextView_Date.setText(y + "년 " + m + "월 " + d + "일");
         }else{
-            ActivityView.TextView_Date.setText("매달 " + day + "일");
+            if(day != 0) {
+                ActivityView.TextView_Date.setText("매달 " + day + "일");
+            }else{
+                ActivityView.TextView_Date.setText("매달 마지막 일");
+            }
+
         }
 
         settingValue.setName(db_date.getName());
@@ -915,7 +927,7 @@ class Date_TimerSettings{
             @Override
             public void onClick(View v) {
                 day = 0;
-                ActivityView.TextView_Date.setText("매달 " + day + "일");
+                ActivityView.TextView_Date.setText("매달 마지막 일");
             }
         });
 
