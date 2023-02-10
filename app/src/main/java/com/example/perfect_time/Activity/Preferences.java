@@ -24,6 +24,7 @@ import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SystemDataSave;
+import com.example.perfect_time.ToDayTimer_Notification;
 
 public class Preferences extends Activity {
 
@@ -100,11 +101,18 @@ public class Preferences extends Activity {
                 AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
                 if(b == true) {//모든 알람 off
                     alarmServiceManagement.All_Delete(true, true, true);
+
+                    alarmServiceManagement.DAY_LoopOff();
                     Toast.makeText(Preferences.this, "모든 알림을 껐습니다.", Toast.LENGTH_SHORT).show();
                 }else{
                     alarmServiceManagement.All_TimerSetting(true, true, true);
+
+                    alarmServiceManagement.DAY_Loop();
                     Toast.makeText(Preferences.this, "모든 알림을 켰습니다.", Toast.LENGTH_SHORT).show();
                 }
+
+                ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(Preferences.this);
+                toDayTimer_notification.NotificationListShow();
             }
         });
 

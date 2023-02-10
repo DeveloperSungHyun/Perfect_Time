@@ -10,6 +10,8 @@ import android.widget.RemoteViews;
  */
 public class WidgetView extends AppWidgetProvider {
 
+    String widgetText = "text";
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
@@ -28,14 +30,14 @@ public class WidgetView extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-            int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_view);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setTextViewText(R.id.appwidget_text, "text");
 
+        views.setTextViewText(R.id.Button, "test");
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

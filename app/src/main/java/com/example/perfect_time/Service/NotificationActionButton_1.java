@@ -25,7 +25,12 @@ public class NotificationActionButton_1 extends BroadcastReceiver {
 
         }else if(intent.getStringExtra("Action").equals("delete")){
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancelAll();
+//            notificationManager.cancelAll();
+            Log.d("ID", "===================" + intent.getAction() + " : " + intent.getIntExtra("Notification_ID", 0));
+            notificationManager.cancel(intent.getIntExtra("Notification_ID", 0));
         }
+
+
     }
+
 }

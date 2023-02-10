@@ -13,6 +13,7 @@ public class BootReceiver extends BroadcastReceiver {
         if(!systemDataSave.getData_AllTimerOff()) {//알림이 ON 되어있다면 모든알림 설정
             AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
             alarmServiceManagement.All_TimerSetting(true, true, true);
+            alarmServiceManagement.DAY_Loop();
         }
     }
 }

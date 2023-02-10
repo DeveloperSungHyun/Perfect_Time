@@ -46,6 +46,7 @@ import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.SettingValue;
 import com.example.perfect_time.SystemDataSave;
 import com.example.perfect_time.Time24_to_12Hour;
+import com.example.perfect_time.ToDayTimer_Notification;
 
 import java.util.Calendar;
 import java.util.List;
@@ -347,6 +348,9 @@ public class TimerSettings extends Activity {
                     Intent intent = new Intent();
                     setResult(RESULT_OK, intent);
                     //========================================================================설정완료
+
+                    ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(TimerSettings.this);
+                    toDayTimer_notification.NotificationListShow();
 
                     finish();
                 }else{

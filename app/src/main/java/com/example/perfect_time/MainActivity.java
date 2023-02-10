@@ -28,6 +28,7 @@ import com.example.perfect_time.FragmentActivity.FragDate;
 import com.example.perfect_time.FragmentActivity.FragEveryDay;
 import com.example.perfect_time.FragmentActivity.FragHome;
 import com.example.perfect_time.FragmentActivity.FragWeek;
+import com.example.perfect_time.Service.AlarmServiceManagement;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onStart() {
         super.onStart();
 
-//        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
+        AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
+        alarmServiceManagement.DAY_Loop();
 //        alarmServiceManagement.All_TimerSetting();
 
     }
@@ -130,9 +132,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
 
     }
 //=============12/26

@@ -22,14 +22,21 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.perfect_time.All_Time;
+import com.example.perfect_time.FragmentActivity.FragmentType;
 import com.example.perfect_time.MainActivity;
+import com.example.perfect_time.OneDayTimeList;
 import com.example.perfect_time.R;
+import com.example.perfect_time.RecyclerView.RecyclerView_ListItem;
+import com.example.perfect_time.ToDayTimer_Notification;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 public class AlarmService extends BroadcastReceiver {
     NotificationCompat.Builder builder;
+    Intent snoozeIntent;
 
     PowerManager.WakeLock sCpuWakeLock;
 
@@ -37,9 +44,11 @@ public class AlarmService extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        snoozeIntent = new Intent(context, NotificationActionButton_1.class);
         AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(context);
         calendar = Calendar.getInstance();
+
+        Log.d("=======================", "=====================");
 
         switch (intent.getIntExtra("AlarmType", 0)){
 
@@ -51,7 +60,6 @@ public class AlarmService extends BroadcastReceiver {
                     NotificationShow(context, intent);
                 }
 
-                alarmServiceManagement.SetUp_Alarm();//알림 재 설정
                 break;
             }
             case 1:{//요일별 울리는 알림
@@ -62,7 +70,6 @@ public class AlarmService extends BroadcastReceiver {
                     }else{
                         NotificationShow(context, intent);
                     }
-                    alarmServiceManagement.SetUp_Alarm();//알림 재 설정
                 }
 
                 break;
@@ -73,7 +80,6 @@ public class AlarmService extends BroadcastReceiver {
                 }else{
                     NotificationShow(context, intent);
                 }
-                alarmServiceManagement.SetUp_Alarm();//알림 재 설정
 
                 if(true){//데이터베이스에서 제거
 
@@ -82,9 +88,17 @@ public class AlarmService extends BroadcastReceiver {
             }
             case 3:{//하루가 지나면 알림 재설정
                 alarmServiceManagement.All_TimerSetting(true, true, true);
+
+                ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(context);
+                toDayTimer_notification.NotificationListShow();
+
+
                 break;
             }
         }
+
+        ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(context);
+        toDayTimer_notification.NotificationListShow();
 
     }
 
@@ -146,6 +160,8 @@ public class AlarmService extends BroadcastReceiver {
 //            sCpuWakeLock = null;
 //        }
 
+        int id = intent.getIntExtra("Notification_ID", 0);
+
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
         builder.setSmallIcon(R.drawable.calendar_icon);
         builder.setTicker("알람 간단한 설명");
@@ -157,9 +173,9 @@ public class AlarmService extends BroadcastReceiver {
         builder.setDefaults(Notification.PRIORITY_HIGH);
         if(intent.getBooleanExtra("Important", false)){
 
-            Intent snoozeIntent = new Intent(context, NotificationActionButton_1.class);
             snoozeIntent.putExtra("Action", "delete");
-
+            snoozeIntent.putExtra("Notification_ID", id);
+            snoozeIntent.setAction(String.valueOf(id));
 //        snoozeIntent.setAction(ACTION_SNOOZE);
 //        snoozeIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
             PendingIntent ActionButton_Pending =
@@ -176,11 +192,12 @@ public class AlarmService extends BroadcastReceiver {
             builder.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
             builder.addAction(R.drawable.calendar_icon, "제거", ActionButton_Pending);
         }
+//        intent.getIntExtra("ID", 0);
 
+//        int id=(int)System.currentTimeMillis();
 
-        int id=(int)System.currentTimeMillis();
-
-        notificationManager.notify(id,builder.build());
+        Log.d("ID", "========================-----" + id);
+        notificationManager.notify(id, builder.build());
     }
 
 
