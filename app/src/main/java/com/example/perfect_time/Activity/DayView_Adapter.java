@@ -22,6 +22,10 @@ public class DayView_Adapter extends BaseAdapter {
         day_items.add("" + num);
     }
 
+    public void clear(){
+        day_items.clear();
+    }
+
     @Override
     public int getCount() {
         return day_items.size();

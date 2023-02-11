@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.perfect_time.Activity.Preferences;
 import com.example.perfect_time.Activity.TimerSettings;
 import com.example.perfect_time.Service.AlarmServiceManagement;
 import com.example.perfect_time.FragmentActivity.FragmentType;
@@ -31,6 +32,7 @@ import com.example.perfect_time.RoomDataBase.Date_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.EveryDay_DataBase_Management;
 import com.example.perfect_time.RoomDataBase.Week_DataBase_Management;
 import com.example.perfect_time.Time24_to_12Hour;
+import com.example.perfect_time.ToDayTimer_Notification;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -301,6 +303,10 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                     }
 
                                 }
+
+                                ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(view.getContext());
+                                toDayTimer_notification.NotificationListShow();
+
                                 Toast.makeText(view.getContext(), ToastText, Toast.LENGTH_SHORT).show();
                                 Log.d("다이얼 로그", "알림끄기");
                                 break;

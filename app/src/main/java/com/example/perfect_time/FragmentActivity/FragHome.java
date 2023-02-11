@@ -183,7 +183,8 @@ public class FragHome extends Fragment {
 
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
+
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -225,19 +226,38 @@ public class FragHome extends Fragment {
             }
 
             if(next_Time != null){
+//                int h, m;
+//                h = next_Time.getTime_Hour() - Time_h;
+//                if(next_Time.getTime_Minute() >= Time_m){
+//                    m = next_Time.getTime_Minute() - Time_m;
+//                }else{
+//                    h--;
+//                    m = 60 - Time_m + next_Time.getTime_Minute();
+//                }
+//                TextView_NextTimerCount.setText("" + h + "시간 " + m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.");
+
                 int h, m;
+                String nextTimer_count = null;
                 h = next_Time.getTime_Hour() - Time_h;
-                if(next_Time.getTime_Minute() > Time_m){
-                    m = next_Time.getTime_Minute() - Time_m;
-                }else{
+                if(0 > next_Time.getTime_Minute() - Time_m){
                     h--;
-                    m = 60 - Time_m + next_Time.getTime_Minute();
+                    m = (next_Time.getTime_Minute() - Time_m) + 60;
+                }else{
+                    m = next_Time.getTime_Minute() - Time_m;
                 }
-                TextView_NextTimerCount.setText("" + h + "시간 " + m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.");
+
+                if(h > 0){
+                    nextTimer_count = h + "시간 " + m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.";
+                }else{
+                    nextTimer_count = m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.";
+                }
+                TextView_NextTimerCount.setText(nextTimer_count);
+                Log.d("======================", " " + h + " : " + m);
+
             }else{
                 TextView_NextTimerCount.setText("이후 일정은 없습니다.");
             }
-            Log.d("test", "=========================");
+
         }
     };
 }

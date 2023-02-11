@@ -914,6 +914,7 @@ class Date_TimerSettings{
         GridView GridView_Day = view.findViewById(R.id.GridView_Day);
         TextView TextView_last = view.findViewById(R.id.TextView_last);
 
+        dayView_adapter.clear();
         for (int i = 1; i <= 31; i++) {
             dayView_adapter.addItem(i);
         }

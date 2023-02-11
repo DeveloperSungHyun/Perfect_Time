@@ -247,9 +247,14 @@ public class AlarmServiceManagement {
                             calendar.set(Calendar.SECOND, 1);
                             calendar.set(Calendar.MILLISECOND, 1000);
 
-                            calendar.set(Calendar.YEAR, db_date.getDate_Year());
-                            calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
-                            calendar.set(Calendar.DATE, db_date.getDate_Day());
+                            calendar.set(Calendar.YEAR, NowTime.get(Calendar.YEAR));
+                            calendar.set(Calendar.MONDAY, NowTime.get(Calendar.MONDAY));
+
+                            if(db_date.getDay() > 0) {
+                                calendar.set(Calendar.DATE, db_date.getDay());
+                            }else{
+                                calendar.set(Calendar.DATE, 31);//마지막 날짜 지정
+                            }
 
                             if (systemDataSave.getData_AllTimerOff() == false)
                                 AlarmManager_add(intent, db_date.getUniqueID(), calendar);
@@ -440,9 +445,13 @@ public class AlarmServiceManagement {
                             calendar.set(Calendar.SECOND, 1);
                             calendar.set(Calendar.MILLISECOND, 1000);
 
-                            calendar.set(Calendar.YEAR, db_date.getDate_Year());
-                            calendar.set(Calendar.MONDAY, db_date.getDate_Month() - 1);
-                            calendar.set(Calendar.DATE, db_date.getDate_Day());
+                            calendar.set(Calendar.YEAR, NowTime.get(Calendar.YEAR));
+                            calendar.set(Calendar.MONDAY, NowTime.get(Calendar.MONDAY));
+                            if(db_date.getDay() > 0) {
+                                calendar.set(Calendar.DATE, db_date.getDay());
+                            }else{
+                                calendar.set(Calendar.DATE, 31);//마지막 날짜 지정
+                            }
 
                             if (systemDataSave.getData_AllTimerOff() == false)
                                 AlarmManager_add(intent, db_date.getUniqueID(), calendar);
@@ -450,12 +459,9 @@ public class AlarmServiceManagement {
                             break;
                         }
                     }
-
                 }
             }
-
         }
-
     }
 
 
