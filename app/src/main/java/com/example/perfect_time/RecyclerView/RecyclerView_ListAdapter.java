@@ -150,30 +150,44 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+
+                    EveryDay_DataBase_Management everyDay_dataBase_management =
+                            new EveryDay_DataBase_Management(view.getContext());
+
                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
                     intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
                     intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
 
                     intent.putExtra("ItemID", holder.getAdapterPosition());
+                    intent.putExtra("UniqueID", everyDay_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
                     Log.d("인텐트 데이터 출력", "ItemID " + holder.getAdapterPosition());
 
                     view.getContext().startActivity(intent);
                 }
                 if(getItem.getFragmentType() == FragmentType.fragWeek){
+                    Week_DataBase_Management week_dataBase_management =
+                            new Week_DataBase_Management(view.getContext());
+
                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
                     intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
                     intent.putExtra("TimerViewType", FragmentType.fragWeek);
 
                     intent.putExtra("ItemID", holder.getAdapterPosition());
+                    intent.putExtra("UniqueID", week_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
 
                     view.getContext().startActivity(intent);
                 }
                 if(getItem.getFragmentType() == FragmentType.fragDate){
+
+                    Date_DataBase_Management date_dataBase_management =
+                            new Date_DataBase_Management(view.getContext());
+
                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
                     intent.putExtra("TimerSettingType", 2);//1 새로운 데이터 추가
                     intent.putExtra("TimerViewType", FragmentType.fragDate);
 
                     intent.putExtra("ItemID", holder.getAdapterPosition());
+                    intent.putExtra("UniqueID", date_dataBase_management.getData().get(holder.getAdapterPosition()).getUniqueID());
 
                     view.getContext().startActivity(intent);
                 }
@@ -207,6 +221,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                             case 0:{
 
                                 if(getItem.getFragmentType() == FragmentType.fragEveryDay){
+
                                     Intent intent = new Intent(view.getContext(), TimerSettings.class);
                                     intent.putExtra("TimerSettingType", 3);//3 데이터 복사
                                     intent.putExtra("TimerViewType", FragmentType.fragEveryDay);
@@ -308,7 +323,6 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                                 toDayTimer_notification.NotificationListShow();
 
                                 Toast.makeText(view.getContext(), ToastText, Toast.LENGTH_SHORT).show();
-                                Log.d("다이얼 로그", "알림끄기");
                                 break;
                             }
                             case 2:{
@@ -345,6 +359,9 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                                 listItems.remove(holder.getAdapterPosition());
                                 notifyItemRemoved(holder.getAdapterPosition());
+
+                                ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(view.getContext());
+                                toDayTimer_notification.NotificationListShow();
 
                                 Toast.makeText(view.getContext(), "알람이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 

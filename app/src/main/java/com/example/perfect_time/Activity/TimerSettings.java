@@ -277,7 +277,8 @@ public class TimerSettings extends Activity {
                                 everyDay_timerSettings.TimerUpData();
 
                                 EveryDay_DataBase_Management everyDay_dataBase_management = new EveryDay_DataBase_Management(getApplicationContext());
-                                int UniqueID = everyDay_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+//                                int UniqueID = everyDay_dataBase_management.getData().get(getIntent().getIntExtra("UniqueID", 0)).getUniqueID();
+                                int UniqueID = getIntent().getIntExtra("UniqueID", 0);
                                 Log.d("UniqueID", " 번호 " + UniqueID);
                                 alarmServiceManagement.AlarmUpDate(UniqueID);
 
@@ -304,8 +305,11 @@ public class TimerSettings extends Activity {
                                 dayOfTheWeek_timerSettings.TimerUpData();
 
                                 Week_DataBase_Management week_dataBase_management = new Week_DataBase_Management(getApplicationContext());
-                                int UniqueID = week_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+//                                int UniqueID = week_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+                                int UniqueID = getIntent().getIntExtra("UniqueID", 0);
+
                                 Log.d("UniqueID", " 번호 " + UniqueID);
+
                                 alarmServiceManagement.AlarmUpDate_week(UniqueID);
 
                             }else if(TimerSettingType == 3){
@@ -331,7 +335,9 @@ public class TimerSettings extends Activity {
                                 date_timerSettings.TimerUpData();
 
                                 Date_DataBase_Management date_dataBase_management = new Date_DataBase_Management(getApplicationContext());
-                                int UniqueID = date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+//                                int UniqueID = date_dataBase_management.getData().get(getIntent().getIntExtra("ItemID", 0)).getUniqueID();
+                                int UniqueID = getIntent().getIntExtra("UniqueID", 0);
+
                                 Log.d("UniqueID", " 번호 " + UniqueID);
                                 alarmServiceManagement.AlarmUpDate_data(UniqueID);
                             }else if(TimerSettingType == 3){

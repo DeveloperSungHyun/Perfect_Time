@@ -208,13 +208,11 @@ public class FragHome extends Fragment {
                             break;
                         }else{
                             if(data == all_times.get(all_times.size() - 1)){
-                                Log.d("OK", "=========================");
                                 TextTimer_none = true;
                             }
                         }
                     }
                 }
-                Log.d("test1", "=========================");
                 ListItem.clear();
                 recyclerView_ListShow();
             }else{
@@ -226,16 +224,6 @@ public class FragHome extends Fragment {
             }
 
             if(next_Time != null){
-//                int h, m;
-//                h = next_Time.getTime_Hour() - Time_h;
-//                if(next_Time.getTime_Minute() >= Time_m){
-//                    m = next_Time.getTime_Minute() - Time_m;
-//                }else{
-//                    h--;
-//                    m = 60 - Time_m + next_Time.getTime_Minute();
-//                }
-//                TextView_NextTimerCount.setText("" + h + "시간 " + m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.");
-
                 int h, m;
                 String nextTimer_count = null;
                 h = next_Time.getTime_Hour() - Time_h;
@@ -252,7 +240,6 @@ public class FragHome extends Fragment {
                     nextTimer_count = m + "분 뒤 " + "\"" + next_Time.getName() + "\"" + " 일정이 있습니다.";
                 }
                 TextView_NextTimerCount.setText(nextTimer_count);
-                Log.d("======================", " " + h + " : " + m);
 
             }else{
                 TextView_NextTimerCount.setText("이후 일정은 없습니다.");
