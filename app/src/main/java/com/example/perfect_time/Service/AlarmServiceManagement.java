@@ -25,6 +25,9 @@ public class AlarmServiceManagement {
     public static PendingIntent alarmIntent;
     SystemDataSave systemDataSave;
 
+    PendingIntent pIntent;
+
+    Calendar calendar;
     Calendar NowTime;
 
     public AlarmServiceManagement(Context context){
@@ -40,11 +43,31 @@ public class AlarmServiceManagement {
 
         alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        PendingIntent pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 0,intent, PendingIntent.FLAG_IMMUTABLE);
+        pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), -1,intent, PendingIntent.FLAG_IMMUTABLE);
 
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 49);
+        calendar.set(Calendar.SECOND, 1);
+        calendar.set(Calendar.MILLISECOND, 1000);
+
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        // 지정한 시간에 매일 알림
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pIntent);
+
+        //===
+
+        alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), -2,intent, PendingIntent.FLAG_IMMUTABLE);
+
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 1);
         calendar.set(Calendar.MILLISECOND, 1000);
@@ -62,7 +85,12 @@ public class AlarmServiceManagement {
 
         Intent intent = new Intent(context, AlarmService.class);
 
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        alarmIntent = PendingIntent.getBroadcast(context, -1, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        alarmManager.cancel(alarmIntent);
+        alarmIntent.cancel();
+
+        alarmIntent = PendingIntent.getBroadcast(context, -2, intent, PendingIntent.FLAG_IMMUTABLE);
 
         alarmManager.cancel(alarmIntent);
         alarmIntent.cancel();
@@ -177,15 +205,19 @@ public class AlarmServiceManagement {
         for (DB_Date db_date : date_dataBase_management.getData()){
 
             if(db_date.isSelector() == false) {
-
+                Log.d("===============================", "1");
                 if (db_date.getDate_Year() == NowTime.get(Calendar.YEAR)) {
-                    if (db_date.getDate_Month() == NowTime.get(Calendar.MONDAY)) {
+                    if (db_date.getDate_Month() == NowTime.get(Calendar.MONDAY) + 1) {
                         if (db_date.getDate_Day() == NowTime.get(Calendar.DATE)) {
+
+                            Log.d("===============================", "2");
 
                             if (db_date.isTimer_Activate()) {
 
                                 if (db_date.getTime_Hour() > NowTime.get(Calendar.HOUR_OF_DAY) ||
                                         (db_date.getTime_Hour() == NowTime.get(Calendar.HOUR_OF_DAY) && db_date.getTime_Minute() > NowTime.get(Calendar.MINUTE))) {
+
+                                    Log.d("===============================", "3");
 
                                     Log.d("미래", db_date.getName());
 
@@ -381,7 +413,7 @@ public class AlarmServiceManagement {
 
             if(db_date.isSelector() == false) {
                 if (db_date.getDate_Year() == NowTime.get(Calendar.YEAR)) {
-                    if (db_date.getDate_Month() == NowTime.get(Calendar.MONDAY)) {
+                    if (db_date.getDate_Month() == NowTime.get(Calendar.MONDAY) + 1) {
                         if (db_date.getDate_Day() == NowTime.get(Calendar.DATE)) {
 
                             if (db_date.isTimer_Activate()) {

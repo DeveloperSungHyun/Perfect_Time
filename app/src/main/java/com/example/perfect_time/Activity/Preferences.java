@@ -33,6 +33,8 @@ public class Preferences extends Activity {
 
     SystemDataSave systemDataSave;
 
+    ToDayTimer_Notification toDayTimer_notification;
+
     Switch Switch_AllTimer_Off;
     Switch Switch_AutoTableMode;
     Switch Switch_BatteryLow_Notification;
@@ -66,6 +68,7 @@ public class Preferences extends Activity {
         IdMapping();
 
         systemDataSave = new SystemDataSave(getApplicationContext());
+        toDayTimer_notification = new ToDayTimer_Notification(Preferences.this);
 
         DataSetting();
     }
@@ -111,7 +114,6 @@ public class Preferences extends Activity {
                     Toast.makeText(Preferences.this, "모든 알림을 켰습니다.", Toast.LENGTH_SHORT).show();
                 }
 
-                ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(Preferences.this);
                 toDayTimer_notification.NotificationListShow();
             }
         });
@@ -193,6 +195,8 @@ public class Preferences extends Activity {
                                             everyDay_dataBase_management.setDelete(0);
                                         }
                                         Toast.makeText(Preferences.this, "매일 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                        toDayTimer_notification.NotificationListShow();
                                         break;
                                     }
                                     case 1:{
@@ -202,6 +206,8 @@ public class Preferences extends Activity {
                                             week_dataBase_management.setDelete(0);
                                         }
                                         Toast.makeText(Preferences.this, "요일별 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                        toDayTimer_notification.NotificationListShow();
                                         break;
                                     }
                                     case 2:{
@@ -211,6 +217,8 @@ public class Preferences extends Activity {
                                             date_dataBase_management.setDelete(0);
                                         }
                                         Toast.makeText(Preferences.this, "날짜별 알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                        toDayTimer_notification.NotificationListShow();
                                         break;
                                     }
                                     case 3:{
@@ -222,6 +230,7 @@ public class Preferences extends Activity {
 
                                         while(everyDay_dataBase_management.getData().size() > 0){
                                             everyDay_dataBase_management.setDelete(0);
+
                                         }
 
                                         while(week_dataBase_management.getData().size() > 0){
@@ -232,6 +241,8 @@ public class Preferences extends Activity {
                                             date_dataBase_management.setDelete(0);
                                         }
                                         Toast.makeText(Preferences.this, "알람이 모두 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                        toDayTimer_notification.NotificationListShow();
 
                                         break;
                                     }
