@@ -147,7 +147,6 @@ public class AlarmServiceManagement {
 
                     Log.d("All_AddAlarm_everyDay", everyDay.getName() + " | " + everyDay.getMemo() + " | " + everyDay.getTime_Hour() + " | " + everyDay.getTime_Minute());
 
-                    break;
                 }
             }
         }
@@ -191,7 +190,6 @@ public class AlarmServiceManagement {
                         AlarmManager_add(intent, db_week.getUniqueID(), calendar);
                     Log.d("All_AddAlarm_week", "command================");
 
-                    break;
                 }
             }
         }
@@ -248,7 +246,6 @@ public class AlarmServiceManagement {
                                     if (systemDataSave.getData_AllTimerOff() == false)
                                         AlarmManager_add(intent, db_date.getUniqueID(), calendar);
 
-                                    break;
                                 }
 
                             }
@@ -296,7 +293,6 @@ public class AlarmServiceManagement {
                             if (systemDataSave.getData_AllTimerOff() == false)
                                 AlarmManager_add(intent, db_date.getUniqueID(), calendar);
 
-                            break;
                         }
                     }
                 }

@@ -3,7 +3,10 @@ package com.example.perfect_time;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 
@@ -83,6 +86,22 @@ public class ToDayTimer_Notification {
             IMPORTANCE_LOW.setLightColor(0xFFFF0000);
             notificationManager.createNotificationChannel(IMPORTANCE_LOW);
         }
+
+        Intent busRouteIntent = new Intent(context, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(busRouteIntent);
+        PendingIntent pendingIntent =
+                stackBuilder.getPendingIntent(1, PendingIntent.FLAG_IMMUTABLE);
+
+        Intent Alarm_settings = new Intent(context, Preferences.class);
+
+        TaskStackBuilder Alarm_settings_stackBuilder = TaskStackBuilder.create(context);
+        Alarm_settings_stackBuilder.addNextIntentWithParentStack(Alarm_settings);
+        PendingIntent pendingIntent_Alarm_settings =
+                Alarm_settings_stackBuilder.getPendingIntent(1, PendingIntent.FLAG_IMMUTABLE);
+
+
         builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
         builder.setSmallIcon(R.drawable.calendar_icon);
@@ -93,6 +112,11 @@ public class ToDayTimer_Notification {
         builder.setPriority(0);
         builder.setDefaults(Notification.PRIORITY_HIGH);
         builder.setOngoing(true);//알림 못지우기
+        builder.setContentIntent(pendingIntent);
+        if(systemDataSave.getData_AllTimerOff() == true){
+            builder.addAction(R.drawable.calendar_icon, "설정", pendingIntent_Alarm_settings);
+        }
+
         notificationManager.notify(0, builder.build());
     }
 }

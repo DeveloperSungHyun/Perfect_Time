@@ -65,12 +65,10 @@ public class PopupView extends Activity {
             }
         });
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
-        getWindow().addFlags(
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);//화면터치 막기
 
-                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         //WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
@@ -86,6 +84,8 @@ public class PopupView extends Activity {
 //            context.startService(foreground_intent);
             getApplicationContext().stopService(foreground_intent);
         }
+
+        //getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);//화면터치 막기 해제
     }
 
     @Override

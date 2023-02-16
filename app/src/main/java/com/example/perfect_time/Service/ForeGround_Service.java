@@ -93,6 +93,8 @@ public class ForeGround_Service extends Service {
             builder.setDefaults(Notification.DEFAULT_VIBRATE);
             builder.addAction(R.drawable.calendar_icon, "알림끄기", ActionButton_Pending);
 
+
+
             startForeground(1, builder.build());
         }
 
