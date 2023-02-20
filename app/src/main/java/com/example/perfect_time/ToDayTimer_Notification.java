@@ -103,8 +103,8 @@ public class ToDayTimer_Notification {
 
 
         builder = new NotificationCompat.Builder(context, "IMPORTANCE_LOW");
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
-        builder.setSmallIcon(R.drawable.calendar_icon);
+        //builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.perfect_time_top_icon3));
+        builder.setSmallIcon(R.drawable.perfect_time_top_icon3);
         builder.setContentTitle(Title);
         builder.setContentText(Content);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(Content));
@@ -114,7 +114,7 @@ public class ToDayTimer_Notification {
         builder.setOngoing(true);//알림 못지우기
         builder.setContentIntent(pendingIntent);
         if(systemDataSave.getData_AllTimerOff() == true){
-            builder.addAction(R.drawable.calendar_icon, "설정", pendingIntent_Alarm_settings);
+            builder.addAction(R.drawable.perfect_time_top_icon3, "설정", pendingIntent_Alarm_settings);
         }
 
         notificationManager.notify(0, builder.build());

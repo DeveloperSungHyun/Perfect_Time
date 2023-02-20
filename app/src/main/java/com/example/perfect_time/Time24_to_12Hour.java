@@ -20,8 +20,6 @@ public class Time24_to_12Hour {
                 t -= 12;
             }
             if(t == 0) t = 12;
-        }else {
-            if (t == 0) t = 24;
         }
         return t;
     }

@@ -162,8 +162,7 @@ public class AlarmService extends BroadcastReceiver {
 
         int id = intent.getIntExtra("Notification_ID", 0);
 
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.calendar_icon));
-        builder.setSmallIcon(R.drawable.calendar_icon);
+        builder.setSmallIcon(R.drawable.perfect_time_top_icon3);
         builder.setTicker("알람 간단한 설명");
         builder.setContentTitle(intent.getStringExtra("Name"));
         builder.setContentText(intent.getStringExtra("Memo"));
@@ -189,8 +188,8 @@ public class AlarmService extends BroadcastReceiver {
                     stackBuilder.getPendingIntent(1, PendingIntent.FLAG_IMMUTABLE);
 
             builder.setOngoing(true);//알림 못지우기
-            builder.addAction(R.drawable.calendar_icon, "확인", busRoutePendingIntent);
-            builder.addAction(R.drawable.calendar_icon, "제거", ActionButton_Pending);
+            builder.addAction(R.drawable.perfect_time_top_icon3, "확인", busRoutePendingIntent);
+            builder.addAction(R.drawable.perfect_time_top_icon3, "제거", ActionButton_Pending);
         }
 //        intent.getIntExtra("ID", 0);
 

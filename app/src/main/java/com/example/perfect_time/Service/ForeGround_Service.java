@@ -83,15 +83,14 @@ public class ForeGround_Service extends Service {
 
             builder = new NotificationCompat.Builder(this, "Alarm");
 
-            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.calendar_icon));
-            builder.setSmallIcon(R.drawable.calendar_icon);
+            builder.setSmallIcon(R.drawable.perfect_time_top_icon3);
             builder.setTicker("알람 간단한 설명");
             builder.setContentTitle(intent.getStringExtra("Name"));
             builder.setContentText(intent.getStringExtra("Memo"));
             builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             builder.setPriority(0);
             builder.setDefaults(Notification.DEFAULT_VIBRATE);
-            builder.addAction(R.drawable.calendar_icon, "알림끄기", ActionButton_Pending);
+            builder.addAction(R.drawable.perfect_time_top_icon, "알림끄기", ActionButton_Pending);
 
 
 

@@ -511,7 +511,7 @@ public class TimerSettings extends Activity {
 
                     AlertDialog.Builder dlg = new AlertDialog.Builder(TimerSettings.this);
                     dlg.setTitle("다른앱 위에 표시(권한)"); //제목
-                    dlg.setMessage("권한을 승인하셔야 팝업 알림을 받을 수 있습니다."); // 메시지
+                    dlg.setMessage("권한을 승인하셔야 팝업 알림을 받을 수 있습니다.\n안드로이드 정책으로 인해 사용자분께서 직접 권한을 허용해주셔야 합니다."); // 메시지
 
 //                버튼 클릭시 동작
                     dlg.setPositiveButton("허용",new DialogInterface.OnClickListener(){

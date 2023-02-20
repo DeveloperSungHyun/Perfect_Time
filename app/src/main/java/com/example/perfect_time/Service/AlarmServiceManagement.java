@@ -341,8 +341,6 @@ public class AlarmServiceManagement {
                         if (systemDataSave.getData_AllTimerOff() == false)
                             AlarmManager_add(intent, everyDay.getUniqueID(), calendar);
 
-
-                        break;
                     }
                 }
             }
@@ -391,7 +389,6 @@ public class AlarmServiceManagement {
                         if (systemDataSave.getData_AllTimerOff() == false)
                             AlarmManager_add(intent, db_week.getUniqueID(), calendar);
 
-                        break;
                     }
                 }
             }
@@ -447,7 +444,6 @@ public class AlarmServiceManagement {
                                         if (systemDataSave.getData_AllTimerOff() == false)
                                             AlarmManager_add(intent, db_date.getUniqueID(), calendar);
 
-                                        break;
                                     }
                                 }
                             }
@@ -494,7 +490,6 @@ public class AlarmServiceManagement {
                             if (systemDataSave.getData_AllTimerOff() == false)
                                 AlarmManager_add(intent, db_date.getUniqueID(), calendar);
 
-                            break;
                         }
                     }
                 }
