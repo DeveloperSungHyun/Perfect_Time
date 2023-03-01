@@ -28,6 +28,7 @@ public class AlarmService extends BroadcastReceiver {
     Intent snoozeIntent;
 
     PowerManager.WakeLock sCpuWakeLock;
+    ToDayTimer_Notification toDayTimer_notification;
 
     Calendar calendar;
 
@@ -39,10 +40,12 @@ public class AlarmService extends BroadcastReceiver {
 
         Log.d("=======================", "=====================");
 
+        toDayTimer_notification = new ToDayTimer_Notification(context);
+
         switch (intent.getIntExtra("AlarmType", 0)){
 
             case 0:{//매일 울리믄 알림
-
+                toDayTimer_notification.NotificationListShow();
                 if(intent.getIntExtra("AlarmMethod", 0) == 3){//포그라운드 알람으로 설정되어 있다면
                     ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), intent.getIntExtra("AutoTimerOff", 2), intent.getIntExtra("SoundValue", 70));
                 }else{
@@ -54,6 +57,7 @@ public class AlarmService extends BroadcastReceiver {
             case 1:{//요일별 울리는 알림
 
                 if(intent.getIntExtra("Week", 0) == calendar.get(Calendar.DAY_OF_WEEK) - 1) {//오늘 요일과 동일하다면
+                    toDayTimer_notification.NotificationListShow();
                     if(intent.getIntExtra("AlarmMethod", 0) == 3){//포그라운드 알람으로 설정되어 있다면
                         ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), intent.getIntExtra("AutoTimerOff", 2), intent.getIntExtra("SoundValue", 70));
                     }else{
@@ -64,6 +68,7 @@ public class AlarmService extends BroadcastReceiver {
                 break;
             }
             case 2:{//특정 날짜에만 울리는 알림
+                toDayTimer_notification.NotificationListShow();
                 if(intent.getIntExtra("AlarmMethod", 0) == 3){//포그라운드 알람으로 설정되어 있다면
                     ForGroundStart(context, intent.getStringExtra("Name"), intent.getStringExtra("Memo"), intent.getIntExtra("AutoTimerOff", 2), intent.getIntExtra("SoundValue", 70));
                 }else{
@@ -78,16 +83,18 @@ public class AlarmService extends BroadcastReceiver {
             case 3:{//하루가 지나면 알림 재설정
                 alarmServiceManagement.All_TimerSetting(true, true, true);
 
-                ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(context);
                 toDayTimer_notification.NotificationListShow();
 
+                if(intent.getStringExtra("DAY_Loop_time").equals("A")){
+                    alarmServiceManagement.DAY_Loop(false, true);
+                }
+                if(intent.getStringExtra("DAY_Loop_time").equals("B")){
+                    alarmServiceManagement.DAY_Loop(true, false);
+                }
 
                 break;
             }
         }
-
-        ToDayTimer_Notification toDayTimer_notification = new ToDayTimer_Notification(context);
-        toDayTimer_notification.NotificationListShow();
 
     }
 

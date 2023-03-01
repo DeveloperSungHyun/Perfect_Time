@@ -34,48 +34,56 @@ public class AlarmServiceManagement {
         systemDataSave = new SystemDataSave(context);
     }
 
-    public void DAY_Loop(){
+    public void DAY_Loop(boolean Time_A, boolean Time_B){
 
         intent = new Intent(context, AlarmService.class);
         intent.putExtra("AlarmType", 3);
 
-        alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if(Time_A){
+            intent.putExtra("DAY_Loop_time", "A");
 
-        pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), -1,intent, PendingIntent.FLAG_IMMUTABLE);
+            alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
-        calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 1);
-        calendar.set(Calendar.MILLISECOND, 1000);
+            pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), -1,intent, PendingIntent.FLAG_IMMUTABLE);
 
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 1);
+            calendar.set(Calendar.MILLISECOND, 1000);
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1);
+            }
+
+            // 지정한 시간에 매일 알림
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pIntent);
         }
 
-        // 지정한 시간에 매일 알림
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pIntent);
 
         //===
 
-        alarmManager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        if(Time_B){
+            intent.putExtra("DAY_Loop_time", "B");
+            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), -2,intent, PendingIntent.FLAG_IMMUTABLE);
+            pIntent = PendingIntent.getBroadcast(context.getApplicationContext(), -2, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 1);
-        calendar.set(Calendar.MILLISECOND, 1000);
+            calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 12);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 1);
+            calendar.set(Calendar.MILLISECOND, 1000);
 
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 1);
+            }
+
+            // 지정한 시간에 매일 알림
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
         }
-
-        // 지정한 시간에 매일 알림
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pIntent);
     }
 
     public void DAY_LoopOff(){

@@ -110,7 +110,7 @@ public class Preferences extends Activity {
                 }else{
                     alarmServiceManagement.All_TimerSetting(true, true, true);
 
-                    alarmServiceManagement.DAY_Loop();
+                    alarmServiceManagement.DAY_Loop(true, true);
                     Toast.makeText(Preferences.this, "모든 알림을 켰습니다.", Toast.LENGTH_SHORT).show();
                 }
 

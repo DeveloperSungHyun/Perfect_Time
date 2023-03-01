@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity{
         super.onStart();
 
         AlarmServiceManagement alarmServiceManagement = new AlarmServiceManagement(getApplicationContext());
-        alarmServiceManagement.DAY_Loop();
+        alarmServiceManagement.DAY_Loop(true, true);
 //        alarmServiceManagement.All_TimerSetting();
 
     }
