@@ -81,16 +81,10 @@ public class AlarmService extends BroadcastReceiver {
                 break;
             }
             case 3:{//하루가 지나면 알림 재설정
+                alarmServiceManagement.DAY_Loop();
                 alarmServiceManagement.All_TimerSetting(true, true, true);
 
                 toDayTimer_notification.NotificationListShow();
-
-                if(intent.getStringExtra("DAY_Loop_time").equals("A")){
-                    alarmServiceManagement.DAY_Loop(false, true);
-                }
-                if(intent.getStringExtra("DAY_Loop_time").equals("B")){
-                    alarmServiceManagement.DAY_Loop(true, false);
-                }
 
                 break;
             }
