@@ -38,7 +38,7 @@ public class FragHome extends Fragment {
 
     View view;
 
-    List<All_Time> all_times;
+    List<All_Time> all_times, all_Nexttimes;
 
     OneDayTimeList oneDayTimeList;
 
@@ -63,7 +63,6 @@ public class FragHome extends Fragment {
     private void IdMapping(View view){
         recyclerView = view.findViewById(R.id.recyclerview);
         TextView_NextTimerCount = view.findViewById(R.id.TextView_NextTimerCount);
-
     }
 
     @Override
@@ -96,9 +95,9 @@ public class FragHome extends Fragment {
         m = calendar.get(Calendar.MONTH) + 1;//24시 형식
         d = calendar.get((Calendar.DATE));
 
-        oneDayTimeList = new OneDayTimeList(view.getContext(), y, m, d);
+        all_times = new OneDayTimeList(view.getContext(), y, m, d).getTimeList();
 
-        all_times = oneDayTimeList.getTimeList();
+        all_Nexttimes = new OneDayTimeList(view.getContext(), y, m, d + 1).getTimeList();
 
         ListLayout_View();
 
@@ -127,6 +126,7 @@ public class FragHome extends Fragment {
         recyclerView_listAdapter = new RecyclerView_ListAdapter(ListItem);
 
         recyclerView.setAdapter(recyclerView_listAdapter);
+
     }
 
     private void recyclerView_ListShow(){
@@ -137,7 +137,20 @@ public class FragHome extends Fragment {
 
                 recyclerView_listItem =
                         new RecyclerView_ListItem(1, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
-                                data.getTime_Minute(), data.getAlarm_Method(),null, 0xFF000000, FragmentType.fragHome);
+                                data.getTime_Minute(), data.getAlarm_Method(),"오늘 일정", 0xFF000000, FragmentType.fragHome);
+
+                ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+                recyclerView_listItem = null;
+            }
+        }
+        //all_Nexttimes
+        for(All_Time data : all_Nexttimes){
+
+            if(data.isTimer_Activate() == true){
+
+                recyclerView_listItem =
+                        new RecyclerView_ListItem(2, data.isTimer_Activate(), data.isImportant(), data.getName(), data.getMemo(), data.getTime_Hour(),
+                                data.getTime_Minute(), data.getAlarm_Method(),"내일 일정", 0xFFFF0000, FragmentType.fragHome);
 
                 ListItem.add(recyclerView_listItem);//리스트 아이템 추가
                 recyclerView_listItem = null;

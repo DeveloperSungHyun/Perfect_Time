@@ -72,7 +72,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             case 2:{
                 another_day = false;
                 view = inflater.inflate(R.layout.next_day_line, parent, false);
-                return new NextDayLine(view);
+                return new NextTimeListView(view);
             }
         }
 
@@ -97,8 +97,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             ActivateView(((ActivateListView) holder), position);
         }else if(holder instanceof DisabledListView){
             DisabledView(((DisabledListView) holder), position);
-        }else{
-
+        }else if(holder instanceof NextTimeListView){
+            NextTimeView(((NextTimeListView) holder), position);
         }
     }
 
@@ -417,6 +417,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.TextView_Name.setText(getItem.getName());
         holder.TextView_Memo.setText(getItem.getMemo());
 
+        holder.TextView_Day.setText(getItem.getDayText());
+
         Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
         String time_M_str = null;
         if(getItem.getTime_Minute() < 10){
@@ -436,6 +438,56 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.ImageView_icon.setImageResource(icon_img);
 
     }
+
+    private void NextTimeView(NextTimeListView holder, int position){
+
+        calendar = Calendar.getInstance();
+
+        holder.TextView_Day.setText(null);
+
+        h = calendar.get(Calendar.HOUR_OF_DAY);
+        m = calendar.get(Calendar.MINUTE);
+
+//        Day_y = calendar.get(Calendar.YEAR);//24시 형식
+//        Day_m = calendar.get(Calendar.MONTH) + 1;//24시 형식
+//        Day_d = calendar.get((Calendar.DATE));
+
+        RecyclerView_ListItem getItem = listItems.get(position);
+
+        if(another_day){
+            if(h < getItem.getTime_Hour() || (h == getItem.getTime_Hour() && m < getItem.getTime_Minute())){
+                holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFFFF));
+            }else{
+                holder.CardView_List.setBackgroundTintList(ColorStateList.valueOf(0xFFD6D6D6));
+            }
+        }
+
+        holder.TextView_Name.setText(getItem.getName());
+        holder.TextView_Memo.setText(getItem.getMemo());
+
+        holder.TextView_Day.setText(getItem.getDayText());
+
+        Time24_to_12Hour time24_to_12Hour = new Time24_to_12Hour(getItem.getTime_Hour(), view.getContext());
+        String time_M_str = null;
+        if(getItem.getTime_Minute() < 10){
+            time_M_str = "0" + getItem.getTime_Minute();
+        }else{
+            time_M_str = "" + getItem.getTime_Minute();
+        }
+        holder.TextView_Time.setText(time24_to_12Hour.getTime_Hour() + " : " + time_M_str);
+        holder.TextView_Time_AmPm.setText(time24_to_12Hour.getAmPm());
+
+        switch (getItem.getAlarm_Method()){
+            case 0: icon_img = R.drawable.alarm_none; break;
+            case 1: icon_img = R.drawable.notifications_icon; break;
+            case 2: icon_img = R.drawable.head_up; break;
+            case 3: icon_img = R.drawable.alarm_icon;
+        }
+        holder.ImageView_icon.setImageResource(icon_img);
+
+    }
+    //===========
+
 
     public class ActivateListView extends RecyclerView.ViewHolder{//활성화 뷰
         CardView CardView_List;
@@ -512,10 +564,39 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    public class NextDayLine extends RecyclerView.ViewHolder{
 
-        public NextDayLine(@NonNull View itemView) {
+    public class NextTimeListView extends RecyclerView.ViewHolder{
+
+        CardView CardView_List;
+
+        TextView TextView_Day;
+
+        ImageView ImageView_important;//중요알림 표시 아이콘
+
+        TextView TextView_Name;//알람 이름
+        TextView TextView_Memo;//알람 메모
+
+        TextView TextView_Time;//시간 시 : 분
+        TextView TextView_Time_AmPm;// (오전, 오후) 구분
+
+        ImageView ImageView_icon;//알림방식 아이콘
+
+        public NextTimeListView(@NonNull View itemView) {
             super(itemView);
+
+            CardView_List = itemView.findViewById(R.id.CardView_List);
+
+            ImageView_important = itemView.findViewById(R.id.ImageView_important);
+
+            TextView_Day = itemView.findViewById(R.id.TextView_Day);
+
+            TextView_Name = itemView.findViewById(R.id.TextView_Name);
+            TextView_Memo = itemView.findViewById(R.id.TextView_Memo);
+
+            TextView_Time = itemView.findViewById(R.id.TextView_Time);
+            TextView_Time_AmPm = itemView.findViewById(R.id.TextView_Time_AmPm);
+
+            ImageView_icon = itemView.findViewById(R.id.ImageView_icon);
         }
     }
 }
