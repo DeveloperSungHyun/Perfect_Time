@@ -143,6 +143,14 @@ public class FragHome extends Fragment {
                 recyclerView_listItem = null;
             }
         }
+
+
+        recyclerView_listItem =
+                new RecyclerView_ListItem(3, false, false, null, null, 0,
+                        0, 0,null, 0, FragmentType.fragHome);
+
+        ListItem.add(recyclerView_listItem);//리스트 아이템 추가
+
         //all_Nexttimes
         for(All_Time data : all_Nexttimes){
 

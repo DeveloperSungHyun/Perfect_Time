@@ -74,6 +74,11 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
                 view = inflater.inflate(R.layout.next_day_line, parent, false);
                 return new NextTimeListView(view);
             }
+            case 3:{
+                another_day = false;
+                view = inflater.inflate(R.layout.line, parent, false);
+                return new lineView(view);
+            }
         }
 
         return null;
@@ -99,6 +104,8 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             DisabledView(((DisabledListView) holder), position);
         }else if(holder instanceof NextTimeListView){
             NextTimeView(((NextTimeListView) holder), position);
+        }else if(holder instanceof lineView){
+            ListView(((lineView) holder), position);
         }
     }
 
@@ -439,7 +446,7 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
 
     }
 
-    private void NextTimeView(NextTimeListView holder, int position){
+    private void NextTimeView(NextTimeListView holder, int position){//ListView
 
         calendar = Calendar.getInstance();
 
@@ -484,6 +491,11 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             case 3: icon_img = R.drawable.alarm_icon;
         }
         holder.ImageView_icon.setImageResource(icon_img);
+
+    }
+
+
+    private void ListView(lineView holder, int position){
 
     }
     //===========
@@ -597,6 +609,18 @@ public class RecyclerView_ListAdapter extends RecyclerView.Adapter<RecyclerView.
             TextView_Time_AmPm = itemView.findViewById(R.id.TextView_Time_AmPm);
 
             ImageView_icon = itemView.findViewById(R.id.ImageView_icon);
+        }
+    }
+
+
+
+
+    public class lineView extends RecyclerView.ViewHolder{
+
+
+        public lineView(@NonNull View itemView) {
+            super(itemView);
+
         }
     }
 }

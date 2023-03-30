@@ -17,53 +17,15 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="25dp"/>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbarFadeDuration="0"
-                android:scrollbarSize="5dp"
-                android:scrollbarThumbVertical="@android:color/darker_gray"
-                android:scrollbars="vertical">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="내일 일정"-->
-<!--                android:paddingBottom="5dp"-->
-<!--                android:paddingTop="5dp"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingRight="20dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:background="@drawable/background_style1"/>-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recyclerView_NextDay"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:scrollbarFadeDuration="0"-->
-<!--                android:scrollbarSize="5dp"-->
-<!--                android:scrollbarThumbVertical="@android:color/darker_gray"-->
-<!--                android:scrollbars="vertical">-->
-
-<!--            </androidx.recyclerview.widget.RecyclerView>-->
-
-
-        </LinearLayout>
-
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
