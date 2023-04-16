@@ -20,6 +20,7 @@ public class DeviceType {
 
     }
 
+
     public boolean IsTablet(){
         int screenSizeType = context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 

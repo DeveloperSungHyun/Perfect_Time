@@ -3,8 +3,12 @@ package com.project.perfect_time;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +65,18 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         IdMapping();
+
+
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.POST_NOTIFICATIONS);
+        if (permission == PackageManager.PERMISSION_DENIED) {
+            // 마쉬멜로우 이상버전부터 권한을 물어본다
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                // 권한 체크(READ_PHONE_STATE의 requestCode를 1000으로 세팅
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1000);
+            }
+            return;
+        }
 
         calendar = Calendar.getInstance();
 
