@@ -49,10 +49,6 @@ public class ForeGround_Service extends Service {
     public void onCreate() {
         super.onCreate();
 
-
-        Log.d("서비스", "실행중...");
-
-
     }
 
     @Override
